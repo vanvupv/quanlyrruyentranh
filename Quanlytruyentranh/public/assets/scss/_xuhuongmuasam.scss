@@ -1,0 +1,48 @@
+.xuhuongmuasam {
+    background-color: #F0F0F0; 
+    .xuhuong {
+        background-color: #fcddef;
+        padding: 12px;
+        border-radius: 8px 8px 0px 0px;
+    }
+}
+ 
+.cart-book:hover {
+    border: 1px solid gray; 
+}
+
+.nav-tabs .nav-link.active {
+    color: #C92127;
+    border-bottom: #C92127 solid 2px; 
+}
+
+.nav-tabs, .tab-content {
+    background-color: white;
+} 
+
+.w-auto {
+    width: auto !important;
+}
+
+.thuonghieu-item {
+    justify-content: center;
+    margin-right: 20px;
+}
+
+#thuonghieu {
+    padding: 20px 15px; 
+}
+
+.list-group-item {
+    border: none!important; 
+    padding: 0px 2px 0px 0px !important;
+    // padding-right: 2px !important;
+}
+
+// .list-group-item:first {
+//     margin-right: 8px!important;
+// }
+
+// .list-group {
+//     margin-left: 8px!important;
+// }

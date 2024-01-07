@@ -1,0 +1,39 @@
+
+#navigation {
+    padding: 16px 0px; 
+    .logo {
+        width: 240px; 
+    }
+
+    .search_bar {
+        .search-input input {
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: 1px solid #cdcfd0;
+            font-size: 0.9em; 
+            font-family: inherit;
+        }
+
+        .search-input .btn-search {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%); 
+             
+            padding: 4px 24px;
+        }
+    }
+
+    .cart {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .icon > .row {
+        gap: 8px;
+      }
+}
+
+// 
+ 

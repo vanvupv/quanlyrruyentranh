@@ -1,0 +1,97 @@
+
+
+--- 
+*I. Mô tả và Phân tích 
+
+*II. Xây dựng CSDL 
+1. Xây dựng CSDL trên phpMyadmin 
+
+
+2. Xây dựng CSDL trên LARAVEL 
+
+*III. Xây dựng Giao diện
+1. Xác định Số giao diện 
+
+2. Code Giao diện 
+
+ - Đăng Nhập 
+ - Quản Lý : Thêm - Sửa - Xóa Sản Phẩm
+ - Quản Lý : Thêm -Sửa - Xóa Loại Sản Phẩm 
+
+*IV. Xây dựng Chức năng 
+1. Xác định Các chức năng 
+
+2. Code Chức năng 
+ 
+ - Đăng Nhập : Xác thực Tài khoản + Mật khẩu  
+ 
+ - Thêm - Sửa - Xóa  
+
+ - Phân quyền (17/12/2023) (2H) 
+* Thiết kế DB  
++ Tạo DB : 
+ 	- roloes - role_id - routes - permission 
+
+ + Chỉnh sửa Bảng trong DB : 
+ 	- Roles: Gồm ID tự tăng và Tên 
+	- AddRoleIdInUsersTable: Khoá Ngoại với Bảng Roles 
+	- Routes: Gồm ID tự tăng, Tên và Tiêu đề 
+	- CreatePermissionTable: THiết lập khóa ngoại và Khóa chính 
+	- Phút 24 
+
+ + Thêm dữ liệu vào DB (30 -> 40) 
+ 	- Thêm bằng tay 
+
+	- Thêm bằng cách chỉnh sửa trong thư mục `database\seeders\` 
+
+	  + Đặt tên cho các Route 
+	  + Thêm vào bảng Routers  
+
+	+ Chạy lệnh để thêm các dữ liệu từ `RouterSeeder` vào Bảng Routers 
+
+* Fake data -> DONE 
+
+*Phát triển chức năng của chương trình  
+- Phân Quyền : Giao diện 
+	+ Hiển thị danh sách Roles -> Phân Quyền 
+	+ Cài đặt phân quyền cho roles 
+
++ Tạo `Module`: 
+PS C:\xampp\htdocs\PMNM_QLTV_65pm34\qltv> php artisan make:controller Pe
+rmission/PermissionController    
+
+   INFO  Controller [C:\xampp\htdocs\PMNM_QLTV_65pm34\qltv\app/Http/Cont
+rollers/Permission/PermissionController.php] created successfully.  
+
+ + B1: Hiển thị danh sách các Roles (40 -> 50) 
+
+	- Lấy dữ liệu trong Controller 
+	- Trả về cho View 
+ 	- Trong View, Hiển thị dữ liệu 
+
+ 	+ Để hiển thị dữ liệu trong View ta cần thiết lập Routers 
+
+ + B2: Xử lý phân quyền (50 -> 1h10) 
+
+* Chạy chương trình test 
+
+* Kích hoạt chức năng phân quyền 
+
+
+CÁCH 2: Xử Lý `Middleware` 
+
+
+
+
+Danh Sách Các Route : 
+ - localhost/ : Trang Home (Trang Chủ) --> Tất cả đều truy cập vào được 
+
+ - loacalhost/admin/ : Trang Home Quản Lý --> Yêu cầu Đăng Nhập
+
+ - localhost/admin/login : Trang Đăng Nhập cho Admin 
+
+ - localhost/login : Trang Đăng Nhập cho Người dùng 
+
+ - localhost/signup : Trang Đăng ký 
+ 
+

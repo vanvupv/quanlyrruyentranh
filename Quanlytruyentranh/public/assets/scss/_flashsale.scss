@@ -1,0 +1,44 @@
+#flash-sale {
+    padding: 24px 16px; 
+    background-color: red;
+
+    .flash-sale-item {
+        background-color: white; 
+        padding: 16px 8px;
+        border-radius: 8px; 
+        margin-bottom: 16px; 
+         
+        .flash-sale-sale {
+
+            .clock-round {
+                padding: 4px 8px;  
+            }
+        }
+    .view-all {
+        height: 100%;
+        display: flex;
+        justify-content: end;
+        align-items: center;
+
+        .font-view {
+            font-weight: 600;
+            color: #1478FC; 
+        }
+    }
+    }
+
+    .cart-book {
+        margin-right: 8px; 
+    }
+
+    .slide-book {
+
+        .slick-list {
+            width: 100% !important;     
+        }
+    }
+}
+ 
+button[aria-disabled="true"] {
+    display: none !important;
+}

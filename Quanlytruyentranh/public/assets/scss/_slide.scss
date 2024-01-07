@@ -1,0 +1,14 @@
+
+#banner {
+    .slide-show .img-slide img {
+        border-radius: 8px; 
+    }
+
+    .slide-swipper {
+        position: relative; 
+
+        .slick-slider-dots {
+            position: absolute; 
+        }
+    }
+}
