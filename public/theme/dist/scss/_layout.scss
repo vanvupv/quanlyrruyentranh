@@ -1,0 +1,74 @@
+#admin__main {
+    display: flex;
+}
+
+* {
+    padding: 0px;
+    margin: 0px;
+}
+
+.open {
+     display: block !important;
+}
+
+.show {
+    display:block !important;
+}
+
+.small-left-menu {
+    width: 60px;
+}
+
+.eyeDetails:hover {
+    cursor: pointer;
+}
+
+/* ------------------------------------------------------ */
+ /* Style cho thông báo confirm */
+ .confirm-dialog {
+     border: 1px solid #ccc;
+     border-radius: 5px;
+     padding: 20px;
+     background-color: #f9f9f9;
+     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+     max-width: 300px;
+     margin: 20px auto;
+ }
+
+.confirm-dialog h2 {
+    margin-top: 0;
+}
+
+.confirm-dialog button {
+    padding: 10px 20px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.confirm-dialog button.confirm {
+    background-color: #4caf50;
+    color: #fff;
+}
+
+.confirm-dialog button.cancel {
+    background-color: #ccc;
+    color: #000;
+}
+
+/* Style cho button renewBook */
+.renewBook {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.renewBook:hover {
+    background-color: #0056b3;
+}
+

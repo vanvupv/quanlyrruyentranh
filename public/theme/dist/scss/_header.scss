@@ -1,0 +1,30 @@
+#main__content {
+    width: 100%;
+}
+
+.header {
+    color: red !important;
+    padding: 30px;
+    box-sizing: border-box;
+
+    &__container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    &__menu {
+        width: 24px;
+        height: 24px;
+        -webkit-transition: all 0.3s ease-in-out;
+        -o-transition: all 0.3s ease-in-out;
+        transition: all 0.3s ease-in-out;
+        z-index: 2;
+    }
+
+    &__user {
+        width: 15px;
+        height: 15px;
+    }
+}
+
