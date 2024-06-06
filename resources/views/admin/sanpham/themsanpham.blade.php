@@ -71,7 +71,7 @@
                             <div class="col">
                                 <div class="form-floating form-floating-outline">
                                     <input type="number" class="form-control" id="ecommerce-product-quantity"
-                                           placeholder="qty" name="productQty" aria-label="Product quantity" value="@if($action == 'edit') {{$sanpham->soluong}} @endif">
+                                           placeholder="qty" name="productQty" aria-label="Product quantity" @if($action == 'edit') value={{$sanpham->soluong}} @endif>
                                     <label for="ecommerce-product-quantity"> Quantity </label>
                                 </div>
                             </div>
@@ -106,7 +106,7 @@
                                 @endif
                             </div>
                         </div>
-                        <input id="thumbnail" class="form-control" type="hidden" name="anhbia">
+                        <input id="thumbnail" class="form-control" type="hidden" name="anhbia" @if($action == 'edit') value={{$sanpham->anhbia}} @endif>
                         <p class="h4 needsclick my-2 text-center">Drag and drop your image here</p>
                         <small class="text-muted d-block fs-6 my-2 text-center">or</small>
                         <div class="d-flex justify-content-center">
@@ -137,7 +137,7 @@
                         <!-- Base Price -->
                         <div class="form-floating form-floating-outline mb-3">
                             <input type="number" class="form-control" id="ecommerce-product-price" placeholder="Price"
-                                   name="productPrice" aria-label="Product price" value="@if($action == 'edit') {{$sanpham->giaban}} @endif">
+                                   name="productPrice" aria-label="Product price" @if($action == 'edit') value={{trim($sanpham->giaban)}} @endif>
                             <label for="ecommerce-product-price">Best Price</label>
                         </div>
 
@@ -145,7 +145,7 @@
                         <div class="form-floating form-floating-outline mb-3">
                             <input type="number" class="form-control" id="ecommerce-product-discount-price"
                                    placeholder="Discounted Price" name="productDiscountedPrice"
-                                   aria-label="Product discounted price" value="@if($action == 'edit') {{$sanpham->giatotnhat}} @endif">
+                                   aria-label="Product discounted price" @if($action == 'edit') value={{$sanpham->giatotnhat}} @endif>
                             <label for="ecommerce-product-discount-price">Discounted Price</label>
                         </div>
                         <!-- Charge tax check box -->

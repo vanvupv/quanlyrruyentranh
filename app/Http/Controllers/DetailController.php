@@ -12,15 +12,15 @@ class DetailController extends Controller
     //
     public function viewDetail($detail) {
 
-        $sanpham = Sanpham::join('Loaisanpham', 'sanphams.MaLoaiSP', '=', 'Loaisanpham.MaLoaiSP')
-            ->select('sanphams.*', 'Loaisanpham.TenLoai')
-            ->where('id', $detail)->first();
+        $sanpham = Sanpham::join('loaisanpham', 'sanphams.matheloai', '=', 'loaisanpham.id')
+            ->select('sanphams.*', 'loaisanpham.tenloai')
+            ->where('sanphams.id', $detail)->first();
 
-        $product1Type = $sanpham->MaLoaiSP;
+        $product1Type = $sanpham->matheloai;
 
-        $relatedProducts = Sanpham::join('Loaisanpham', 'sanphams.MaLoaiSP', '=', 'Loaisanpham.MaLoaiSP')
-            ->select('sanphams.*', 'Loaisanpham.TenLoai')
-            ->where('sanphams.MaLoaiSP', $product1Type) // Chỉ định rõ trường MaLoaiSP đến từ bảng sanphams
+        $relatedProducts = Sanpham::join('loaisanpham', 'sanphams.matheloai', '=', 'loaisanpham.id')
+            ->select('sanphams.*', 'loaisanpham.tenloai')
+            ->where('sanphams.matheloai', $product1Type) // Chỉ định rõ trường MaLoaiSP đến từ bảng sanphams
             ->where('sanphams.id', '!=', $detail)
             ->get();
 

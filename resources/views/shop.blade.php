@@ -1,4 +1,4 @@
-@include('share.header')                                         s
+@include('share.header')
 <body class="theme-color4 light ltr">
 
 @include('share.nav')
@@ -65,11 +65,11 @@
                                         @foreach($loaisanphams as $loaisanpham)
                                             <li>
                                                 <div class="form-check ps-0 custome-form-check">
-                                                    <input class="checkbox_animated check-it" id="ct1{{$loaisanpham->MaLoaiSP}}" name="categories"
+                                                    <input class="checkbox_animated check-it" id="ct1{{$loaisanpham->id}}" name="categories"
                                                            type="checkbox" onchange="filterByCatory()"
-                                                           value="{{$loaisanpham->MaLoaiSP}}"
-                                                           @if(in_array($loaisanpham->MaLoaiSP,explode(',',$q_options))) checked @endif >
-                                                    <label class="form-check-label">{{$loaisanpham->TenLoai}}</label>
+                                                           value="{{$loaisanpham->tenloai}}"
+                                                           @if(in_array($loaisanpham->id,explode(',',$q_options))) checked @endif >
+                                                    <label class="form-check-label">{{$loaisanpham->tenloai}}</label>
                                                     <p class="font-light">({{$loaisanpham->count}})</p>
                                                 </div>
                                             </li>
@@ -182,7 +182,7 @@
                             <div class="img-wrapper">
                                 <div class="front">
                                     <a href="{{route('home.detail', $sanpham->id)}}">
-                                        <img src="{{asset("assets/images/product/front/$sanpham->AnhBia")}}"
+                                        <img src="{{asset("assets/images/product/front/$sanpham->anhbia")}}"
                                              class="bg-img blur-up lazyload" alt="">
                                     </a>
                                 </div>
@@ -208,7 +208,7 @@
                             </div>
                             <div class="product-details">
                                 <div class="rating-details">
-                                    <span class="font-light grid-content">{{$sanpham->TenSP}}</span>
+                                    <span class="font-light grid-content">{{$sanpham->tensanpham}}</span>
                                     <ul class="rating mt-0">
                                         <li>
                                             <i class="fas fa-star theme-color"></i>
@@ -233,9 +233,9 @@
                                     </a>
                                     <div class="listing-content">
                                         <span class="font-light">Cupiditate Minus</span>
-                                        <p class="font-light">{!! $sanpham->MoTa !!}</p>
+                                        <p class="font-light">{!! $sanpham->mota !!}</p>
                                     </div>
-                                    <h3 class="theme-color">${{$sanpham->GiaBan}}</h3>
+                                    <h3 class="theme-color">${{$sanpham->giaban}}</h3>
                                     <button class="btn listing-content">Add To Cart</button>
                                 </div>
                             </div>

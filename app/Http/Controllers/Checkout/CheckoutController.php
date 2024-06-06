@@ -3,11 +3,193 @@
 namespace App\Http\Controllers\Checkout;
 
 use App\Http\Controllers\Controller;
+use App\Models\Donhang;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use DB;
+use Cart;
 
 class CheckoutController extends Controller
 {
     //
+    public function index() {
+//        dd(session()->all());
+//       dd(Cart::content());
+
+//     dd(   Cart::instance('cart')->content());
+
+        $dataCheckout = session('dataCheckout') ?? '';
+//        dd($dataCheckout);
+
+        // If cart info empty
+        if (!$dataCheckout) {
+            return redirect()->route('cart')->with(['error' => 'Gio hang khong co san pham']);
+        }
+
+        // Shipping
+        // Lay danh sach phuong thuc giao hang
+
+        // Payment
+        // Lay danh sach phuong thuc thanh toan
+
+        // Total
+        // Lay danh sach tong
+
+        // Shipping address
+        // Lay dia chi giao hang mac dinh
+
+        //
+        //
+
+        //
+        $customer = Auth::user();
+
+
+        $cartDetail = DB::table('shoppingcart')
+            ->where('identifier', $customer->id)
+            ->where('instance', 'cart')
+            ->first();
+
+        // Chuyển đổi chuỗi serialized về đối tượng gốc
+        $content = unserialize($cartDetail->content);
+
+        dd(Cart::instance('cart'));
+
+        dd($content->subtotal());
+
+        session(['cartDetail', $cartDetail]);
+
+               $cart = new Cart(session('cartDetail'));
+
+               dd($cart->subtotal());
+
+        $cartItems = unserialize($cartDetail->content);
+
+        $totalItem = 0;
+        foreach ($cartItems as $item) {
+            $totalItem += (double) $item->subtotal();
+        }
+
+        //Process captcha
+        // Ma Capcha xac minh khong phai robot
+
+        return view('checkout', [
+            'title' => "Thanh toan",
+            'cartItems' => $cartItems,
+            'totalItem' => $totalItem,
+        ]);
+    }
+
+    /*
+     * Kiem tra request duoc gui len tu gio hang
+     *
+     * */
+    public function prepareCheckout(Request $request) {
+        $data = $request->all();
+
+        //
+        $customer = Auth::user()->id;
+
+        // Kiem tra gio hang rong
+        $cartDetail = DB::table('shoppingcart')
+            ->where('identifier', $customer)
+            ->where('instance', 'cart')
+            ->first();
+
+        $cartItems = unserialize($cartDetail->content);
+
+        // Kiem tra so luong tung san pham
+
+
+        //Set session
+        session(['dataCheckout' => $cartItems]);
+
+        return redirect()->route('checkout');
+    }
+
+    /*
+     *
+     *
+     * */
+    public function processCheckout(Request $request) {
+        $dataCheckout  = session('dataCheckout') ?? '';
+//        dd($dataCheckout);
+
+        // Kiem tra gio hang rong
+        if (!$dataCheckout) {
+            return redirect()->route('cart')->with(['error' => 'Gio hang rong']);
+        }
+
+        $customer = auth()->user();
+
+        // Kiem tra khach hang phai dang nhap
+        if (!$customer) {
+            return redirect()->route('login');
+        }
+
+        $data = request()->all();
+
+        //Set session shippingMethod
+        session(['shippingMethod' => request('shippingMethod')]);
+
+        //Set session paymentMethod
+        session(['paymentMethod' => request('paymentMethod')]);
+
+        //Set session address process
+        session(['address_process' => request('address_process')]);
+
+        //Set session shippingAddressshippingAddress
+        session(
+            [
+                'shippingAddress' => [
+                    'first_name'      => request('first_name'),
+                    'last_name'       => request('last_name'),
+                    'email'           => request('email'),
+                    'country'         => request('country'),
+                    'address'        => request('address'),
+                    'phone'           => request('phone'),
+                    'comment'         => request('comment'),
+                ],
+            ]
+        );
+
+        //
+        return redirect()->route('checkout.confirm');
+    }
+
+    /*
+     *
+     *
+     * */
+    public function getCheckoutConfirmFront(Request $request) {
+        // Address Shipping
+        $shippingAddress = session('shippingAddress') ?? '';
+
+        // Shipping method
+        $shippingMethod = session('shippingMethod') ?? '';
+
+        // Payment method
+        $paymentMethod = session('paymentMethod') ?? '';
+
+        //
+
+        //
+        $data = $request->all();
+
+        //
+        return view('checkoutConfirm', [
+            'title'              => 'checkout.page_title',
+            'cart'               => session('dataCheckout'),
+            'paymentMethodData'  => $shippingMethod,
+            'shippingMethodData' => $paymentMethod,
+            'shippingAddress'    => $shippingAddress,
+        ]);
+    }
+
+    /*
+     *
+     *
+     * */
     public function onlineCheckout() {
         //
         $vnp_Url = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
@@ -19,7 +201,7 @@ class CheckoutController extends Controller
 //        $vnp_TxnRef = $_POST['order_id'];
         $vnp_OrderInfo = "Noi dung thanh toan"; // $_POST['order_desc']
         $vnp_OrderType = 'billpayment';
-        $vnp_Amount = ((int)$_POST['money']) * 10000;
+        $vnp_Amount = ((int)$_POST['money']) * 1000;
 
         dd($vnp_Amount);
         //
@@ -121,8 +303,69 @@ class CheckoutController extends Controller
         // vui lòng tham khảo thêm tại code demo
     }
 
-    //
-    public function store(Request $request) {
+    /*
+     *
+     *
+     *  */
+    public function addOrder() {
+        $customer = auth()->user();
+        $uID = $customer->id ?? 0;
 
+        //if cart empty
+        if (count(session('dataCheckout', [])) == 0) {
+            return redirect()->route('home');
+        }
+        // Kiem tra nguoi dung dang nhap
+        if ( !$customer) {
+            return redirect()->route('login');
+        }
+
+        $data = request()->all();
+        if (!$data) {
+            return redirect()->route('cart');
+        } else {
+            $shippingAddress = session('shippingAddress') ?? [];
+            $paymentMethod   = session('paymentMethod') ?? '';
+            $shippingMethod  = session('shippingMethod') ?? '';
+            $dataCheckout    = session('dataCheckout') ?? '';
+        }
+
+        //
+        $dataOrder['manhanvien']     = $uID;
+        $dataOrder['makhachhang']     = $uID;
+        $dataOrder['tongtien']        = 10000;
+        $dataOrder['trangthai']     = 'new';
+
+        //
+        $arrCartDetail = [];
+        foreach ($dataCheckout as $cartItem) {
+            $arrDetail['masanpham']  = $cartItem->id;
+            $arrDetail['soluong']         = $cartItem->qty;
+            $arrDetail['giatien'] = $cartItem->price * $cartItem->qty;
+            $arrCartDetail[]          = $arrDetail;
+        }
+
+        //Set session info order
+        session(['dataOrder' => $dataOrder]);
+        session(['arrCartDetail' => $arrCartDetail]);
+
+        //Create new order
+        $newOrder = (new Donhang)->createOrder($dataOrder, $arrCartDetail);
+
+        // Kiem tra don hang da tao thanh cong chua
+        if ($newOrder['error'] == 1) {
+            return redirect()->route('cart')->with(['error' =>'Tao don hang that bai']);
+        }
+
+        // Set session orderID
+        session(['orderID' => $newOrder['orderID']]);
+
+        //
+        return redirect()->route('order.success')->with(['success', "Tao don hang thanh cong"]);
+    }
+
+    public function orderSuccessProcessFront() {
+
+        return view('order-success');
     }
 }

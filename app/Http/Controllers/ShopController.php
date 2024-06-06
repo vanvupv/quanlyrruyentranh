@@ -12,9 +12,9 @@ class ShopController extends Controller
     //
     public function index(Request $request) {
 
-        $loaisp = Loaisanpham::select('loaisanpham.MaLoaiSP','TenLoai', 'loaisanpham.MoTa', 'loaisanpham.AnhBia', DB::raw('count(sanphams.id) as count'))
-            ->leftJoin('sanphams', 'loaisanpham.MaLoaiSP', '=', 'sanphams.MaLoaiSP')
-            ->groupBy('loaisanpham.MaLoaiSP','loaisanpham.TenLoai','loaisanpham.MoTa', 'loaisanpham.AnhBia')
+        $loaisp = Loaisanpham::select('loaisanpham.id','tenloai', 'loaisanpham.mota', 'loaisanpham.anhbia', DB::raw('count(sanphams.id) as count'))
+            ->leftJoin('sanphams', 'loaisanpham.id', '=', 'sanphams.matheloai')
+            ->groupBy('loaisanpham.id','loaisanpham.tenloai','loaisanpham.mota', 'loaisanpham.anhbia')
             ->get();
 
         $query = Sanpham::query();
@@ -25,14 +25,14 @@ class ShopController extends Controller
             if ($orderBy == -1) {
                 $orderBy = 'asc';
             }
-            $query->orderBy("GiaBan", $orderBy);
+            $query->orderBy("giaban", $orderBy);
         }
 
         //
         $q_options = $request->query("categories");
         if ($q_options) {
             $arr_options = explode(',',$q_options);
-            $query->whereIn('MaLoaiSP',$arr_options);
+            $query->whereIn('matheloai',$arr_options);
         }
 
         //
@@ -42,7 +42,7 @@ class ShopController extends Controller
             $arr_price = [];
             $arr_price[] = $min_price;
             $arr_price[] = $max_price;
-            $query->whereBetween('GiaBan',$arr_price);
+            $query->whereBetween('giaban',$arr_price);
         }
 
         //

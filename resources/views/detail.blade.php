@@ -56,15 +56,15 @@
                                 <div class="col-lg-2">
                                     <div class="details-image-vertical black-slide rounded">
                                         <div>
-                                            <img src="{{asset("assets/images/product/front/$sanpham->AnhBia")}}"
+                                            <img src="{{asset($sanpham->anhbia)}}"
                                                  class="img-fluid blur-up lazyload" alt="">
                                         </div>
                                         <div>
-                                            <img src="{{asset("assets/images/product/front/$sanpham->AnhBia")}}"
+                                            <img src="{{asset($sanpham->anhbia)}}"
                                                  class="img-fluid blur-up lazyload" alt="">
                                         </div>
                                         <div>
-                                            <img src="{{asset("assets/images/product/front/$sanpham->AnhBia")}}"
+                                            <img src="{{asset($sanpham->anhbia)}}"
                                                  class="img-fluid blur-up lazyload" alt="">
                                         </div>
                                     </div>
@@ -73,18 +73,18 @@
                                 <div class="col-lg-10">
                                     <div class="details-image-1 ratio_asos">
                                         <div>
-                                            <img src="{{asset("assets/images/product/front/$sanpham->AnhBia")}}"
-                                                 data-zoom-image="{{asset("assets/images/product/front/$sanpham->AnhBia")}}"
+                                            <img src="{{asset($sanpham->anhbia)}}"
+                                                 data-zoom-image="{{asset($sanpham->anhbia)}}"
                                                  class="img-fluid w-100 image_zoom_cls-0 blur-up lazyload" alt="">
                                         </div>
                                         <div>
-                                            <img src="{{asset("assets/images/product/front/$sanpham->AnhBia")}}"
-                                                 data-zoom-image="{{asset("assets/images/product/front/$sanpham->AnhBia")}}"
+                                            <img src="{{asset($sanpham->anhbia)}}"
+                                                 data-zoom-image="{{asset($sanpham->anhbia)}}"
                                                  class="img-fluid w-100 image_zoom_cls-2 blur-up lazyload" alt="">
                                         </div>
                                         <div>
-                                            <img src="{{asset("assets/images/product/front/$sanpham->AnhBia")}}"
-                                                 data-zoom-image="{{asset("assets/images/product/front/$sanpham->AnhBia")}}"
+                                            <img src="{{asset($sanpham->anhbia)}}"
+                                                 data-zoom-image="{{asset($sanpham->anhbia)}}"
                                                  class="img-fluid w-100 image_zoom_cls-3 blur-up lazyload" alt="">
                                         </div>
                                     </div>
@@ -113,7 +113,7 @@
                                     <span class="badge badge-grey-color">#1 Best seller</span>
                                 </div>
 
-                                <h3 class="price-detail">{{ number_format($sanpham->GiaBan) }}</h3>
+                                <h3 class="price-detail">{{ number_format($sanpham->giaban) }}</h3>
 
                                 <div id="selectSize" class="addeffect-section product-description border-product">
                                     <h6 class="product-title product-title-2 d-block">quantity</h6>
@@ -124,7 +124,7 @@
                                                 <span class="bi bi-dash"></span>
                                               </button>
                                             </span>
-                                            <input type="text" name="quant[1]" id="quantity" class="form-control input-number" value="1"  min="1" max="{{$sanpham->SoLuong}}">
+                                            <input type="text" name="quant[1]" id="quantity" class="form-control input-number" value="1"  min="1" max="{{$sanpham->soluong}}">
 
                                             <span class="input-group-btn">
                                               <button type="button" class="btn btn-success btn-number" onclick="updateQuantity()" data-type="plus" data-field="quant[1]">
@@ -227,7 +227,7 @@
                                     <div class="col-lg-8">
                                         <div class="part mt-3">
                                             <h5 class="inner-title mb-2">Mô Tả: </h5>
-                                            <p class="font-light">{!! $sanpham->MoTa !!}</p>
+                                            <p class="font-light">{!! $sanpham->mota !!}</p>
 
                                         </div>
                                     </div>
@@ -248,23 +248,27 @@
                                     <table class="table table-part">
                                         <tr>
                                             <th>Mã Truyện</th>
-                                            <td>{{$sanpham->MaSP}}</td>
+                                            <td>{{$sanpham->masanpham}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>SKU</th>
+                                            <td>{{$sanpham->SKU}}</td>
                                         </tr>
                                         <tr>
                                             <th>Tên Truyện</th>
-                                            <td>{{$sanpham->TenSP}}</td>
+                                            <td>{{$sanpham->tensanpham}}</td>
                                         </tr>
                                         <tr>
                                             <th>Số Lượng</th>
-                                            <td>{{$sanpham->SoLuong}}</td>
+                                            <td>{{$sanpham->soluong}}</td>
                                         </tr>
                                         <tr>
                                             <th>Thể Loại</th>
-                                            <td>{{$sanpham->TenLoai}}</td>
+                                            <td>{{$sanpham->tenloai}}</td>
                                         </tr>
                                         <tr>
                                             <th>Mô Tả</th>
-                                            <td>{{$sanpham->MoTa}}</td>
+                                            <td>{{$sanpham->mota}}</td>
                                         </tr>
                                     </table>
                                 </div>
@@ -571,7 +575,7 @@
                             <div class="img-wrapper">
                                 <div class="front">
                                     <a href="{{route('home.detail', $relatedProduct->id)}}">
-                                        <img src="{{asset("assets/images/product/front/$relatedProduct->AnhBia")}}"
+                                        <img src="{{asset($relatedProduct->anhbia)}}"
                                              class="bg-img blur-up lazyload" alt="">
                                     </a>
                                 </div>
@@ -609,7 +613,7 @@
                                             Qui eligendi voluptatem autem ullam et. Voluptas nemo eum nihil aliquam
                                             eos aperiam. Numquam dolorum veniam non magnam illum odit deleniti.</p>
                                     </div>
-                                    <h3 class="theme-color">{{ number_format($relatedProduct->GiaBan) }}</h3>
+                                    <h3 class="theme-color">{{ number_format($relatedProduct->giaban) }}</h3>
                                     <button onclick="location.href = 'cart.html';" class="btn listing-content">Add To Cart</button>
                                 </div>
                             </div>
@@ -662,7 +666,7 @@
     }
 
     function updateminusQuantity() {
-        $("#quantity").val(parseInt($("#quantity").val()) - 1);       
+        $("#quantity").val(parseInt($("#quantity").val()) - 1);
 
         $("#qty").val(parseInt($("#quantity").val()) - 1);
     }

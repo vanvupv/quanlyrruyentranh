@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+//
+use DB;
+
 class Donhang extends Model
 {
     use HasFactory;
@@ -34,5 +37,56 @@ class Donhang extends Model
     {
         return $this->belongsTo(Khachhang::class, 'makhachhang');
     }
+
+    /*
+     *
+     *
+     * */
+    public function createOrder($dataOrder, $arrCartDetail) {
+        try {
+            DB::connection('mysql')->beginTransaction();
+
+            $uID = $dataOrder['makhachhang'] ?? 0;
+            $adminID = $dataOrder['manhanvien'] ?? 0;
+//            unset($dataOrder['manhanvien']);
+
+            //Insert order
+            $order = Donhang::create($dataOrder);
+            $orderID = $order->id;
+            //End insert order
+
+            //Order detail
+            foreach ($arrCartDetail as $cartDetail) {
+                $pID = $cartDetail['masanpham'];
+                $product = Sanpham::find($pID);
+
+                $cartDetail['madonhang'] = $orderID;
+
+                $this->addOrderDetail($cartDetail);
+
+                //Update stock and sold
+                Sanpham::updateStock($pID, $cartDetail['soluong']);
+            }
+            //End order detail
+
+            DB::connection('mysql')->commit();
+
+            $return = ['error' => 0, 'orderID' => $orderID, 'msg' => "", 'detail' => $order];
+        } catch (\Throwable $e) {
+            DB::connection('mysql')->rollBack();
+            $return = ['error' => 1, 'msg' => $e->getMessage()];
+        }
+        return $return;
+    }
+
+    /**
+     * Add order detail
+     * @param [type] $dataDetail [description]
+     */
+    public function addOrderDetail($dataDetail)
+    {
+        return Chitietdonhang::create($dataDetail);
+    }
+
 
 }

@@ -40,8 +40,8 @@
                                         <span class="badge rounded-pill bg-label-danger">Hết Hàng</span>
                                     @endif
                                 </td>
-                                <td>{{$item->DonViTinh}}</td>
-                                <td>{{$item->GiaBan}}</td>
+                                <td>{{$item->donvitinh}}</td>
+                                <td>{{$item->giaban}}</td>
                                 <td>
                                     <div class="avatarImg">
                                         <img src="{{asset($item->anhbia)}}" alt="{{$item->tensach}}">

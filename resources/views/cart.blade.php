@@ -9,6 +9,8 @@
 
     <!-- Start Cart -->
     <section class="cart-section section-b-space">
+        <form action="{{route('checkout.prepare')}}" method="POST">
+            @csrf
         <div class="container">
             @if($cartItems->count() > 0)
             <div class="row">
@@ -39,8 +41,7 @@
                                     <div class="col">
                                         <div class="qty-box">
                                             <div class="input-group">
-                                                <input type="text" name="quantity" class="form-control input-number"
-                                                       value="1">
+                                               <!-- -->
                                             </div>
                                         </div>
                                     </div>
@@ -62,10 +63,13 @@
                             <td>
                                 <div class="qty-box">
                                     <div class="input-group">
-                                        <input type="number" name="quantity"
+                                        <!-- -->
+                                        <input type="number"
+                                               data-id="{{$item->id}}"
                                                data-rowid="{{$item->rowId}}"
                                                onchange="updateQuantity(this)"
-                                               class="form-control input-number" value="{{$item->qty}}">
+                                               class="item-qty form-control stepper-input"
+                                               name="qty-{{$item->rowId}}" value="{{$item->qty}}">
                                     </div>
                                 </div>
                             </td>
@@ -102,50 +106,12 @@
 
                 <div class="cart-checkout-section">
                     <div class="row g-4">
-                        <div class="col-lg-4 col-sm-6">
-                            <div class="promo-section">
-                                <form class="row g-3">
-                                    <div class="col-7">
-                                        <input type="text" class="form-control" id="number" placeholder="Mã Giảm Giá">
-                                    </div>
-                                    <div class="col-5">
-                                        <button class="btn btn-solid-default rounded btn"> Áp Dụng Mã </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-
                         <div class="col-lg-4 col-sm-6 ">
                             <div class="checkout-button">
                                 <a href="{{route("checkout")}}" class="btn btn-solid-default btn fw-bold">
-                                    Thanh Toán <i class="fas fa-arrow-right ms-1"></i></a>
-                            </div>
-                        </div>
-
-                        <!-- -->
-                        <form  action="{{route('checkout')}}" method="post">
-                            <input type="hidden" name="order_id" value="">
-                            <input type="hidden" name="money" value="{{Cart::instance('cart')->total()}}">
-                            <button type="submit" name="redirect" class="btn btn-success"> Thanh toán VNPay </button>
-                            @csrf
-                        </form>
-                        <!-- -->
-
-                        <div class="col-lg-4">
-                            <div class="cart-box">
-                                <div class="cart-box-details">
-                                    <div class="total-details">
-                                        <div class="top-details">
-                                            <h3>Cart Totals</h3>
-                                            <h6>Sub Total <span>{{Cart::instance('cart')->subtotal()}}</span></h6>
-                                            <h6>Tax <span>{{Cart::instance('cart')->tax()}}</span></h6>
-                                            <h6>Total <span>{{Cart::instance('cart')->total()}}</span></h6>
-                                        </div>
-                                        <div class="bottom-details">
-                                            <a href="{{route("checkout")}}"> Quy Trình Thanh Toán </a>
-                                        </div>
-                                    </div>
-                                </div>
+                                    Thanh Toán
+                                    <i class="fas fa-arrow-right ms-1"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -161,6 +127,8 @@
                 </div>
             @endif
         </div>
+            <input type="submit" value="Thanh toan" class="btn btn-warning" >
+        </form>
     </section>
 
     <form id="updateCartQty" action="{{route('cart.update')}}" method="POST">

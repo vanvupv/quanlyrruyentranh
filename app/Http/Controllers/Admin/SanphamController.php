@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers\Admin;
 
+//
+use Illuminate\Support\Facades\Validator;
+
+//
 use App\Models\Loaisanpham;
 use App\Models\Nhaxuatban;
 use App\Models\Sanpham;
@@ -64,6 +68,15 @@ class SanphamController extends Controller
 
         $trangthai      =   $request->input('status'); // 15
 
+        $validator = Validator::make($request->all(), [
+            'productSku' => 'required|product_sku_unique' , // truyền được id -
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->with('error', 'SKU đã tồn tại Khi sử dụng ')
+                ->withErrors($validator)
+                ->withInput();
+        }
         try {
             Sanpham::create([
                 'masanpham'     => $masanpham, // 1
@@ -130,6 +143,16 @@ class SanphamController extends Controller
         $mavitri        =   $request->input('mavitri'); // 14
 
         $trangthai      =   $request->input('status'); // 15
+
+        $validator = Validator::make($request->all(), [
+            'productSku' => 'required|product_sku_unique:'.$id , // truyền được id -
+        ]);
+
+        if ($validator->fails()) {
+            return redirect()->back()->with('error', 'SKU đã tồn tại Khi sử dụng ')
+                ->withErrors($validator)
+                ->withInput();
+        }
 
         $sanpham->masanpham = $masanpham; // 1
         $sanpham->tensanpham = $tensanpham; // 2

@@ -6,7 +6,7 @@
         <h5 class="card-header"> DANH SÁCH THỂ LOẠI </h5>
         <hr class="my-0">
         <div class="listTable__add add-new">
-            <a class="addCategoryModal btn btn-primary waves-effect waves-light" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
+            <a class="addCategoryBtn btn btn-primary waves-effect waves-light" data-href="{{route('theloai.store')}}" data-bs-toggle="modal" data-bs-target="#addCategoryModal">
                 <i class="bi bi-plus-lg me-0 me-sm-1 d-inline-block"></i>
                 <span class="d-none d-sm-inline-block"> Thêm Mới </span>
             </a>
@@ -14,7 +14,7 @@
         <hr class="my-0">
         <div class="card-body">
             <div class="card-datatable text-nowrap">
-                <table id="BookTable" class="listTable__table table table-bordered">
+                <table id="category-table" class="listTable__table table table-bordered">
                     <thead>
                     <tr>
                         <th>ID</th>
@@ -37,10 +37,12 @@
                                 <td>
                                     <div class="actionFunc">
                                         <a data-id-category="{{$theloai->id}}" href="{{route('theloai.detail',['id' => $theloai->id])}}" class="detailCategoryModal btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect"
-                                           data-bs-toggle="modal"  data-bs-target="#detailCategoryModal_{{$theloai->id}}">
+                                           data-bs-toggle="modal"  data-bs-target="#addCategoryModal">
                                             <i class="bi bi-eye"></i>
                                         </a>
-                                        <a href="{{route('theloai.edit',['id' => $theloai->id])}}" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect" data-bs-toggle="tooltip" title="Edit">
+                                        <a data-href="{{route('theloai.edit',['id' => $theloai->id])}}"
+                                           class="categoryEdit btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect"
+                                           data-bs-toggle="modal"  data-bs-target="#addCategoryModal" title="Edit">
                                             <i class="bi bi-pencil-square"></i>
                                         </a>
                                         <a href="{{route('theloai.delete',['id' => $theloai->id])}}" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect" data-bs-toggle="tooltip" title="Delete">
@@ -79,13 +81,13 @@
     <div class="modal fade" id="addCategoryModal" tabindex="-1" aria-labelledby="addCategoryModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form action="{{route('theloai.store')}}" method="POST" id="quickForm" novalidate="novalidate" enctype="multipart/form-data">
+                <form id="addCategoryForm" novalidate="novalidate" enctype="multipart/form-data" method="POST">
                     <div class="modal-header">
                         <h5 class="modal-title" id="addCategoryModalLabel"> THÊM THỂ LOẠI </h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <div class="card-body mt-2">
+                        <div class="addCategoryModal card-body mt-2">
                             <div class="form-floating form-floating-outline mb-3">
                                 <input type="text" name="tentheloai" class="form-control" id="tentheloai" placeholder="Nhập tên Thể loại... ">
                                 <label for="tentheloai">Tên Thể Loại</label>
@@ -100,7 +102,7 @@
                             </div>
 
                             <!-- Media -->
-                            <div class="card mb-3">
+                            <div class="imageEdit card mb-3">
                                 <div class="card-header d-flex justify-content-between align-items-center">
                                     <h5 class="mb-0 card-title">Product Image</h5>
                                     <a href="javascript:void(0);" class="fw-medium" id="lfm" data-input="thumbnail" data-preview="holder">Add media from URL</a>
@@ -108,6 +110,7 @@
                                 <div class="card-body">
                                     <div class="d-flex justify-content-center mb-3">
                                         <div id="holder" style="margin-top:15px;max-height:100px;">
+                                            <img src="" alt="">
                                         </div>
                                     </div>
                                     <input id="thumbnail" class="form-control" type="hidden" name="anhbia">
@@ -146,21 +149,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="info-container">
-                        <ul class="list-unstyled mb-6">
-                            <li class="mb-2">
-                                <span class="h6"> Mã Thể Loại: </span>
-                                <span></span>
-                            </li>
-                            <li class="mb-2">
-                                <span class="h6"> Tên Thể Loại: </span>
-                                <span></span>
-                            </li>
-                            <li class="mb-2">
-                                <span class="h6"> Mô tả: </span>
-                                <span></span>
-                            </li>
-                        </ul>
+                    <div class="detailCategoryModal info-container">
+                        <!-- -->
+
                     </div>
                 </div>
                 <div class="modal-footer">

@@ -53,7 +53,7 @@ Route::put('/cart/update',[CartController::class,'updateCart'])->name('cart.upda
 Route::delete('/cart/remove',[CartController::class,'removeCart'])->name('cart.remove');
 Route::delete('/cart/clear',[CartController::class,'clearCart'])->name('cart.clear');
 
-// Image Manager 
+// Image Manager
 Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']], function () {
     \UniSharp\LaravelFilemanager\Lfm::routes();
 });
@@ -79,7 +79,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/',[LoaisanphamController::class,'list'])->name('theloai');
             Route::get('add',[LoaisanphamController::class,'create'])->name('theloai.add');
             Route::post('add/store',[LoaisanphamController::class,'store'])->name('theloai.store');
-            Route::get('/view/{id}', [LoaisanphamController::class,'view'])->name('theloai.detail');
+            Route::get('/detail/{id}', [LoaisanphamController::class,'view'])->name('theloai.detail');
             Route::get('edit/{id}',[LoaisanphamController::class,'edit'])->name('theloai.edit');
             Route::post('edit/{id}',[LoaisanphamController::class,'postedit'])->name('theloai.postedit');
             Route::delete('delete',[LoaisanphamController::class,'delete'])->name('theloai.delete');

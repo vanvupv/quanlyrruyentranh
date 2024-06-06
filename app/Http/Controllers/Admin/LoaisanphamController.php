@@ -45,45 +45,40 @@ class LoaisanphamController extends Controller
 
     }
 
-    public function edit($maLoaisanpham) {
-        $LoaisanphamDetail = Loaisanpham::where('id', $maLoaisanpham)->first();
+    public function edit($id) {
+        $loaisanpham = Loaisanpham::find($id);
 
-        return view('admin.Loaisanpham.editLoaisanpham', [
-            'maLoaisanpham' => $maLoaisanpham,
-            'LoaisanphamDetail' => $LoaisanphamDetail,
-        ]);
-    }
-
-    //
-    public function postedit($maLoaisanpham, Request $request) {
-        $tenLoaisanpham = $request->input('tenLoaisanpham');
-        $mota = $request->input('mota');
-
-        $Loaisanpham = Loaisanpham::where('id', $maLoaisanpham)->first();
-        $Loaisanpham->tentl = $tenLoaisanpham;
-        $Loaisanpham->mota = $mota;
-
-        if ($Loaisanpham->isDirty()) {
-            $changedAttributes = $Loaisanpham->getDirty();
-
-            if (isset($changedAttributes['tentl'])) {
-                if (Loaisanpham::LoaisanphamExists($tenLoaisanpham)) {
-                    return redirect()->back()->with('message', 'Thể Loại "' . $tenLoaisanpham . '" Đã Tồn Tại');
-                }
-            }
-        }
-
-        else {
-            return redirect()->back()->with([
-                'message' => 'Không có thông tin thay đổi',
-                'status' => 200,
+        if (!$loaisanpham) {
+            return response()->json([
+                'status' => 400,
+                'message' => 'Không tìm thấy thể loại!',
             ]);
         }
 
-        Loaisanpham::where('id', $maLoaisanpham)
+        return response()->json([
+            'status' => 200,
+            'data' => $loaisanpham,
+        ]);
+    }
+
+    public function postedit($id, Request $request) {
+        $data = $request->all();
+
+        $loaisanpham = Loaisanpham::find($id);
+
+        if(!$loaisanpham) {
+            return redirect()->back()->with('error', 'Không tìm thấy tên thể loại');
+        }
+
+        if(Loaisanpham::checkTenloai($id, $data['tentheloai'])) {
+            return redirect()->back()->with('error', 'Tên thể loại đã tồn tại');
+        }
+
+        Loaisanpham::where('id', $id)
             ->update([
-                'tentl' => $tenLoaisanpham,
-                'mota' => $mota,
+                'tenloai' => $data['tentheloai'],
+                'mota' => $data['motatheloai'],
+                'anhbia' => $data['anhbia'],
             ]);
 
         return redirect()->back()->with([

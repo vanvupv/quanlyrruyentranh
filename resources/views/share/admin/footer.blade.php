@@ -26,8 +26,9 @@
 <!-- Admin Customize -->
 <script src="{{asset('theme/assets/js/datatable-customize.js')}}"></script>
 
-
 <!-- Customize -->
+<script src="{{asset('assets/js/main-customize.js')}}"></script>
+
 
 
 </body>
