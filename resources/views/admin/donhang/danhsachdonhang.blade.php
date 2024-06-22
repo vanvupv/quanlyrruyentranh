@@ -33,13 +33,13 @@
                         <td>{{$item->trangthai}}</td>
                         <td>
                             <div class="actionFunc">
-                                <a href="{{route('order',['id' => $item->id])}}" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect" data-bs-toggle="tooltip" title="Preview">
+                                <a href="{{route('order.detail',['id' => $item->id])}}" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect" data-bs-toggle="tooltip" title="Preview">
                                     <i class="bi bi-eye"></i>
                                 </a>
                                 <a href="{{route('order.edit',['id' => $item->id])}}" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect" data-bs-toggle="tooltip" title="Edit">
                                     <i class="bi bi-pencil-square"></i>
                                 </a>
-                                <a href="{{route('order.edit', [$item->id])}}" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect" data-bs-toggle="tooltip" title="Return Book">
+                                <a href="{{route('order.delete')}}" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect" data-bs-toggle="tooltip" title="Return Book">
                                     <i class="bi bi-book-half"></i>
                                 </a>
                                 <a href="javascript:void(0);" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect" data-bs-toggle="tooltip" title="Delete">
@@ -57,7 +57,7 @@
                                         <i class="bi bi-pencil-square"></i>
                                         <span>Edit</span>
                                     </a>
-                                    <a href="#" class="dropdown-item delete-record">
+                                    <a href="{{route('order.delete')}}" class="dropdown-item delete-record">
                                         <i class="bi bi-trash"></i>
                                         <span>Delete</span>
                                     </a>

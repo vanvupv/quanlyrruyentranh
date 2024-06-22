@@ -13,7 +13,7 @@ Route::group(['prefix' => '/checkout'],
 
         // Checkout screen - Giao dien Thanh toan
         Route::get('/checkout.html',
-            [CheckoutController::class,'index']
+            [CheckoutController::class,'getCheckout']
         )->name('checkout');
 
         // Checkout process, from screen checkout to check out confirm

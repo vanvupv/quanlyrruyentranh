@@ -14,10 +14,10 @@ class CreateKhuyenmaiTable extends Migration
             $table->string('type');
             $table->text('desc');
             $table->integer('limit');
-            $table->unsignedBigInteger('productExclude');
-            $table->unsignedBigInteger('productApply');
-            $table->unsignedBigInteger('categoryExclude');
-            $table->unsignedBigInteger('categoryApply');
+            $table->json('productExclude')->nullable();
+            $table->json('productApply')->nullable();
+            $table->json('categoryExclude')->nullable();
+            $table->json('categoryApply')->nullable();
             $table->date('expires');
             $table->string('status');
             $table->timestamps();

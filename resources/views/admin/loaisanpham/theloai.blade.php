@@ -20,6 +20,7 @@
                         <th>ID</th>
                         <th>Ảnh bìa</th>
                         <th>Tên Thể Loại</th>
+                        <th>thể loại cha</th>
                         <th>Mô Tả</th>
                         <th>Action</th>
                     </tr>
@@ -33,6 +34,13 @@
                                     <img src="{{$theloai->anhbia}}" alt="{{$theloai->tenloai}}" class="w-50">
                                 </td>
                                 <td>{{$theloai->tenloai}}</td>
+                                <td>
+                                    @if($theloai->parent_id == 0)
+                                        {{"ROOT"}}
+                                    @else
+                                        {{$theloai->parentCategory->tenloai}}
+                                    @endif
+                                </td>
                                 <td>{!! $theloai->mota !!}</td>
                                 <td>
                                     <div class="actionFunc">
@@ -91,6 +99,17 @@
                             <div class="form-floating form-floating-outline mb-3">
                                 <input type="text" name="tentheloai" class="form-control" id="tentheloai" placeholder="Nhập tên Thể loại... ">
                                 <label for="tentheloai">Tên Thể Loại</label>
+                            </div>
+
+                            <div class="form-floating form-floating-outline mb-3">
+                                <select name="parent_category" id="parent_category">
+                                    @if($danhmucs)
+                                        <option value="0"> ROOT </option>
+                                        @foreach($danhmucs as $id => $theloai)
+                                            <option value={{$id}}>{{$theloai}}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
                             </div>
 
                             <div class="form-group">

@@ -8,10 +8,17 @@ class CreateChitietdonhangTable extends Migration
     public function up()
     {
         Schema::create('chitietdonhang', function (Blueprint $table) {
-            $table->unsignedBigInteger('madonhang')->default(1);
-            $table->unsignedBigInteger('masanpham')->default(1);
-            $table->integer('soluong')->default(1);
-            $table->double('giatien')->default(1);
+            $table->unsignedBigInteger('madonhang');
+            $table->unsignedBigInteger('masanpham');
+            $table->string('name');
+
+            $table->double('giatien');
+            $table->integer('soluong');
+            $table->double('tongtien');
+
+            $table->double('thue');
+            $table->string('sku');
+
             $table->timestamps();
 
             // Khóa ngoại

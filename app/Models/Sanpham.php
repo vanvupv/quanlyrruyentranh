@@ -9,7 +9,7 @@ class Sanpham extends Model
 {
     use HasFactory;
 
-    protected $table = 'sanphams';
+    protected $table = 'sanpham';
 
     protected $primaryKey = 'id';
 
@@ -49,32 +49,37 @@ class Sanpham extends Model
     }
 
     // Kiểm tra ma san pham
-    public static function masanpham($id, string $masanpham): bool {
-        return self::where('masanpham', $masanpham)->where('id', '<>', $id)->exists();
-    }
+//    public static function masanpham($id, string $masanpham): bool {
+//        return self::where('masanpham', $masanpham)->where('id', '<>', $id)->exists();
+//    }
 
     // Kiểm tra sku
-    public static function sku($id, string $sku): bool {
-        return self::where('sku', $sku)->where('id', '<>', $id)->exists();
-    }
+//    public static function sku($id, string $sku): bool {
+//        return self::where('sku', $sku)->where('id', '<>', $id)->exists();
+//    }
 
     public function loaisanpham() {
-        return $this->belongsTo(Loaisanpham::class, 'MaLoaiSP');
+        return $this->belongsTo(Loaisanpham::class, 'matheloai');
     }
+
+    /*
+     *
+     * */
 
 
     /*
-    Upate stock, sold
-    */
+     * Upate stock, sold
+     * */
     public static function updateStock($product_id, $qty_change)
     {
+        // Tìm sản phẩm trong Cơ sở dữ liệu
         $item = self::find($product_id);
+
         if ($item) {
             $item->soluong = $item->soluong - $qty_change;
             $item->save();
         }
     }
-
 
 }
 

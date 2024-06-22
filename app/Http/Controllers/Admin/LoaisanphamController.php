@@ -7,29 +7,59 @@ use App\Models\Sanpham;
 use Illuminate\Http\Request;
 
 //
+use Validator;
+
+//
 use App\Models\Loaisanpham;
 
 class LoaisanphamController extends Controller
 {
     //
     public function list() {
-        $loaisanphams = Loaisanpham::all();
+        $loaisanphams = Loaisanpham::with('parentCategory')->get();
+
+        $danhmuc = (new Loaisanpham())->getTreeCategoriesAdmin();
 
         return view('admin.loaisanpham.theloai',[
             'theloais' => $loaisanphams,
+            'danhmucs' => $danhmuc,
         ]);
     }
 
     public function store(Request $request) {
+        $parent = $request->input('parent_category');
         $tenloai = $request->input('tentheloai');
         $mota = $request->input('motatheloai');
         $anhbia = $request->input('anhbia');
+
+        $data = request()->all();
+
+        $arrValidation = [
+            'parent_id' => 'required',
+            'tenloai' => 'required|unique,tenloai|regex:/(^([0-9A-Za-z\-_]+)$)/|string|max:100',
+            'mota'   => 'required|string|max:200',
+            'anhbia' => 'nullable|string|max:200',
+        ];
+
+        $validator = Validator::make(
+            $data,$arrValidation,
+            [
+                'tenloai.regex' => 'Kiểu thể loại bị sai',
+            ]
+        );
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput($data);
+        }
 
         if (Loaisanpham::theloaiExists($tenloai)) {
             return redirect()->back()->with('error', 'Tên Thể Loại Đã Tồn Tại');
         }
 
         Loaisanpham::create([
+            'parent_id' => $parent,
             'tenloai'   => $tenloai,
             'mota'      => $mota,
             'anhbia'    => $anhbia,
@@ -70,12 +100,36 @@ class LoaisanphamController extends Controller
             return redirect()->back()->with('error', 'Không tìm thấy tên thể loại');
         }
 
+        $data = request()->all();
+
+        $arrValidation = [
+            'parent_id' => 'required',
+            'tenloai' => 'required|unique,tenloai|regex:/(^([0-9A-Za-z\-_]+)$)/|string|max:100',
+            'mota'   => 'required|string|max:200',
+            'anhbia' => 'nullable|string|max:200',
+        ];
+
+        $validator = Validator::make(
+            $data,$arrValidation,
+            [
+                'tenloai.regex' => 'Kiểu thể loại bị sai',
+            ]
+        );
+
+
+        if ($validator->fails()) {
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput($data);
+        }
+
         if(Loaisanpham::checkTenloai($id, $data['tentheloai'])) {
             return redirect()->back()->with('error', 'Tên thể loại đã tồn tại');
         }
 
         Loaisanpham::where('id', $id)
             ->update([
+                'parent_id'    => $data['parent_category'],
                 'tenloai' => $data['tentheloai'],
                 'mota' => $data['motatheloai'],
                 'anhbia' => $data['anhbia'],

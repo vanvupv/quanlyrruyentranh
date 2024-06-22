@@ -103,7 +103,14 @@ class SanphamController extends Controller
     }
 
     public function detail($id) {
+        $product = Sanpham::find($id);
 
+        if ($product) {
+            return response()->json([
+                'data' => $product,
+                'message' => 'success',
+            ]);
+        }
     }
 
     public function edit($id){

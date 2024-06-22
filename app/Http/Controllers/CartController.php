@@ -13,27 +13,22 @@ class CartController extends Controller
 {
     //
     public function viewCart() {
-
         $this->clearSession();
 
-        $customer = Auth::user();
+//        $customer = Auth::user();
 
-//        $cartItems = Cart::instance('cart')->content();
+//        $cartDetail = DB::table('shoppingcart')
+//            ->where('identifier', $customer->id)
+//            ->where('instance', 'cart')
+//            ->first();
 //
-//        dd(session()->all());
+//        dd($cartDetail, unserialize($cartDetail->content));
+//
+//        if($cartDetail) {
+//            $cartItems = unserialize($cartDetail->content) ?? '';
+//        }
 
-        dd(Cart::instance('cart'));                  
-
-        $cartDetail = DB::table('shoppingcart')
-            ->where('identifier', $customer->id)
-            ->where('instance', 'cart')
-            ->first();
-
-        if($cartDetail) {
-            $cartItems = unserialize($cartDetail->content) ?? '';
-        }
-
-//        dd($cartItems1, $cartItems2);
+        $cartItems = Cart::instance('cart')->content();
 
         return view('cart', [
             'title' => "giohang",
@@ -47,11 +42,10 @@ class CartController extends Controller
 
         $product = Sanpham::find($request->id);
 
-
         Cart::instance('cart')->add($product->id, $product->tensanpham, $request->quantity, $product->giaban)
             ->associate('App\Models\Sanpham');
 
-//        Cart::instance('cart1')->store($customer->id);
+        Cart::instance('cart')->store($customer->id);
 
         return redirect()->back()->with('message', 'success ! Items has been added successfully');
     }

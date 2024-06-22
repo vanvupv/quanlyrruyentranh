@@ -25,14 +25,14 @@ class CheckPermission
     {
         $role_id = Auth::user()->role_id;
 
-//        dd($role_id);
-
         // Lay ra route name tu link URL
 // Lấy thông tin về route hiện tại
-//        $currentRoute = Route::current();
+        $currentRoute = Route::current();
 
         // Lấy tên của route hiện tại
         $routeName = Route::currentRouteName();
+
+        dd($currentRoute);
 
         // role_id va route_name
         $routeNameNow = DB::table('routes')

@@ -57,21 +57,21 @@
                                        data-bs-toggle="modal"  data-bs-target="#detailCategoryModal_{{$item->id}}">
                                         <i class="bi bi-eye"></i>
                                     </a>
-                                    <a href="{{route('khachhang.edit',['id' => $item->id])}}" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect" data-bs-toggle="tooltip" title="Edit">
+                                    <a href="{{route('khuyenmai.edit',['id' => $item->id])}}" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect" data-bs-toggle="tooltip" title="Edit">
                                         <i class="bi bi-pencil-square"></i>
                                     </a>
-                                    <a href="{{route('khachhang.edit',['id' => $item->id])}}" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect" data-bs-toggle="tooltip" title="Delete">
+                                    <a href="{{route('khuyenmai.edit',['id' => $item->id])}}" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect" data-bs-toggle="tooltip" title="Delete">
                                         <i class="bi bi-trash"></i>
                                     </a>
                                     <button class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect dropdown-toggle hide-arrow" data-bs-toggle="dropdown" aria-expanded="false">
                                         <i class="bi bi-three-dots-vertical"></i>
                                     </button>
                                     <div class="dropdown-menu dropdown-menu-end m-0">
-                                        <a href="{{route('khachhang.detail',['id' => $item->id])}}" class="dropdown-item view-record">
+                                        <a href="{{route('khuyenmai.edit',['id' => $item->id])}}" class="dropdown-item view-record">
                                             <i class="bi bi-eye"></i>
                                             <span>View</span>
                                         </a>
-                                        <a href="{{route('khachhang.edit',['id' => $item->id])}}" class="dropdown-item edit-record">
+                                        <a href="{{route('khuyenmai.edit',['id' => $item->id])}}" class="dropdown-item edit-record">
                                             <i class="bi bi-pencil-square"></i>
                                             <span>Edit</span>
                                         </a>

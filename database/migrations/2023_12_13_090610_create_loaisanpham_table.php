@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('loaisanpham', function (Blueprint $table) {
             $table->id();
+            $table->string('parent_id',60);
             $table->string('tenloai', 60);
             $table->string('mota', 255)->default('ko co');
             $table->text('anhbia');

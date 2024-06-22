@@ -11,19 +11,16 @@ use Cart;
 
 class CheckoutController extends Controller
 {
-    //
-    public function index() {
-//        dd(session()->all());
-//       dd(Cart::content());
-
-//     dd(   Cart::instance('cart')->content());
-
+    /*
+     * Hiển thị trang thanh toán (Checkout)
+     *
+     * */
+    public function getCheckout() {
+        // Lấy thông tin giỏ hàng từ phiên để kiểm tra giỏ hàng
         $dataCheckout = session('dataCheckout') ?? '';
-//        dd($dataCheckout);
 
-        // If cart info empty
-        if (!$dataCheckout) {
-            return redirect()->route('cart')->with(['error' => 'Gio hang khong co san pham']);
+        if(!$dataCheckout) {
+            return redirect()->route('cart')->with('error', 'Giỏ hàng rỗng');
         }
 
         // Shipping
@@ -37,37 +34,10 @@ class CheckoutController extends Controller
 
         // Shipping address
         // Lay dia chi giao hang mac dinh
-
-        //
-        //
-
-        //
         $customer = Auth::user();
 
-
-        $cartDetail = DB::table('shoppingcart')
-            ->where('identifier', $customer->id)
-            ->where('instance', 'cart')
-            ->first();
-
-        // Chuyển đổi chuỗi serialized về đối tượng gốc
-        $content = unserialize($cartDetail->content);
-
-        dd(Cart::instance('cart'));
-
-        dd($content->subtotal());
-
-        session(['cartDetail', $cartDetail]);
-
-               $cart = new Cart(session('cartDetail'));
-
-               dd($cart->subtotal());
-
-        $cartItems = unserialize($cartDetail->content);
-
-        $totalItem = 0;
-        foreach ($cartItems as $item) {
-            $totalItem += (double) $item->subtotal();
+        if(!$customer) {
+            return redirect()->route('cart')->with('error', 'Ban chua dang nhap');
         }
 
         //Process captcha
@@ -75,33 +45,43 @@ class CheckoutController extends Controller
 
         return view('checkout', [
             'title' => "Thanh toan",
-            'cartItems' => $cartItems,
-            'totalItem' => $totalItem,
+            'cartItems' => $dataCheckout,
+//            'totalItem' => $totalItem,
         ]);
     }
 
     /*
-     * Kiem tra request duoc gui len tu gio hang
+     * Kiểm tra request được gửi lên từ giỏ hàng
+     *
      *
      * */
     public function prepareCheckout(Request $request) {
+        // kiểm tra đăng nhập
+        $customer = Auth::user();
+
+        if(!$customer) {
+            return redirect()->route('login');
+        }
+
         $data = $request->all();
 
-        //
-        $customer = Auth::user()->id;
+        // Kiểm tra giỏ hàng có rỗng không
+//        $cartDetail = DB::table('shoppingcart')
+//            ->where('identifier', $customer)
+//            ->where('instance', 'cart')
+//            ->first();
+        $cartItems = Cart::instance('cart')->content();
 
-        // Kiem tra gio hang rong
-        $cartDetail = DB::table('shoppingcart')
-            ->where('identifier', $customer)
-            ->where('instance', 'cart')
-            ->first();
+        if(!$cartItems) {
+            return redirect()->route('cart');
+        }
+//
+//        $cartItems = unserialize($cartDetail->content);
 
-        $cartItems = unserialize($cartDetail->content);
-
-        // Kiem tra so luong tung san pham
+        // Kiểm tra số lượng của từng sản phẩm
 
 
-        //Set session
+        //Set session - Thiết lập phiên lưu trữ thông tin giỏ hàng
         session(['dataCheckout' => $cartItems]);
 
         return redirect()->route('checkout');
@@ -112,22 +92,24 @@ class CheckoutController extends Controller
      *
      * */
     public function processCheckout(Request $request) {
-        $dataCheckout  = session('dataCheckout') ?? '';
-//        dd($dataCheckout);
-
         // Kiem tra gio hang rong
+        $dataCheckout  = session('dataCheckout') ?? '';
+
         if (!$dataCheckout) {
             return redirect()->route('cart')->with(['error' => 'Gio hang rong']);
         }
 
+        // Kiem tra khach hang phai dang nhap
         $customer = auth()->user();
 
-        // Kiem tra khach hang phai dang nhap
         if (!$customer) {
-            return redirect()->route('login');
+            return redirect()->route('login')->with('error', 'Yêu cầu đăng nhập');
         }
 
         $data = request()->all();
+
+        // Validate dữ liệu đầu vào
+
 
         //Set session shippingMethod
         session(['shippingMethod' => request('shippingMethod')]);
@@ -158,6 +140,7 @@ class CheckoutController extends Controller
     }
 
     /*
+     * Hiển thị giao diện xác nhận thanh toán
      *
      *
      * */
@@ -173,8 +156,6 @@ class CheckoutController extends Controller
 
         //
 
-        //
-        $data = $request->all();
 
         //
         return view('checkoutConfirm', [
@@ -304,52 +285,71 @@ class CheckoutController extends Controller
     }
 
     /*
-     *
+     * Tạo đơn hàng
      *
      *  */
     public function addOrder() {
+        // Kiểm tra trạng thái đăng nhập
         $customer = auth()->user();
-        $uID = $customer->id ?? 0;
 
-        //if cart empty
-        if (count(session('dataCheckout', [])) == 0) {
-            return redirect()->route('home');
-        }
-        // Kiem tra nguoi dung dang nhap
         if ( !$customer) {
-            return redirect()->route('login');
+            return redirect()->route('login')->with('error', 'Bạn chưa đăng nhập');
+        }
+
+        // Kiểm tra phiên lưu giỏ hàng
+        if (count(session('dataCheckout', [])) == 0) {
+            return redirect()->route('home')->with('error', 'Giỏ hàng rỗng');
         }
 
         $data = request()->all();
+
         if (!$data) {
             return redirect()->route('cart');
         } else {
-            $shippingAddress = session('shippingAddress') ?? [];
-            $paymentMethod   = session('paymentMethod') ?? '';
-            $shippingMethod  = session('shippingMethod') ?? '';
-            $dataCheckout    = session('dataCheckout') ?? '';
+            $shippingAddress = session('shippingAddress') ?? [];    // Địa chỉ giao hàng
+            $paymentMethod   = session('paymentMethod') ?? '';      // Phương thức thanh toán
+            $shippingMethod  = session('shippingMethod') ?? '';     // Phương thức giao hàng
+            $dataCheckout    = session('dataCheckout') ?? '';       // Danh sách sản phẩm đơn hàng
         }
 
-        //
-        $dataOrder['manhanvien']     = $uID;
-        $dataOrder['makhachhang']     = $uID;
-        $dataOrder['tongtien']        = 10000;
-        $dataOrder['trangthai']     = 'new';
+        // Khởi tạo mảng giá trị đơn hàng
+        $uID = $customer->id ?? 0;
 
-        //
+        $dataOrder['manhanvien']     = $uID;    // mã nhân viên
+        $dataOrder['makhachhang']     = $uID;   // mã khách hàng
+        $dataOrder['tienhang']        = 10000;  // tổng tiền
+        $dataOrder['tiengiaohang']     = 0;    // trạng thái
+        $dataOrder['giamgia']     = 0;    // trạng thái
+        $dataOrder['trangthaithanhtoan']     = 1;
+        $dataOrder['trangthaigiaohang']     = 0;
+        $dataOrder['trangthai']     = 0;    //
+        $dataOrder['tienthue']     = 0;    //
+        $dataOrder['tongtien']     = 0;    //
+        $dataOrder['hoten']     = $shippingAddress['first_name'];    //
+        $dataOrder['diachi']     = $shippingAddress['address'];    //
+        $dataOrder['sodienthoai']     = $shippingAddress['phone'];    //
+        $dataOrder['email']     = $shippingAddress['email'];    //
+        $dataOrder['ghichu']     = $shippingAddress['comment'];    //
+        $dataOrder['phuongthucthanhtoan']     = $paymentMethod;    //
+        $dataOrder['phuongthucgiaohang']     = $shippingMethod;    //
+
+        // Khởi tạo mảng giá trị chi tiết đơn hàng
         $arrCartDetail = [];
         foreach ($dataCheckout as $cartItem) {
-            $arrDetail['masanpham']  = $cartItem->id;
-            $arrDetail['soluong']         = $cartItem->qty;
-            $arrDetail['giatien'] = $cartItem->price * $cartItem->qty;
-            $arrCartDetail[]          = $arrDetail;
+            $arrDetail['masanpham'] = $cartItem->id;
+            $arrDetail['tensanpham'] = $cartItem->name;
+            $arrDetail['giatien'] = $cartItem->price;
+            $arrDetail['soluong'] = $cartItem->qty;
+            $arrDetail['tongtien'] = $cartItem->price * $cartItem->qty;
+            $arrDetail['thue'] = 0;
+            $arrCartDetail[] = $arrDetail;
         }
 
         //Set session info order
         session(['dataOrder' => $dataOrder]);
         session(['arrCartDetail' => $arrCartDetail]);
 
-        //Create new order
+        // Khởi tạo đơn hàng
         $newOrder = (new Donhang)->createOrder($dataOrder, $arrCartDetail);
 
         // Kiem tra don hang da tao thanh cong chua
@@ -361,11 +361,97 @@ class CheckoutController extends Controller
         session(['orderID' => $newOrder['orderID']]);
 
         //
-        return redirect()->route('order.success')->with(['success', "Tao don hang thanh cong"]);
+        return (new CheckoutController())->completeOrder();							// Ngược lại gọi đến hàm completeOrder() ở dòng 1018
+
     }
 
-    public function orderSuccessProcessFront() {
+    /*
+     *
+     *
+     * */
+    public function orderSuccessProcessFront()	     				// Bỏ
+    {
+        if (!session('orderID')) {								// b01. Nếu đơn hàng tạo thất bại
+            return redirect()->route('home');
+        }
 
-        return view('order-success');
+        $orderInfo = Donhang::with('chitietdonhang')->find(session('orderID'))->toArray();		// b03. Lấy đơn hàng kèm chi tiết đơn hàng
+
+        session()->forget('orderID');
+
+        return view('order-success', [
+                'title'       => '',
+                'orderInfo'   => $orderInfo,
+            ]
+        );
+    }
+
+    /*
+     *
+     *
+     * */
+    public function completeOrder() {
+        // Clear cart store
+        $this->clearCartStore();
+
+        // Lấy phiên đơn hàng vừa tạo
+        $orderID = session('orderID') ?? 0;
+
+        if ($orderID == 0) {
+            return redirect()->route('home', ['error' => 'Error Order ID!']);
+        }
+
+        // Process after order compled: send mail, data response ...				// Quá trình sau khi đơn hàng đã được xác nhận
+        $dataResponse = $this->processAfterOrderSuccess($orderID);				// b4. Gọi đến hàm processAfterOrderSuccess ở dòng 1145
+
+        return redirect()->route('order.success')->with($dataResponse);
+
+    }
+
+    /*
+     *
+     *
+     * */
+    private function clearCartStore() {
+        // b1. Kiểm tra dữ liệu trong phiên dataCheckout
+        $dataCheckout = session('dataCheckout') ?? '';
+
+//        dd($dataCheckout);
+
+        if ($dataCheckout) {
+            foreach ($dataCheckout as $key => $row) {
+//                dd($row->rowId);
+                Cart::instance('cart')->remove($row->rowId);   			// b2. Xóa sản phẩm trong giỏ hàng
+            }
+        }
+    }
+
+    /*
+     *
+     *
+     * */
+    private function processAfterOrderSuccess (string $orderID)
+    {
+        //Clear session
+        $this->clearSession();
+        return $orderID;
+    }
+
+    /*
+     *
+     *
+     * */
+    private function clearSession()
+    {
+        session()->forget('paymentMethod'); //destroy paymentMethod
+        session()->forget('shippingMethod'); //destroy shippingMethod		// b02. Xoá phiên chứa dữ liệu về phương thức giao hàng
+        session()->forget('totalMethod'); //destroy totalMethod			// b03. Xoá phiên chứa dữ liệu về phương thức tổng
+        session()->forget('otherMethod'); //destroy otherMethod			// b04. Xoá phiên chứa dữ liệu về một số phương thức khác
+        session()->forget('dataTotal'); //destroy dataTotal 			// b05. Xoá phiên chứa dữ liệu về Total
+        session()->forget('dataCheckout'); //destroy dataCheckout		// b06. Xoá phiên chứa dữ liệu về Thông tin thanh toán
+        session()->forget('storeCheckout'); //destroy storeCheckout		// b07. Xoá phiên chứa dữ liệu về Cửa hàng thanh toán
+        session()->forget('dataOrder'); //destroy dataOrder			// b08. Xoá phiên chứa dữ liệu về đơn hàng
+        session()->forget('arrCartDetail'); //destroy arrCartDetail		// b09. Xoá phiên chứa dữ liệu về Danh sách sản phẩm trong giỏ hàng
+       // session()->forget('orderID'); //destroy orderID				// b10. Xoá phiên chứa dữ liệu về Đơn hàng được tạo
     }
 }

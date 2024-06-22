@@ -28,5 +28,10 @@ class Khuyenmai extends Model
     ];
 
     //
-
+    protected $casts = [
+        'productExclude' => 'array',
+        'productApply' => 'array',
+        'categoryExclude' => 'array',
+        'categoryApply' => 'array',
+    ];
 }

@@ -117,7 +117,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($detailOrder as $id => $item)
+                @foreach($order->chitietdonhang as $id => $item)
                     <tr>
                         <td>
                             {{$item->sanpham->SKU}}

@@ -11,8 +11,23 @@ class CreateDonhangTable extends Migration
             $table->id();
             $table->unsignedBigInteger('manhanvien');
             $table->unsignedBigInteger('makhachhang');
+            $table->double('tienhang');
+            $table->double('tiengiaohang');
+            $table->double('giamgia');
+            $table->integer('trangthaithanhtoan');
+            $table->integer('trangthaigiaohang');
+            $table->integer('trangthai');
+            $table->double('tienthue');
             $table->double('tongtien');
-            $table->string('trangthai', 55);
+
+            $table->string('hoten');
+            $table->string('diachi');
+            $table->string('sodienthoai');
+            $table->string('email');
+            $table->string('ghichu');
+            $table->string('phuongthucthanhtoan');
+            $table->string('phuongthucgiaohang');
+
             $table->timestamps();
 
             // Khóa ngoại

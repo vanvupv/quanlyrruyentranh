@@ -18,4 +18,6 @@ class Khachhang extends Model
         'sodienthoai',
         'trangthaihoatdong',
     ];
+
+
 }

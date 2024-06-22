@@ -19,8 +19,21 @@ class Donhang extends Model
     protected $fillable = [
         'manhanvien',
         'makhachhang',
-        'tongtien',
+        'tienhang',
+        'tiengiaohang',
+        'giamgia',
+        'trangthaithanhtoan',
+        'trangthaigiaohang',
         'trangthai',
+        'tienthue',
+        'tongtien',
+        'hoten',
+        'diachi',
+        'sodienthoai',
+        'email',
+        'ghichu',
+        'phuongthucthanhtoan',
+        'phuongthucgiaohang',
     ];
 
     //
@@ -50,12 +63,12 @@ class Donhang extends Model
             $adminID = $dataOrder['manhanvien'] ?? 0;
 //            unset($dataOrder['manhanvien']);
 
-            //Insert order
+            // Insert order
             $order = Donhang::create($dataOrder);
             $orderID = $order->id;
-            //End insert order
+            // End insert order
 
-            //Order detail
+            // Order detail
             foreach ($arrCartDetail as $cartDetail) {
                 $pID = $cartDetail['masanpham'];
                 $product = Sanpham::find($pID);
@@ -87,6 +100,4 @@ class Donhang extends Model
     {
         return Chitietdonhang::create($dataDetail);
     }
-
-
 }

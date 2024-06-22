@@ -114,9 +114,9 @@
                                     <div class="total-details">
                                         <div class="top-details">
                                             <h3>Cart Totals</h3>
-                                            <h6>Sub Total <span>{{$totalItem}}</span></h6>
+                                            <h6>Sub Total <span>{{Cart::instance('cart')->subtotal()}}</span></h6>
                                             <h6>Tax <span></span></h6>
-                                            <h6>Total <span>{{$totalItem}}</span></h6>
+                                            <h6>Total <span>{{Cart::instance('cart')->total()}}</span></h6>
                                         </div>
                                     </div>
                                 </div>

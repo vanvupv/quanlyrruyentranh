@@ -12,8 +12,8 @@ class ShopController extends Controller
     //
     public function index(Request $request) {
 
-        $loaisp = Loaisanpham::select('loaisanpham.id','tenloai', 'loaisanpham.mota', 'loaisanpham.anhbia', DB::raw('count(sanphams.id) as count'))
-            ->leftJoin('sanphams', 'loaisanpham.id', '=', 'sanphams.matheloai')
+        $loaisp = Loaisanpham::select('loaisanpham.id','tenloai', 'loaisanpham.mota', 'loaisanpham.anhbia', DB::raw('count(sanpham.id) as count'))
+            ->leftJoin('sanpham', 'loaisanpham.id', '=', 'sanpham.matheloai')
             ->groupBy('loaisanpham.id','loaisanpham.tenloai','loaisanpham.mota', 'loaisanpham.anhbia')
             ->get();
 

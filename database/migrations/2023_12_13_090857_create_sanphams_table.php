@@ -11,18 +11,25 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sanphams', function (Blueprint $table) {
-            $table->id('IDSanPham');
-            $table->string('MaSP', 10);
-            $table->string('TenSP', 60);
-            $table->integer('SoLuong')->default(1);
-            $table->string('DonViTinh', 15)->nullable();
-            $table->integer('GiaNhap')->default(0);
-            $table->integer('GiaBan')->default(0);
-            $table->integer('MaLoaiSP');
-            $table->string('MoTa', 255)->nullable();
+        Schema::create('sanpham', function (Blueprint $table) {
+            $table->id();
+            $table->string('tensanpham', 60);
+            $table->string('sku', 10);
+            $table->string('mota', 255);
+            $table->integer('soluong');
+
+//            $table->string('donvitinh', 15)->nullable();
+            $table->integer('gianhap')->default(0);
+            $table->integer('giaban')->default(0);
+
+            $table->integer('matheloai');
+
+//            $table->integer('matacgia');
+//            $table->integer('manhaxuatban');
+//            $table->integer('mavitri');
+
             // Uncomment the following line if you want to add foreign key constraint
-            $table->foreign('MaLoaiSP')->references('MaLoaiSP')->on('loaisanpham');
+            $table->foreign('matheloai')->references('id')->on('loaisanpham');
 
 //            $table->check('GiaBan > GiaNhap');
 //            $table->check('GiaNhap >= 0');
@@ -39,3 +46,4 @@ return new class extends Migration
         Schema::dropIfExists('sanpham');
     }
 };
+

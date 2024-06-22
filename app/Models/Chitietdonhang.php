@@ -16,8 +16,11 @@ class Chitietdonhang extends Model
     protected $fillable = [
         'madonhang',
         'masanpham',
+        'tensanpham',
         'soluong',
         'giatien',
+        'tongtien',
+        'thue',
     ];
 
     public function donhang() {
