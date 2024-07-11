@@ -21,7 +21,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role_id',
     ];
 
     /**
@@ -42,4 +41,46 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * A User has and belongs to many roles.
+     *
+     * @return
+     */
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'role_user', 'user_id', 'role_id');
+    }
+
+    /**
+     * A User has and belongs to many permissions.
+     *
+     * @return
+     */
+    public function permissions()
+    {
+        return $this->belongsToMany(Permission::class, 'user_permission', 'user_id', 'permission_id');
+    }
+
+    /**
+     * Check if user is administrator.
+     *
+     * @return mixed
+     */
+    public function isAdministrator() : bool
+    {
+        return $this->isRole('administrator');
+    }
+
+    /**
+     * Check if user is $role.
+     *
+     * @param string $role
+     *
+     * @return mixed
+     */
+    public function isRole(string $role) : bool
+    {
+        return $this->roles->pluck('role_slug')->contains($role);
+    }
 }

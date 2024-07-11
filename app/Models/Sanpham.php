@@ -14,7 +14,6 @@ class Sanpham extends Model
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'masanpham',
         'tensanpham',
         'SKU',
         'donvitinh',
@@ -47,16 +46,6 @@ class Sanpham extends Model
             return true;
         }
     }
-
-    // Kiểm tra ma san pham
-//    public static function masanpham($id, string $masanpham): bool {
-//        return self::where('masanpham', $masanpham)->where('id', '<>', $id)->exists();
-//    }
-
-    // Kiểm tra sku
-//    public static function sku($id, string $sku): bool {
-//        return self::where('sku', $sku)->where('id', '<>', $id)->exists();
-//    }
 
     public function loaisanpham() {
         return $this->belongsTo(Loaisanpham::class, 'matheloai');

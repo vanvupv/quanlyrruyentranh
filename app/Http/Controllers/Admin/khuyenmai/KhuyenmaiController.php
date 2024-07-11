@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin\khuyenmai;
 
 use App\Http\Controllers\Controller;
+use App\Models\Loaisanpham;
 use App\Models\Sanpham;
 use Illuminate\Http\Request;
 
@@ -17,6 +18,7 @@ class KhuyenmaiController extends Controller
      *
      * */
     public function index() {
+        // Lấy tất cả mã giảm giá
         $khuyenmais = Khuyenmai::all();
 
         return view('admin.khuyenmai.danhsachkhuyenmai',[
@@ -29,9 +31,13 @@ class KhuyenmaiController extends Controller
      *
      * */
     public function create() {
+        $sanphams = Sanpham::pluck('tensanpham','id')->all();
+        $danhmucs = Loaisanpham::pluck('tenloai','id')->all();
 
         return view('admin.khuyenmai.themkhuyenmai',[
             'khuyenmais' => '',
+            'sanphams' => $sanphams,
+            'danhmucs' => $danhmucs,
         ]);
     }
 
@@ -39,8 +45,8 @@ class KhuyenmaiController extends Controller
      *
      *
      * */
-    public function store(Request $request) {
-        $data = $request->all();
+    public function store() {
+        $data = request()->all();
 
         $rules = [
             'code' => 'required|unique:khuyenmai,code|string|max:255',
@@ -80,10 +86,10 @@ class KhuyenmaiController extends Controller
         $discount['type'] = $data['type'];
         $discount['desc'] = $data['data'];
         $discount['limit'] = $data['limit'];
-        $discount['productExclude'] = json_encode($data['product_exclude']);
-        $discount['productApply'] = json_encode($data['product_apply']);
-        $discount['categoryExclude'] = json_encode($data['category_exclude']);
-        $discount['categoryApply'] = json_encode($data['category_apply']);
+        $discount['productExclude'] = json_encode(array_map('intval', $data['product_exclude']));
+        $discount['productApply'] = json_encode(array_map('intval', $data['product_apply']));
+        $discount['categoryExclude'] = json_encode(array_map('intval', $data['category_exclude']));
+        $discount['categoryApply'] = json_encode(array_map('intval', $data['category_apply']));
         $discount['expires'] = $data['expires_at'];
         $discount['status'] = $data['status'];
 
@@ -98,16 +104,18 @@ class KhuyenmaiController extends Controller
      * */
     public function edit($id) {
         $coupon = Khuyenmai::find($id);
-        $coupon->productExclude = json_decode($coupon->productExclude, true);
-        $coupon->productApply = json_decode($coupon->productApply, true);
-        $coupon->categoryExclude = json_decode($coupon->categoryExclude, true);
-        $coupon->categoryApply = json_decode($coupon->categoryApply, true);
+        $coupon->productExclude= json_decode($coupon->productExclude);
+        $coupon->productApply= json_decode($coupon->productApply);
+        $coupon->categoryExclude= json_decode($coupon->categoryExclude);
+        $coupon->categoryApply= json_decode($coupon->categoryApply);
 
-        $sanphams = Sanpham::all();
+        $sanphams = Sanpham::pluck('tensanpham','id')->all();
+        $danhmucs = Loaisanpham::pluck('tenloai','id')->all();
 
         return view('admin.khuyenmai.capnhatkhuyenmai',[
             'data' => $coupon,
             'sanphams' => $sanphams,
+            'danhmucs' => $danhmucs,
         ]);
     }
 
@@ -158,10 +166,10 @@ class KhuyenmaiController extends Controller
         $discount['type'] = $data['type'];
         $discount['desc'] = $data['data'];
         $discount['limit'] = $data['limit'];
-        $discount['productExclude'] = json_encode($data['product_exclude']);
-        $discount['productApply'] = json_encode($data['product_apply']);
-        $discount['categoryExclude'] = json_encode($data['category_exclude']);
-        $discount['categoryApply'] = json_encode($data['category_apply']);
+        $discount['productExclude'] = json_encode(array_map('intval', $data['product_exclude'])) ?? '';
+        $discount['productApply'] = json_encode(array_map('intval', $data['product_apply'])) ?? '';
+        $discount['categoryExclude'] = json_encode(array_map('intval', $data['category_exclude'])) ?? '';
+        $discount['categoryApply'] = json_encode(array_map('intval', $data['category_apply'])) ?? '';
         $discount['expires'] = $data['expires_at'];
         $discount['status'] = $data['status'];
 

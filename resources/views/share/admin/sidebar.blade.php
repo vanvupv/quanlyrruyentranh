@@ -61,56 +61,56 @@
         <!-- / Thể Loại -->
 
         <!-- Tác Giả -->
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons mdi mdi-flip-to-front"></i>
-                <div data-i18n="Front Pages">Tác Giả</div>
-                <div class="badge bg-label-primary fs-tiny rounded-pill ms-auto"></div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="{{route('tacgia')}}"
-                       class="menu-link">
-                        <div data-i18n="Landing">Tác Giả</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
+{{--        <li class="menu-item">--}}
+{{--            <a href="javascript:void(0);" class="menu-link menu-toggle">--}}
+{{--                <i class="menu-icon tf-icons mdi mdi-flip-to-front"></i>--}}
+{{--                <div data-i18n="Front Pages">Tác Giả</div>--}}
+{{--                <div class="badge bg-label-primary fs-tiny rounded-pill ms-auto"></div>--}}
+{{--            </a>--}}
+{{--            <ul class="menu-sub">--}}
+{{--                <li class="menu-item">--}}
+{{--                    <a href="{{route('tacgia')}}"--}}
+{{--                       class="menu-link">--}}
+{{--                        <div data-i18n="Landing">Tác Giả</div>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+{{--            </ul>--}}
+{{--        </li>--}}
         <!-- / Tác Giả -->
 
         <!-- Nhà Xuất Bản -->
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons mdi mdi-file-document-multiple-outline"></i>
-                <div data-i18n="Front Pages">Nhà Xuất Bản</div>
-                <div class="badge bg-label-primary fs-tiny rounded-pill ms-auto"></div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="{{route('nhaxuatban')}}"
-                       class="menu-link">
-                        <div data-i18n="Landing">Nhà Xuất Bản</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
+{{--        <li class="menu-item">--}}
+{{--            <a href="javascript:void(0);" class="menu-link menu-toggle">--}}
+{{--                <i class="menu-icon tf-icons mdi mdi-file-document-multiple-outline"></i>--}}
+{{--                <div data-i18n="Front Pages">Nhà Xuất Bản</div>--}}
+{{--                <div class="badge bg-label-primary fs-tiny rounded-pill ms-auto"></div>--}}
+{{--            </a>--}}
+{{--            <ul class="menu-sub">--}}
+{{--                <li class="menu-item">--}}
+{{--                    <a href="{{route('nhaxuatban')}}"--}}
+{{--                       class="menu-link">--}}
+{{--                        <div data-i18n="Landing">Nhà Xuất Bản</div>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+{{--            </ul>--}}
+{{--        </li>--}}
         <!-- / Nhà Xuất Bản -->
         <!-- Nhà Xuất Bản -->
-        <li class="menu-item">
-            <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons bi bi-geo-alt"></i>
-                <div data-i18n="Front Pages">Vị trí</div>
-                <div class="badge bg-label-primary fs-tiny rounded-pill ms-auto"></div>
-            </a>
-            <ul class="menu-sub">
-                <li class="menu-item">
-                    <a href="{{route('vitri')}}"
-                       class="menu-link" >
-                        <div data-i18n="Landing">Vị trí</div>
-                    </a>
-                </li>
-            </ul>
-        </li>
+{{--        <li class="menu-item">--}}
+{{--            <a href="javascript:void(0);" class="menu-link menu-toggle">--}}
+{{--                <i class="menu-icon tf-icons bi bi-geo-alt"></i>--}}
+{{--                <div data-i18n="Front Pages">Vị trí</div>--}}
+{{--                <div class="badge bg-label-primary fs-tiny rounded-pill ms-auto"></div>--}}
+{{--            </a>--}}
+{{--            <ul class="menu-sub">--}}
+{{--                <li class="menu-item">--}}
+{{--                    <a href="{{route('vitri')}}"--}}
+{{--                       class="menu-link" >--}}
+{{--                        <div data-i18n="Landing">Vị trí</div>--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+{{--            </ul>--}}
+{{--        </li>--}}
         <!-- / Vị trí -->
 
         <!-- Quản Lý Order -->
@@ -203,13 +203,23 @@
             </a>
             <ul class="menu-sub">
                 <li class="menu-item">
-                    <a href="{{route('permission_role')}}" class="menu-link">
-                        <div data-i18n="Basic Inputs">Danh Sách Quyền</div>
+                    <a href="{{route('permission_user')}}" class="menu-link">
+                        <div data-i18n="Basic Inputs"> Danh Sách Người Dùng (Users) </div>
                     </a>
                 </li>
                 <li class="menu-item">
-                    <a href="{{route('permission_setting')}}" class="menu-link">
-                        <div data-i18n="Input groups">Cài Đặt Quyền</div>
+                    <a href="{{route('permission_role')}}" class="menu-link">
+                        <div data-i18n="Basic Inputs"> Danh Sách Vai trò (Roles) </div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{route('permission')}}" class="menu-link">
+                        <div data-i18n="Input groups"> Danh sách Quyền </div>
+                    </a>
+                </li>
+                <li class="menu-item">
+                    <a href="{{route('permission_route')}}" class="menu-link">
+                        <div data-i18n="Input groups"> Danh sách Đường dẫn (Routes) </div>
                     </a>
                 </li>
             </ul>

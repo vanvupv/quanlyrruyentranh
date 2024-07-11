@@ -110,7 +110,6 @@ class CheckoutController extends Controller
 
         // Validate dữ liệu đầu vào
 
-
         //Set session shippingMethod
         session(['shippingMethod' => request('shippingMethod')]);
 
@@ -128,7 +127,7 @@ class CheckoutController extends Controller
                     'last_name'       => request('last_name'),
                     'email'           => request('email'),
                     'country'         => request('country'),
-                    'address'        => request('address'),
+                    'address'         => request('address'),
                     'phone'           => request('phone'),
                     'comment'         => request('comment'),
                 ],
@@ -144,7 +143,7 @@ class CheckoutController extends Controller
      *
      *
      * */
-    public function getCheckoutConfirmFront(Request $request) {
+    public function getCheckoutConfirmFront() {
         // Address Shipping
         $shippingAddress = session('shippingAddress') ?? '';
 
@@ -360,8 +359,8 @@ class CheckoutController extends Controller
         // Set session orderID
         session(['orderID' => $newOrder['orderID']]);
 
-        //
-        return (new CheckoutController())->completeOrder();							// Ngược lại gọi đến hàm completeOrder() ở dòng 1018
+        // Ngược lại gọi đến hàm completeOrder() ở dòng 1018
+        return (new CheckoutController())->completeOrder();
 
     }
 
@@ -426,32 +425,32 @@ class CheckoutController extends Controller
         }
     }
 
-    /*
-     *
-     *
-     * */
-    private function processAfterOrderSuccess (string $orderID)
-    {
-        //Clear session
-        $this->clearSession();
-        return $orderID;
-    }
+        /*
+         *
+         *
+         * */
+        private function processAfterOrderSuccess (string $orderID)
+        {
+            //Clear session
+            $this->clearSession();
+            return $orderID;
+        }
 
-    /*
-     *
-     *
-     * */
-    private function clearSession()
-    {
-        session()->forget('paymentMethod'); //destroy paymentMethod
-        session()->forget('shippingMethod'); //destroy shippingMethod		// b02. Xoá phiên chứa dữ liệu về phương thức giao hàng
-        session()->forget('totalMethod'); //destroy totalMethod			// b03. Xoá phiên chứa dữ liệu về phương thức tổng
-        session()->forget('otherMethod'); //destroy otherMethod			// b04. Xoá phiên chứa dữ liệu về một số phương thức khác
-        session()->forget('dataTotal'); //destroy dataTotal 			// b05. Xoá phiên chứa dữ liệu về Total
-        session()->forget('dataCheckout'); //destroy dataCheckout		// b06. Xoá phiên chứa dữ liệu về Thông tin thanh toán
-        session()->forget('storeCheckout'); //destroy storeCheckout		// b07. Xoá phiên chứa dữ liệu về Cửa hàng thanh toán
-        session()->forget('dataOrder'); //destroy dataOrder			// b08. Xoá phiên chứa dữ liệu về đơn hàng
-        session()->forget('arrCartDetail'); //destroy arrCartDetail		// b09. Xoá phiên chứa dữ liệu về Danh sách sản phẩm trong giỏ hàng
-       // session()->forget('orderID'); //destroy orderID				// b10. Xoá phiên chứa dữ liệu về Đơn hàng được tạo
-    }
+        /*
+         *
+         *
+         * */
+        private function clearSession()
+        {
+            session()->forget('paymentMethod'); //destroy paymentMethod
+            session()->forget('shippingMethod'); //destroy shippingMethod		// b02. Xoá phiên chứa dữ liệu về phương thức giao hàng
+            session()->forget('totalMethod'); //destroy totalMethod			// b03. Xoá phiên chứa dữ liệu về phương thức tổng
+            session()->forget('otherMethod'); //destroy otherMethod			// b04. Xoá phiên chứa dữ liệu về một số phương thức khác
+            session()->forget('dataTotal'); //destroy dataTotal 			// b05. Xoá phiên chứa dữ liệu về Total
+            session()->forget('dataCheckout'); //destroy dataCheckout		// b06. Xoá phiên chứa dữ liệu về Thông tin thanh toán
+            session()->forget('storeCheckout'); //destroy storeCheckout		// b07. Xoá phiên chứa dữ liệu về Cửa hàng thanh toán
+            session()->forget('dataOrder'); //destroy dataOrder			// b08. Xoá phiên chứa dữ liệu về đơn hàng
+            session()->forget('arrCartDetail'); //destroy arrCartDetail		// b09. Xoá phiên chứa dữ liệu về Danh sách sản phẩm trong giỏ hàng
+           // session()->forget('orderID'); //destroy orderID				// b10. Xoá phiên chứa dữ liệu về Đơn hàng được tạo
+        }
 }

@@ -2,10 +2,10 @@
 @section('content')
 <div class="card listTable">
     @include('share.error')
-    <h5 class="card-header"> Thêm Người Dùng </h5>
+    <h5 class="card-header"> Cập Nhật Người Dùng </h5>
     <hr class="my-0">
     <div class="card-body">
-        <form action="{{route('permission_user.store')}}" method="post" accept-charset="UTF-8" class="form-horizontal" id="form-main" enctype="multipart/form-data">
+        <form action="{{route('permission_user.postedit',['id'=> $user->id])}}" method="post" accept-charset="UTF-8" class="form-horizontal" id="form-main" enctype="multipart/form-data">
             @csrf
             <div class="card-body">
                 <div class="form-group row">
@@ -15,7 +15,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-pencil-alt"></i></span>
                             </div>
-                            <input type="text" id="username" name="username" value="" class="form-control username" placeholder="">
+                            <input type="text" id="username" name="username" value="{{$user->name}}" class="form-control username" placeholder="">
                         </div>
                     </div>
                 </div>
@@ -26,7 +26,7 @@
                             <div class="input-group-prepend">
                                 <span class="input-group-text"><i class="fas fa-pencil-alt"></i></span>
                             </div>
-                            <input type="text" id="email" name="email" value="" class="form-control email" placeholder="">
+                            <input type="text" id="email" name="email" value="{{$user->email}}" class="form-control email" placeholder="">
                         </div>
                     </div>
                 </div>
@@ -53,28 +53,74 @@
                     </div>
                 </div>
 
-                <div class="form-group row ">
-                    <label for="roles" class="col-sm-2  control-label">Select roles</label>
+                {{-- select roles --}}
+                <div class="form-group row {{ $errors->has('roles') ? ' text-red' : '' }}">
+                    @php
+                        $listRoles = [];
+                            $old_roles = old('roles',($user)?$user->roles->pluck('id')->toArray():'');
+                            if(is_array($old_roles)){
+                                foreach($old_roles as $value){
+                                    $listRoles[] = (int)$value;
+                                }
+                            }
+                    @endphp
+                    <label for="roles" class="col-sm-2  control-label"> Danh sách Vai trò </label>
                     <div class="col-sm-8">
-                        <select class="form-control roles" multiple="" data-placeholder="Select roles" style="width: 100%;" name="roles[]" data-select2-id="1" tabindex="-1" aria-hidden="true">
-                            <option value=""></option>
-                            @foreach($dataRoles as $ind => $item)
-                                <option value={{$item->id}}>{{$item->role_name}}</option>
-                            @endforeach
-                        </select>
+
+                        @if (isset($user['id']) && in_array($user['id'], [0]))
+                            @if (count($listRoles))
+                                @foreach ($listRoles as $role)
+                                    {!! '<span class="">'.($roles[$role]??'').'</span>' !!}
+                                @endforeach
+                            @endif
+                        @else
+                            <select class="form-control roles select2"  multiple="multiple" data-placeholder="danh sách vai trò" style="width: 100%;" name="roles[]" >
+                                <option value=""></option>
+                                @foreach ($roles as $k => $v)
+                                    <option value="{{ $k }}" {{ (count($listRoles) && in_array($k, $listRoles))?'selected':'' }}>{{ $v }}</option>
+                                @endforeach
+                            </select>
+                            @if ($errors->has('roles'))
+                                <span class="form-text"> {{ $errors->first('roles') }} </span>
+                            @endif
+                        @endif
                     </div>
                 </div>
-                <div class="form-group row ">
-                    <label for="permission" class="col-sm-2  control-label">Add permission</label>
+                {{-- //select roles --}}
+
+                {{-- select permission --}}
+                <div class="form-group row {{ $errors->has('permission') ? ' text-red' : '' }}">
+                    @php
+                        $listPermission = [];
+                        $old_permission = old('permission',($user?$user->permissions->pluck('id')->toArray():''));
+                            if(is_array($old_permission)){
+                                foreach($old_permission as $value){
+                                    $listPermission[] = (int)$value;
+                                }
+                            }
+                    @endphp
+                    <label for="permission" class="col-sm-2  control-label"> Danh sách Quyền </label>
                     <div class="col-sm-8">
-                        <select class="form-control permission" multiple="" data-placeholder="Add permission" style="width: 100%;" name="permission[]" data-select2-id="3" tabindex="-1" aria-hidden="true">
-                            <option value=""></option>
-                            @foreach($dataPermissions as $ind => $item)
-                                <option value={{$item->id}}>{{$item->name}}</option>
-                            @endforeach
-                        </select>
+                        @if (isset($user['id']) && in_array($user['id'], [0]))
+                            @if (count($listPermission))
+                                @foreach ($listPermission as $p)
+                                    {!! '<span class="">'.($permissions[$p]??'').'</span>' !!}
+                                @endforeach
+                            @endif
+                        @else
+                            <select class="form-control permission select2"  multiple="multiple" data-placeholder="Danh sách quyền" style="width: 100%;" name="permission[]" >
+                                <option value=""></option>
+                                @foreach ($permissions as $k => $v)
+                                    <option value="{{ $k }}"  {{ (count($listPermission) && in_array($k, $listPermission))?'selected':'' }}>{{ $v }}</option>
+                                @endforeach
+                            </select>
+                            @if ($errors->has('permission'))
+                                <span class="form-text">{{ $errors->first('permission') }}</span>
+                            @endif
+                        @endif
                     </div>
                 </div>
+                {{-- //select permission --}}
             </div>
 
             <div class="card-footer row">

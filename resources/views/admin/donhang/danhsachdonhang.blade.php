@@ -27,9 +27,9 @@
                 @foreach($donhangs as $item)
                     <tr>
                         <td>{{$item->id}}</td>
-                        <td>{{$item->manhanvien}}</td>
-                        <td>{{$item->makhachhang}}</td>
-                        <td>{{$item->tongtien}}</td>
+                        <td>{{ $item->nhanvien->name }}</td>
+                        <td>{{ $item->khachhang->tenkhachhang }}</td>
+                        <td>{{ number_format($item->tongtien) }}</td>
                         <td>{{$item->trangthai}}</td>
                         <td>
                             <div class="actionFunc">
@@ -38,9 +38,6 @@
                                 </a>
                                 <a href="{{route('order.edit',['id' => $item->id])}}" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect" data-bs-toggle="tooltip" title="Edit">
                                     <i class="bi bi-pencil-square"></i>
-                                </a>
-                                <a href="{{route('order.delete')}}" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect" data-bs-toggle="tooltip" title="Return Book">
-                                    <i class="bi bi-book-half"></i>
                                 </a>
                                 <a href="javascript:void(0);" class="btn btn-sm btn-icon btn-text-secondary rounded-pill waves-effect" data-bs-toggle="tooltip" title="Delete">
                                     <i class="bi bi-trash"></i>

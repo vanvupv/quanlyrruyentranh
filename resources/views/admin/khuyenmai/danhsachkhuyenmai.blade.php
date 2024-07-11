@@ -21,10 +21,6 @@
                     <th> Type </th>
                     <th> Mô tả </th>
                     <th> Limit </th>
-                    <th> product Exclude </th>
-                    <th> product Apply </th>
-                    <th> category Exclude </th>
-                    <th> category Apply </th>
                     <th> expires </th>
                     <th> status </th>
                     <th> Action </th>
@@ -39,10 +35,6 @@
                             <td>{{$item->type}}</td>
                             <td>{{$item->desc}}</td>
                             <td>{{$item->limit}}</td>
-                            <td>{{$item->productExclude}}</td>
-                            <td>{{$item->productApply}}</td>
-                            <td>{{$item->categoryExclude}}</td>
-                            <td>{{$item->categoryApply}}</td>
                             <td>{{$item->expires}}</td>
                             <td>
                                 @if($item->status === 1)

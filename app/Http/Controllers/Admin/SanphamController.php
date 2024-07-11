@@ -37,16 +37,16 @@ class SanphamController extends Controller
     public function create() {
         $theloais = Loaisanpham::pluck('tenloai','id');
         $vitris = Vitri::pluck('tenvitri','id');
-        $nxbs = Nhaxuatban::pluck('tennxb','id');
-        $tacgias = Tacgia::pluck('tentacgia','id');
+//        $nxbs = Nhaxuatban::pluck('tennxb','id');
+//        $tacgias = Tacgia::pluck('tentacgia','id');
 
         return view('admin.sanpham.themsanpham',[
             'action'        => 'create',
             'title'         => 'Thêm mới danh mục',
             'theloais'      =>  $theloais,
             'vitris'        =>  $vitris,
-            'nxbs'          =>  $nxbs,
-            'tacgias'       =>  $tacgias,
+//            'nxbs'          =>  $nxbs,
+//            'tacgias'       =>  $tacgias,
         ]);
     }
 

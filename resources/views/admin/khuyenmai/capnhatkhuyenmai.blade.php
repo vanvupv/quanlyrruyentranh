@@ -88,14 +88,13 @@
                                 <label for="product_exclude" class="col-sm-2 col-form-label">Product exclude</label>
                                 <div class="col-sm-8">
                                     <select class="form-control" multiple="" data-placeholder="Product exclude" name="product_exclude[]">
-                                        @if($data->productExclude)
-                                            @foreach($sanphams as $product)
-                                                <option value="{{ $product->id }}"
-                                                        @if(in_array($product->id, $data->productExclude)) selected @endif>
-                                                    {{ $product->tensanpham }}
-                                                </option>
-                                            @endforeach
-                                        @endif
+                                        @foreach($sanphams as $index => $product1)
+                                            <option value="{{ $index }}"
+                                                @if($data->productExclude)
+                                                    @if(in_array($index, $data->productExclude)) selected @endif @endif>
+                                                {{ $product1 }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -103,14 +102,14 @@
                                 <label for="product_apply" class="col-sm-2 col-form-label">Product apply</label>
                                 <div class="col-sm-8">
                                     <select class="form-control" multiple="" data-placeholder="Product apply" name="product_apply[]">
-                                        @if($data->productApply)
-                                            @foreach($sanphams as $product)
-                                                <option value="{{ $product->id }}"
-                                                        @if(in_array($product->id, $data->productApply)) selected @endif>
-                                                    {{ $product->tensanpham }}
-                                                </option>
-                                            @endforeach
-                                        @endif
+                                        <option value=""></option>
+                                        @foreach($sanphams as $ind => $product)
+                                            <option value="{{ $ind }}"
+                                                @if($data->productApply)
+                                                    @if(in_array($ind, $data->productApply)) selected @endif   @endif>
+                                                {{ $product }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -118,14 +117,13 @@
                                 <label for="category_exclude" class="col-sm-2 col-form-label">Category exclude</label>
                                 <div class="col-sm-8">
                                     <select class="form-control" multiple="" data-placeholder="Category exclude" name="category_exclude[]">
-                                        @if($data->categoryExclude)
-                                            @foreach($sanphams as $product)
-                                                <option value="{{ $product->id }}"
-                                                        @if(in_array($product->id, $data->categoryExclude)) selected @endif>
-                                                    {{ $product->tensanpham }}
-                                                </option>
-                                            @endforeach
-                                        @endif
+                                        @foreach($danhmucs as $index => $product1)
+                                            <option value="{{ $index }}"
+                                                @if($data->categoryExclude)
+                                                    @if(in_array($index, $data->categoryExclude)) selected @endif  @endif>
+                                                {{ $product1 }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -133,14 +131,14 @@
                                 <label for="category_apply" class="col-sm-2 col-form-label">Category apply</label>
                                 <div class="col-sm-8">
                                     <select class="form-control" multiple="" data-placeholder="Category apply" name="category_apply[]">
-                                        @if($data->categoryApply)
-                                            @foreach($sanphams as $product)
-                                                <option value="{{ $product->id }}"
-                                                        @if(in_array($product->id, $data->categoryApply)) selected @endif>
-                                                    {{ $product->tensanpham }}
-                                                </option>
-                                            @endforeach
-                                        @endif
+                                        @foreach($danhmucs as $ind => $product)
+                                            <option value="{{ $ind }}"
+                                                @if($data->categoryApply)
+                                                    @if(in_array($ind, $data->categoryApply)) selected @endif
+                                                @endif>
+                                                {{ $product }}
+                                            </option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>

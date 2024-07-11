@@ -174,16 +174,16 @@
                     </div>
                     <div class="card-body">
                         <!-- Nha Xuat Ban -->
-                        <div class="mb-3 col ecommerce-select2-dropdown">
-                            <select id="vendor" name="manhaxuatban" class="form-select form-select-sm" data-placeholder="Chọn Nhà xuất bản">
-                                <option value="">Chọn Nhà xuất bản</option>
-                                @if($nxbs)
-                                    @foreach($nxbs as $idex => $item)
-                                        <option @if($action == 'edit' && $sanpham->manhaxuatban == $idex) selected @endif value="{{$idex}}">{{$item}}</option>
-                                    @endforeach
-                                @endif
-                            </select>
-                        </div>
+{{--                        <div class="mb-3 col ecommerce-select2-dropdown">--}}
+{{--                            <select id="vendor" name="manhaxuatban" class="form-select form-select-sm" data-placeholder="Chọn Nhà xuất bản">--}}
+{{--                                <option value="">Chọn Nhà xuất bản</option>--}}
+{{--                                @if($nxbs)--}}
+{{--                                    @foreach($nxbs as $idex => $item)--}}
+{{--                                        <option @if($action == 'edit' && $sanpham->manhaxuatban == $idex) selected @endif value="{{$idex}}">{{$item}}</option>--}}
+{{--                                    @endforeach--}}
+{{--                                @endif--}}
+{{--                            </select>--}}
+{{--                        </div>--}}
                         <!-- Category -->
                         <div class="mb-3 col ecommerce-select2-dropdown">
                             <div class="w-100 me-4">
@@ -199,16 +199,16 @@
                             </div>
                         </div>
                         <!-- Author -->
-                        <div class="mb-3 col ecommerce-select2-dropdown">
-                            <select id="author" name="matacgia" class="form-select form-select-sm" data-placeholder="Author">
-                                <option value="">Chọn Tác giả</option>
-                                @if($tacgias)
-                                    @foreach($tacgias as $id => $item)
-                                        <option @if($action == 'edit' && $sanpham->matacgia == $id) selected @endif value="{{$id}}">{{$item}}</option>
-                                    @endforeach
-                                @endif
-                            </select>
-                        </div>
+{{--                        <div class="mb-3 col ecommerce-select2-dropdown">--}}
+{{--                            <select id="author" name="matacgia" class="form-select form-select-sm" data-placeholder="Author">--}}
+{{--                                <option value="">Chọn Tác giả</option>--}}
+{{--                                @if($tacgias)--}}
+{{--                                    @foreach($tacgias as $id => $item)--}}
+{{--                                        <option @if($action == 'edit' && $sanpham->matacgia == $id) selected @endif value="{{$id}}">{{$item}}</option>--}}
+{{--                                    @endforeach--}}
+{{--                                @endif--}}
+{{--                            </select>--}}
+{{--                        </div>--}}
                         <!-- Author -->
                         <div class="mb-3 col ecommerce-select2-dropdown">
                             <select id="location" name="mavitri" class="form-select form-select-sm" data-placeholder="Location">

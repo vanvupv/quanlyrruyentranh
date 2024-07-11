@@ -2,10 +2,10 @@
 @section('content')
 <div class="card listTable">
     @include('share.error')
-    <h5 class="card-header"> Them Vai Tro </h5>
+    <h5 class="card-header"> Them Duong Dan </h5>
     <hr class="my-0">
     <div class="card-body">
-        <form action="{{route('permission_role.store')}}" method="post" accept-charset="UTF-8" class="form-horizontal" id="form-main" enctype="multipart/form-data">
+        <form action="{{route('permission_route.store')}}" method="post" accept-charset="UTF-8" class="form-horizontal" id="form-main" enctype="multipart/form-data">
             @csrf
             <div class="card-body">
                 <div class="fields-group">
@@ -46,7 +46,6 @@
                     </div>
                 </div>
             </div>
-
         </form>
     </div>
 </div>

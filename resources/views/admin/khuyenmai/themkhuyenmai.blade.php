@@ -84,9 +84,9 @@
                                 <label for="product_exclude" class="col-sm-2 col-form-label">Product exclude</label>
                                 <div class="col-sm-8">
                                     <select class="form-control" multiple="" data-placeholder="Product exclude" name="product_exclude[]">
-                                        <option value="1"> San pham 1 </option>
-                                        <option value="2"> San pham 2 </option>
-                                        <option value="3"> San pham 3 </option>
+                                        @foreach($sanphams as $ind => $item)
+                                            <option value={{$ind}}> {{$item}} </option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -94,9 +94,9 @@
                                 <label for="product_apply" class="col-sm-2 col-form-label">Product apply</label>
                                 <div class="col-sm-8">
                                     <select class="form-control" multiple="" data-placeholder="Product apply" name="product_apply[]">
-                                        <option value="1"> San pham 1 </option>
-                                        <option value="2"> San pham 2 </option>
-                                        <option value="3"> San pham 3 </option>
+                                        @foreach($sanphams as $index => $item1)
+                                            <option value={{$index}}> {{$item1}} </option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -104,9 +104,9 @@
                                 <label for="category_exclude" class="col-sm-2 col-form-label">Category exclude</label>
                                 <div class="col-sm-8">
                                     <select class="form-control" multiple="" data-placeholder="Category exclude" name="category_exclude[]">
-                                        <option value="1"> San pham 1 </option>
-                                        <option value="2"> San pham 2 </option>
-                                        <option value="3"> San pham 3 </option>
+                                        @foreach($danhmucs as $index => $item1)
+                                            <option value={{$index}}> {{$item1}} </option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -114,9 +114,9 @@
                                 <label for="category_apply" class="col-sm-2 col-form-label">Category apply</label>
                                 <div class="col-sm-8">
                                     <select class="form-control" multiple="" data-placeholder="Category apply"  name="category_apply[]">
-                                        <option value="1"> San pham 1 </option>
-                                        <option value="2"> San pham 2 </option>
-                                        <option value="3"> San pham 3 </option>
+                                        @foreach($danhmucs as $ind => $item)
+                                            <option value={{$ind}}> {{$item}} </option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>

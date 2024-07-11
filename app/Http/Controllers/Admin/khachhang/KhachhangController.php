@@ -7,6 +7,7 @@ use App\Models\Khachhang;
 
 //
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Validator;
 
 class KhachhangController extends Controller
@@ -128,6 +129,4 @@ class KhachhangController extends Controller
 
         return redirect()->back()->with('success','Xoa khach hang thanh cong');
     }
-
-
 }

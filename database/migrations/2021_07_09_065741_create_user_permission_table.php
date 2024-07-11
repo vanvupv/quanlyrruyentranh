@@ -11,17 +11,15 @@ class CreateUserPermissionTable extends Migration {
 	 * @return void
 	 */
 	public function up() {
-		Schema::create('permission', function (Blueprint $table) {
-				$table->unsignedBigInteger('role_id');
-				$table->foreign('role_id')->references('id')->on('roles');
+		Schema::create('user_permission', function (Blueprint $table) {
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('permission_id');
+            $table->timestamps();
 
-				$table->unsignedBigInteger('route_id');
-				$table->foreign('route_id')->references('id')->on('routes');
-
-				$table->primary(['role_id', 'route_id']);
-
-				$table->integer('status');
-			});
+            $table->primary(['user_id', 'permission_id']);
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('permission_id')->references('id')->on('permission');
+        });
 	}
 
 	/**
@@ -30,6 +28,6 @@ class CreateUserPermissionTable extends Migration {
 	 * @return void
 	 */
 	public function down() {
-		Schema::dropIfExists('permission');
+		Schema::dropIfExists('user_permission');
 	}
 }

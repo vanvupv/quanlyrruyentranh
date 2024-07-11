@@ -6,7 +6,6 @@ use App\Models\Sanpham;
 use DB;
 
 use Illuminate\Http\Request;
-use Cart;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller

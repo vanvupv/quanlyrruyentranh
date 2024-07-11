@@ -62,10 +62,10 @@ Route::group(['prefix' => 'laravel-filemanager', 'middleware' => ['web', 'auth']
 Route::middleware(['auth','permission'])->group(function () {
     Route::prefix('admin')->group(function () {
 //        Route::get('/',[MainController::class,'index'])->name('admin');
-        Route::get('/chungtacuahientai',[MainController::class,'index'])->name('admin');
+        Route::get('/',[MainController::class,'index'])->name('admin');
 
         // Quan Ly San Pham
-        Route::prefix('sanpham')->group(function () {
+        Route::prefix('sanpham')->middleware(['permission:check,allow,deny'])->group(function () {
             Route::get('/',[SanphamController::class,'index'])->name('sanpham');
             Route::get('add',[SanphamController::class,'create'])->name('sanpham.add');
             Route::post('add/store',[SanphamController::class,'store'])->name('sanpham.store');

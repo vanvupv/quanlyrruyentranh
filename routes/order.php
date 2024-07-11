@@ -26,6 +26,21 @@ Route::group(['prefix' => 'admin/order'],
         // // updateTotal
         Route::get('/updateTotal', [DonhangController::class,'updateTotal'])->name('order.updateTotal');
 
+        // deleteItem
+        Route::get('/deleteItem', [DonhangController::class,'deleteItem'])->name('order.deleteItem');
+
+        // deleteItem
+        Route::post('/coupon-apply', [DonhangController::class,'couponApply'])->name('order.couponApply');
+
+        // prepareCheckout
+        Route::post('/prepareCheckout', [DonhangController::class,'prepareCheckout'])->name('order.prepareCheckout');
+
+        // checkout
+        Route::get('/checkout', [DonhangController::class,'checkout'])->name('order.checkout');
+
+        // update Status Order
+        Route::post('/statusOrder', [DonhangController::class,'statusOrder'])->name('order.status');
+
     }
 );
 

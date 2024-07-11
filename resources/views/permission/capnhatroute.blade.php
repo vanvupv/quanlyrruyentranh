@@ -2,10 +2,10 @@
 @section('content')
 <div class="card listTable">
     @include('share.error')
-    <h5 class="card-header"> Cap Nhat Vai Tro </h5>
+    <h5 class="card-header"> Cap Nhat Duong Dan </h5>
     <hr class="my-0">
     <div class="card-body">
-        <form action="{{route('permission_role.postedit',['id' => $data->id])}}" method="post" accept-charset="UTF-8" class="form-horizontal" id="form-main" enctype="multipart/form-data">
+        <form action="{{route('permission_route.postedit',['id' => $data->id])}}" method="post" accept-charset="UTF-8" class="form-horizontal" id="form-main" enctype="multipart/form-data">
             @csrf
             <div class="card-body">
                 <div class="fields-group">
@@ -16,7 +16,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-pencil-alt"></i></span>
                                 </div>
-                                <input type="text" id="name" name="name" value="{{$data->role_name}}" class="form-control name" placeholder="">
+                                <input type="text" id="name" name="name" value="{{$data->route_name}}" class="form-control name" placeholder="">
                             </div>
                         </div>
                     </div>
@@ -27,7 +27,7 @@
                                 <div class="input-group-prepend">
                                     <span class="input-group-text"><i class="fas fa-pencil-alt"></i></span>
                                 </div>
-                                <input type="text" id="slug" name="slug" value="{{$data->role_slug}}" class="form-control slug" placeholder="">
+                                <input type="text" id="slug" name="slug" value="{{$data->route_title}}" class="form-control slug" placeholder="">
                             </div>
                         </div>
                     </div>

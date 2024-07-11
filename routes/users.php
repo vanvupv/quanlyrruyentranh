@@ -3,22 +3,32 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Permission\PermissionController;
 
-Route::group(['prefix' => 'admin/permission'],
+Route::group(['prefix' => 'admin/user'],
 
     function () {
-        // Role
-        Route::get('/role',
-            [PermissionController::class,'viewRoles']
-        )->name('permission_role');
+        // User
+        Route::get('/',
+            [PermissionController::class,'viewUsers']
+        )->name('permission_user');
 
-        // Role Setting
-        Route::get('/setting',
-            [PermissionController::class,'viewSetting']
-        )->name('permission_setting');
+        // User Add
+        Route::get('/add',
+            [PermissionController::class,'userAdd']
+        )->name('permission_user.add');
 
-        // Role Save
-        Route::post('/save',
-            [PermissionController::class,'save']
-        )->name('permission_save');
+        // User Store
+        Route::post('/add/store',
+            [PermissionController::class,'userStore']
+        )->name('permission_user.store');
+
+        // User Edit
+        Route::get('/edit/{id}',
+            [PermissionController::class,'userEdit']
+        )->name('permission_user.edit');
+
+        // User Post Edit
+        Route::post('/edit/{id}',
+            [PermissionController::class,'userPostEdit']
+        )->name('permission_user.postedit');
     }
 );
