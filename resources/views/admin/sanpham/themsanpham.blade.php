@@ -96,22 +96,15 @@
                 <div class="card mb-3">
                     <div class="card-header d-flex justify-content-between align-items-center">
                         <h5 class="mb-0 card-title">Product Image</h5>
-                        <a href="javascript:void(0);" class="fw-medium" id="lfm" data-input="thumbnail" data-preview="holder">Add media from URL</a>
+                        <a href="javascript:void(0);" class="fw-medium" id="lfm" data-input="thumbnail" data-type="image" data-preview="holder">Add media from URL</a>
                     </div>
                     <div class="card-body">
                         <div class="d-flex justify-content-center mb-3">
-                            <div id="holder" style="margin-top:15px;max-height:100px;">
-                                @if($action == 'edit')
-                                    <img src="{{$sanpham->anhbia}}" alt="{{$sanpham->tensanpham}}">
-                                @endif
+                            <div id="holder">
+                                <img src="{{'/storage/photos/1/products/image_cây-tre-trăm-đốt-080520241159.jpg'}}" alt="{{$sanpham->tensanpham}}">
                             </div>
                         </div>
                         <input id="thumbnail" class="form-control" type="hidden" name="anhbia" @if($action == 'edit') value={{$sanpham->anhbia}} @endif>
-                        <p class="h4 needsclick my-2 text-center">Drag and drop your image here</p>
-                        <small class="text-muted d-block fs-6 my-2 text-center">or</small>
-                        <div class="d-flex justify-content-center">
-                            <span class="needsclick btn btn-sm btn-outline-primary waves-effect" id="btnBrowse">Browse image</span>
-                        </div>
                     </div>
                 </div>
 
@@ -119,8 +112,7 @@
                 <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
                 <script>
                     // Initialize the file manager button
-                    $('#lfm').filemanager('image');
-
+                      $('#lfm').filemanager('image');
                 </script>
                 <!-- /Media -->
             </div>
@@ -173,17 +165,6 @@
                         <h5 class="card-title mb-0">Organize</h5>
                     </div>
                     <div class="card-body">
-                        <!-- Nha Xuat Ban -->
-{{--                        <div class="mb-3 col ecommerce-select2-dropdown">--}}
-{{--                            <select id="vendor" name="manhaxuatban" class="form-select form-select-sm" data-placeholder="Chọn Nhà xuất bản">--}}
-{{--                                <option value="">Chọn Nhà xuất bản</option>--}}
-{{--                                @if($nxbs)--}}
-{{--                                    @foreach($nxbs as $idex => $item)--}}
-{{--                                        <option @if($action == 'edit' && $sanpham->manhaxuatban == $idex) selected @endif value="{{$idex}}">{{$item}}</option>--}}
-{{--                                    @endforeach--}}
-{{--                                @endif--}}
-{{--                            </select>--}}
-{{--                        </div>--}}
                         <!-- Category -->
                         <div class="mb-3 col ecommerce-select2-dropdown">
                             <div class="w-100 me-4">
@@ -198,18 +179,7 @@
                                 </select>
                             </div>
                         </div>
-                        <!-- Author -->
-{{--                        <div class="mb-3 col ecommerce-select2-dropdown">--}}
-{{--                            <select id="author" name="matacgia" class="form-select form-select-sm" data-placeholder="Author">--}}
-{{--                                <option value="">Chọn Tác giả</option>--}}
-{{--                                @if($tacgias)--}}
-{{--                                    @foreach($tacgias as $id => $item)--}}
-{{--                                        <option @if($action == 'edit' && $sanpham->matacgia == $id) selected @endif value="{{$id}}">{{$item}}</option>--}}
-{{--                                    @endforeach--}}
-{{--                                @endif--}}
-{{--                            </select>--}}
-{{--                        </div>--}}
-                        <!-- Author -->
+                        <!-- Location -->
                         <div class="mb-3 col ecommerce-select2-dropdown">
                             <select id="location" name="mavitri" class="form-select form-select-sm" data-placeholder="Location">
                                 <option value="">Chọn Vị trí</option>

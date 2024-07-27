@@ -41,3 +41,5 @@ $(".rtl-button").on("click", function () {
     $("#rtl-link").attr("href", "assets/css/vendors/bootstrap.css");
   }
 });
+
+

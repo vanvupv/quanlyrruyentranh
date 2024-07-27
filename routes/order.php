@@ -39,8 +39,13 @@ Route::group(['prefix' => 'admin/order'],
         Route::get('/checkout', [DonhangController::class,'checkout'])->name('order.checkout');
 
         // update Status Order
-        Route::post('/statusOrder', [DonhangController::class,'statusOrder'])->name('order.status');
+        Route::get('/statusOrder/{id}', [DonhangController::class,'statusOrder'])->name('order.status');
 
+        // update Status Shipping Order
+        Route::get('/statusShipping/{id}', [DonhangController::class,'statusShipping'])->name('order.statusshipping');
+
+        // update Status Payment Order
+        Route::get('/statusPayment/{id}', [DonhangController::class,'statusPayment'])->name('order.statusspayment');
     }
 );
 

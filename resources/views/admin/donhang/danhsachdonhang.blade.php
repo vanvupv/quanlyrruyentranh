@@ -2,18 +2,18 @@
 @section('content')
 <div class="card listTable">
     <h5 class="card-header">Danh Sách Phiếu Mượn</h5>
-    <hr class="my-0">
-    <div class="listTable__add add-new">
-        <a href="{{route('order.create')}}" class="btn btn-primary waves-effect waves-light">
-            <i class="bi bi-plus-lg me-0 me-sm-1 d-inline-block"></i>
-            <span class="d-none d-sm-inline-block"> Add New Order </span>
-        </a>
-    </div>
-    <hr class="my-0">
-    <div class="card-body">
+
+    <div class="card-body p-0">
+        <div class="listTable__add add-new p-3">
+            <a href="{{route('order.create')}}" class="btn btn-primary waves-effect waves-light">
+                <i class="bi bi-plus-lg me-0 me-sm-1 d-inline-block"></i>
+                <span class="d-none d-sm-inline-block"> Add New Order </span>
+            </a>
+        </div>
+
         <div class="card-datatable text-nowrap">
-            <table id="OrderTable" class="listTable__table table table-bordered">
-                <thead>
+            <table id="OrderTable" class="listTable__table table m-0">
+                <thead style="background-color: #f6f7fb;">
                 <tr>
                     <th> Mã Đơn Hàng </th>
                     <th> Mã Nhân Viên </th>
@@ -67,5 +67,5 @@
             </table>
         </div>
     </div>
-    </div>
+</div>
 @endsection

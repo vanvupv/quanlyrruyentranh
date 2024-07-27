@@ -10,88 +10,68 @@
     <!-- -->
     <!-- Order -->
     <div class="mb-4 row">
-        <!-- Card Phiếu Mượn -->
-        <div class="col-12 col-lg-8">
-            <!-- Card Thông Tin Phiếu -->
+        <div class="col-12 col-lg-6">
             <div class="card">
                 <div class="card-header">
                     <h5 class="card-title mb-0">THÔNG TIN ĐƠN HÀNG</h5>
                 </div>
                 <hr class="m-0">
                 <div class="card-body">
-                    <div class="row mb-3">
-                        <!-- Mã Phiếu -->
-                        <div class="col-12 col-md-6">
-                            <div class="form-floating form-floating-outline">
-                                <input type="text" name="tentheloai" class="form-control" id="maphieu_phieumuon" value="{{$order->id}}" disabled>
-                                <label for="tentheloai">Mã đơn hàng</label>
-                            </div>
-                        </div>
-                        <!-- / Mã Phiếu -->
-                        <!-- Ngày Tạo -->
-                        <div class="col-12 col-md-6">
-                            <div class="form-floating form-floating-outline">
-                                <input type="date" name="ngaytao" class="form-control" value="{{ \Carbon\Carbon::parse($order->created_at)->format('Y-m-d') }}">
-                                <label for="ngaytao">Ngày Tạo</label>
-                            </div>
-                        </div>
-                        <!-- / Ngày Tạo -->
+                    <div class="info-container">
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2">
+                                <span class="h6">Mã đơn hàng:</span>
+                                <span>{{$order->id}}</span>
+                            </li>
+                            <li class="mb-2">
+                                <span class="h6">Ngày tạo đơn:</span>
+                                <span>{{\Carbon\Carbon::parse($order->created_at)->format('d-m-Y')}}</span>
+                            </li>
+                            <li class="mb-2">
+                                <span class="h6">Ghi chú:</span>
+                                <span>{{$order->ghichu}}</span>
+                            </li>
+                            <li class="mb-2">
+                                <span class="h6">Phương thức Giao hàng:</span>
+                                <span>{{$order->phuongthucgiaohang}}</span>
+                            </li>
+                            <li>
+                                <span class="h6">Phương thức Thanh toán:</span>
+                                <span>{{$order->phuongthucthanhtoan}}</span>
+                            </li>
+                        </ul>
                     </div>
-                    <!-- Ghi Chú -->
-                    <div class="col-12 mb-4">
-                        <div class="col-md-12">
-                            <label for="ghichu">Ghi chú:</label>
-                            <textarea  class="form-control" name="ghichu" id="ghichu">{{ $order->ghichu }}</textarea>
-                        </div>
-                    </div>
-                    <!-- / Ghi Chú -->
                 </div>
             </div>
         </div>
 
-        <div class="col-12 col-lg-4">
+        <div class="col-12 col-lg-6">
             <div class="card">
                 <div class="card-header">
                     <h5 class="card-title mb-0">THÔNG TIN KHÁCH HÀNG</h5>
                 </div>
                 <hr class="m-0">
                 <div class="card-body">
-                    <div class="row">
-                        <div class="col-12 col-md-6">
-                            <div class="info-container">
-                                <input type="hidden" name="Idkhachhang" id="Idkhachhang" value="{{$order->manhanvien}}">
-                                <ul class="list-unstyled mb-0">
-                                    <li class="mb-2">
-                                        <span class="h6">Username:</span>
-                                        <span>{{$order->khachhang->tenkhachhang}}</span>
-                                    </li>
-                                    <li class="mb-2">
-                                        <span class="h6">Mã Độc Giả:</span>
-                                        <span>{{$order->khachhang->id}}</span>
-                                    </li>
-                                    <li class="mb-2">
-                                        <span class="h6">Status:</span>
-                                        <span class="badge bg-label-success rounded-pill">{{$order->khachhang->trangthaihoatdong}}</span>
-                                    </li>
-                                    <li>
-                                        <span class="h6">Role:</span>
-                                        <span>Reader</span>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <div class="user-avatar-section">
-                                <div class=" d-flex align-items-center flex-column">
-{{--                                    <img class="img-fluid rounded mb-4" src="{{asset('assets/images/Image_Chandung.jpg')}}" height="120" width="120"--}}
-{{--                                         alt="User avatar">--}}
-                                    <div class="user-info text-center">
-                                        <h5>{{$order->khachhang->tenkhachhang}}</h5>
-                                        <span class="badge bg-label-danger rounded-pill">Reader</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="info-container">
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2">
+                                <span class="h6">Mã Khách hàng:</span>
+                                <span>{{$order->khachhang->id}}</span>
+                            </li>
+                            <li class="mb-2">
+                                <span class="h6">Tên khách hàng:</span>
+                                <span>{{$order->khachhang->tenkhachhang}}</span>
+                            </li>
+
+                            <li class="mb-2">
+                                <span class="h6">Status:</span>
+                                <span class="badge bg-label-success rounded-pill">{{$order->khachhang->trangthaihoatdong}}</span>
+                            </li>
+                            <li>
+                                <span class="h6">Địa chỉ Email:</span>
+                                <span>{{$order->khachhang->email}}</span>
+                            </li>
+                        </ul>
                     </div>
                 </div>
             </div>
@@ -104,11 +84,10 @@
         <div class="card-header">
             <h5 class="card-title mb-0">CHI TIẾT ĐƠN HÀNG</h5>
         </div>
-        <hr class="m-0">
-        <div class="card-body p-0 m-0">
-            <table class="table">
+        <div class="card-body">
+            <table class="table table-borderless">
                 <thead>
-                    <tr>
+                    <tr class="border-bottom">
                         <th>STT</th>
                         <th>SKU</th>
                         <th>Tên Sản Phẩm</th>
@@ -146,66 +125,136 @@
     </div>
     <!-- / DetailTable -->
 
+    <!-- Detail Shipping -->
+    <div class="mb-4 row">
+        <div class="col-12 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">THÔNG TIN GIAO HÀNG</h5>
+                </div>
+                <hr class="m-0">
+                <div class="card-body">
+                    <div class="info-container">
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2">
+                                <span class="h6">Mã đơn hàng:</span>
+                                <span>{{$order->id}}</span>
+                            </li>
+                            <li class="mb-2">
+                                <span class="h6">Ngày tạo đơn:</span>
+                                <span>{{\Carbon\Carbon::parse($order->created_at)->format('d-m-Y')}}</span>
+                            </li>
+                            <li class="mb-2">
+                                <span class="h6">Ghi chú:</span>
+                                <span>{{$order->ghichu}}</span>
+                            </li>
+                            <li class="mb-2">
+                                <span class="h6">Phương thức Giao hàng:</span>
+                                <span>{{$order->phuongthucgiaohang}}</span>
+                            </li>
+                            <li>
+                                <span class="h6">Phương thức Thanh toán:</span>
+                                <span>{{$order->phuongthucthanhtoan}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-6">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0">THÔNG TIN THANH TOÁN</h5>
+                </div>
+                <hr class="m-0">
+                <div class="card-body">
+                    <div class="info-container">
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2">
+                                <span class="h6">Mã Khách hàng:</span>
+                                <span>{{$order->khachhang->id}}</span>
+                            </li>
+                            <li class="mb-2">
+                                <span class="h6">Tên khách hàng:</span>
+                                <span>{{$order->khachhang->tenkhachhang}}</span>
+                            </li>
+
+                            <li class="mb-2">
+                                <span class="h6">Status:</span>
+                                <span class="badge bg-label-success rounded-pill">{{$order->khachhang->trangthaihoatdong}}</span>
+                            </li>
+                            <li>
+                                <span class="h6">Địa chỉ Email:</span>
+                                <span>{{$order->khachhang->email}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- / Detail Shipping -->
+
     <!-- Total Order -->
     <div class="card mb-4">
         <div class="card-header">
             <h5 class="card-title mb-0">TỔNG TIỀN</h5>
         </div>
         <hr class="m-0">
-        <div class="card-body p-0 m-0">
-          <div>
-              {{ number_format($order->tienhang) }}
-          </div>
-            <div>
-                {{ number_format($order->tiengiaohang) }}
-            </div>
-            <div>
-                {{ $order->giamgia }}
-            </div>
-            <div>
-                {{ number_format($order->tienthue) }}
-            </div>
-            <div>
-                {{ number_format($order->tongtien) }}
+        <div class="card-body">
+            <div class="info-container">
+                <ul class="list-unstyled mb-0">
+                    <li class="mb-2">
+                        <span class="h6">Tổng tiền hàng:</span>
+                        <span>{{number_format($order->tienhang) }}</span>
+                    </li>
+                    <li class="mb-2">
+                        <span class="h6">Tiền giao hàng:</span>
+                        <span>{{number_format($order->tiengiaohang)}}</span>
+                    </li>
+                    <li class="mb-2">
+                        <span class="h6">Giảm giá:</span>
+                        <span>{{$order->giamgia}}</span>
+                    </li>
+                    <li class="mb-2">
+                        <span class="h6">Thuế:</span>
+                        <span>{{number_format($order->tienthue)}}</span>
+                    </li>
+                    <li>
+                        <span class="h6">Tổng tiền:</span>
+                        <span>{{number_format($order->tongtien)}}</span>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
     <!-- /Total Order -->
 
-    <!-- Status Order -->
-    <div class="card mb-4">
-        <div class="card-header">
-            <h5 class="card-title mb-0">TỔNG TIỀN</h5>
-        </div>
-        <hr class="m-0">
-        <div class="card-body p-0 m-0">
+    <!-- -->
+    <div class="mb-4">
+        @if ($order->trangthai == \App\Models\Donhang::DONE && $order->trangthai == \App\Models\Donhang::CANCELED)
             <div>
-                Trang thai giao hang: {{ $order->trangthaigiaohang }}
+                Đơn hàng đã hoàn thành
             </div>
-            <div>
-                Trang thai thanhtoan: {{ $order->trangthaithanhtoan }}
+        @elseif($order->trangthai == \App\Models\Donhang::CANCELED)
+            <div class="">
+                Đơn hàng đã hủy thành công
             </div>
-          <div>
-                Trang thai don hang: {{ $order->trangthai }}
-          </div>
-        </div>
+        @else
+            @if ($order->trangthai != \App\Models\Donhang::NEW && $order->trangthai != \App\Models\Donhang::DONE)
+                <a href="{{ route('order.status', $order->id) }}?status={{ \App\Models\Donhang::DONE }}" class="btn btn-danger" onclick="return confirm('Bạn có chắc hành động này là gì?')"> Hoàn thành </a>
+                <a href="{{ route('order.status', $order->id) }}?status={{ \App\Models\Donhang::CANCELED }}" class="btn btn-warning" onclick="return confirm('Bạn có chắc hành động này là gì?')">Hủy</a>
+            @elseif($order->trangthai == \App\Models\Donhang::NEW )
+                <a href="{{ route('order.status', $order->id) }}?status={{ \App\Models\Donhang::PROCESSING }}" class="btn btn-warning" onclick="return confirm('Bạn có chắc hành động này là gì?')"> Xác Nhận </a>
+                <a href="{{ route('order.status', $order->id) }}?status={{ \App\Models\Donhang::CANCELED }}" class="btn btn-warning" onclick="return confirm('Bạn có chắc hành động này là gì?')"> Hủy </a>
+            @else
+                <div>
+                    DON HANG DA HOAN THANH
+                </div>
+            @endif
+        @endif
     </div>
     <!-- / -->
-
-    <!-- -->
-    <form action="{{route('order.status')}}" method="POST">
-        @csrf
-        <div>
-            <input type="hidden" name="idOrder" value="{{ $order->id }}">
-            <input type="hidden" name="statusOrder" value="{{ $order->trangthai }}">
-            <input type="submit" value="Xac nhan don hang" class="btn btn-warning">
-        </div>
-        <div>
-            <input type="submit" value="Huy don hang" class="btn btn-danger">
-        </div>
-    </form>
-    <!-- / -->
-
-
 @endsection
 

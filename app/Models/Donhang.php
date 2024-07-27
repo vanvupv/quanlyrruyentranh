@@ -12,6 +12,13 @@ class Donhang extends Model
 {
     use HasFactory;
 
+    const NEW = 'new';
+    const PROCESSING = 'processing';
+    const HOLD = 'hold';
+    const CANCELED = 'canceled';
+    const DONE = 'done';
+    const FAILED = 'failed';
+
     protected  $table = 'donhang';
 
     protected $primaryKey = 'id';

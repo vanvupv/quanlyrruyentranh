@@ -457,21 +457,131 @@ class DonhangController extends Controller
         ]);
     }
 
+    /**
+     *
+     *
+     * */
+    public function statusOrder($id) {
+        $data = request()->all();
+
+        $order = Donhang::find($id);
+
+        //
+        if($order->trangthai == Donhang::NEW) {
+            //
+            if ($data['status'] == Donhang::PROCESSING) {
+                $order->update(['trangthai' => Donhang::PROCESSING]);
+
+                return redirect()->back()->with('message','Cap nhat trang thai don hang thanh cong');
+            }
+
+            //
+            if ($data['status'] == Donhang::CANCELED) {
+                $order->update(['trangthai' => Donhang::CANCELED]);
+
+                return redirect()->back()->with('message','Cap nhat trang thai don hang thanh cong');
+            }
+        }
+
+        //
+        if($order->trangthai == Donhang::PROCESSING) {
+            //
+            if ($data['status'] == Donhang::DONE) {
+                if($order->trangthaigiaohang == 'success' && $order->trangthaithanhtoan == 1) {
+                    $order->update(['trangthai' => Donhang::DONE]);
+
+                    return redirect()->back()->with('message','Cap nhat trang thai don hang thanh cong');
+                }
+
+                return redirect()->back()->with('message','Khong du dieu kien de hoan thanh don hang');
+            }
+
+            //
+            if ($data['status'] == Donhang::CANCELED) {
+                $order->update(['trangthai' => Donhang::CANCELED]);
+
+                return redirect()->back()->with('message','Cap nhat trang thai don hang thanh cong');
+            }
+        }
+
+        //
+        if($order->trangthai == Donhang::DONE) {
+            return redirect()->back()->with('message','Don hang da hoan tat! Khong the cap nhat trang thai');
+        }
+
+        //
+        if($order->trangthai == Donhang::CANCELED) {
+            return redirect()->back()->with('message','Don hang da bi huy! Khong the cap nhat trang thai');
+        }
+    }
+
     /*
      *
      *
      * */
-    public function statusOrder() {
+    public function statusShipping($id) {
         $data = request()->all();
-
-        $id = $data['idOrder'];
 
         $order = Donhang::find($id);
 
-        if($order && $data['statusOrder'] == 'new') {
-            $order->update(['trangthai' =>'processing']);
+        //
+        if($order->trangthaigiaohang == 'success') {
+            return redirect()->back()->with('message','Don hang da duoc giao thanh cong');
         }
-                       
-        return redirect()->back();
+
+        // receive
+        if($order->trangthaigiaohang == 0) {
+            //
+            if ($data['status'] == 'receive') {
+                $order->update(['trangthaigiaohang' => $data['status']]);
+
+                return redirect()->back()->with('message','Cap nhat trang thai giao hang thanh cong');
+            }
+        }
+
+        // deliver
+        if($order->trangthaigiaohang == 'receive') {
+            //
+            if ($data['status'] == 'deliver') {
+                $order->update(['trangthaigiaohang' => $data['status']]);
+
+                return redirect()->back()->with('message','Cap nhat trang thai giao hang thanh cong');
+            }
+        }
+
+        // success
+        if($order->trangthaigiaohang == 'deliver') {
+            //
+            if ($data['status'] == 'success') {
+                $order->update(['trangthaigiaohang' => $data['status']]);
+
+                return redirect()->back()->with('message','Cap nhat trang thai giao hang thanh cong');
+            }
+        }
+
+        return redirect()->back()->with('message','Cap nhat trang thai thanh toán thất bại');
+    }
+
+    /*
+     *
+     *
+     * */
+    public function statusPayment($id) {
+        $data = request()->all();
+
+        $order = Donhang::find($id);
+
+        if($order->trangthaithanhtoan == 0) {
+            //
+            if ($data['status'] == 1) {
+                $order->update(['trangthaithanhtoan' => $data['status']]);
+
+                return redirect()->back()->with('message','Cap nhat trang thai thanh toán don hang thanh cong');
+            }
+        }
+
+        return redirect()->back()->with('message','Cap nhat trang thai thanh toán thất bại');
     }
 }
+
+

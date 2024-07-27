@@ -1,3 +1,6 @@
+
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/2.1.0/css/buttons.dataTables.min.css">
+
 <!-- Lib jQuery -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -9,6 +12,10 @@
 
 <!-- Lib Datatable -->
 <script src="https://cdn.datatables.net/2.0.3/js/dataTables.min.js"></script>
+
+<!-- -->
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js"></script>
+
 
 <!-- Lib Laravel File Manager -->
 {{--<script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>--}}
@@ -28,6 +35,7 @@
 
 <!-- Customize -->
 <script src="{{asset('assets/js/main-customize.js')}}"></script>
+<script src="{{asset('assets/js/datatable/datatables-advanture.js')}}"></script>
 
 <!-- Add Multiple Records -->
 {{--<script src="{{asset('assets/js/change.js')}}"></script>--}}
@@ -178,7 +186,6 @@
         var valueDeleteItem = deleteRow.find('input.item-qty');
         var rowID = valueDeleteItem.attr('name');
 
-
         //
         $.ajax({
             url: `{{ route('order.deleteItem') }}`,
@@ -238,9 +245,8 @@
             },
         });
     });
-
-    //
 </script>
+
 </body>
 </html>
 

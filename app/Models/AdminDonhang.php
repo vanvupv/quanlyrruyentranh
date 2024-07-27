@@ -12,8 +12,8 @@ class AdminDonhang extends Donhang
     use HasFactory;
 
     public static $mapStyleStatus = [
-        '1' => 'info', //new
-        '2' => 'primary', //processing
+        '1' => 'info', //New
+        '2' => 'primary', //Processing
         '3' => 'warning', //Hold
         '4' => 'danger', //Cancel
         '5' => 'success', //Success

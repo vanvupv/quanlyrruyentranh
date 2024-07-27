@@ -51,6 +51,9 @@ class SanphamController extends Controller
     }
 
     public function store(Request $request){
+        $data = request()->all();
+
+
         $masanpham      =   $request->input('productBarcode'); // 1
         $tensanpham     =   $request->input('productTitle'); // 2
         $sku            =   $request->input('productSku'); // 3
@@ -118,8 +121,8 @@ class SanphamController extends Controller
 
         $theloais   = Loaisanpham::pluck('tenloai','id');
         $vitris     = Vitri::pluck('tenvitri','id');
-        $nxbs       = Nhaxuatban::pluck('tennxb','id');
-        $tacgias    = Tacgia::pluck('tentacgia','id');
+//        $nxbs       = Nhaxuatban::pluck('tennxb','id');
+//        $tacgias    = Tacgia::pluck('tentacgia','id');
 
         return view('admin.sanpham.themsanpham',[
             'action'        => 'edit',
@@ -127,12 +130,14 @@ class SanphamController extends Controller
             'sanpham'       => $sanpham,
             'theloais'      =>  $theloais,
             'vitris'        =>  $vitris,
-            'nxbs'          =>  $nxbs,
-            'tacgias'       =>  $tacgias,
+//            'nxbs'          =>  $nxbs,
+//            'tacgias'       =>  $tacgias,
         ]);
     }
     public function postedit($id, Request $request){
         $sanpham    = Sanpham::findorFail($id);
+
+        $data = request()->all();  
 
         $masanpham      =   $request->input('productBarcode'); // 1
         $tensanpham     =   $request->input('productTitle'); // 2
