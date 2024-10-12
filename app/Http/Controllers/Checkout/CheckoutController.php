@@ -3,56 +3,253 @@
 namespace App\Http\Controllers\Checkout;
 
 use App\Http\Controllers\Controller;
-use App\Models\Donhang;
+
+use App\Models\Discount;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
-use DB;
+
+// Models
 use Cart;
+use App\Models\Donhang;
+use App\Models\Shipping;
+use mysql_xdevapi\Session;
 
 class CheckoutController extends Controller
 {
+
     /*
      * Hiển thị trang thanh toán (Checkout)
      *
      * */
     public function getCheckout() {
-        // Lấy thông tin giỏ hàng từ phiên để kiểm tra giỏ hàng
-        $dataCheckout = session('dataCheckout') ?? '';
 
-        if(!$dataCheckout) {
-            return redirect()->route('cart')->with('error', 'Giỏ hàng rỗng');
-        }
+        // Lấy thông tin giỏ hàng từ phiên để kiểm tra giỏ hàng
+        $cartItems = Cart::instance('cart')->content();
+
+//        $dataCheckout = session('dataCheckout') ?? '';
+//
+//        if(!$dataCheckout) {
+//            return redirect()->route('cart')->with('error', 'Giỏ hàng rỗng');
+//        }
+
+        $grandTotal = Cart::subtotal(2, '.', '');
+        $total = Cart::instance('cart')->total(2, '.', '');
 
         // Shipping
-        // Lay danh sach phuong thuc giao hang
+        $shippings = Shipping::all();
+
+        // Apply Discount Here
+        if (session()->has('code')) {
+            $code = session()->get('code');
+
+            if ($code->type == 'percent') {
+                $discount = ($code->discount_amount / 100) * $grandTotal;
+                $total = $total - $discount;
+            } else {
+                $discount = $code->discount_amount;
+                $total = $total - $discount;
+            }
+        }
 
         // Payment
-        // Lay danh sach phuong thuc thanh toan
-
-        // Total
-        // Lay danh sach tong
 
         // Shipping address
-        // Lay dia chi giao hang mac dinh
         $customer = Auth::user();
 
         if(!$customer) {
-            return redirect()->route('cart')->with('error', 'Ban chua dang nhap');
+            return redirect()->route('cart')->with('error', 'Bạn chưa đăng nhập. Vui lòng đăng nhập hoăc đăng ký để tiếp tục sử dụng!');
         }
 
-        //Process captcha
-        // Ma Capcha xac minh khong phai robot
-
+        // Data response
         return view('checkout', [
             'title' => "Thanh toan",
-            'cartItems' => $dataCheckout,
-//            'totalItem' => $totalItem,
+            'cartItems' => $cartItems,
+            'shippings' => $shippings,
+            'discount' => isset($discount) ? number_format($discount, 2) : 0,
+            'total' => number_format($total,2)
         ]);
     }
 
     /*
-     * Kiểm tra request được gửi lên từ giỏ hàng
+     * Tính tiền giao hàng
      *
+     * */
+    public function getShipping(Request $request) {
+
+        $id = $request->id;
+
+        $shipping = Shipping::find($id);
+
+        $grandTotal = Cart::instance('cart')->total(2,'.','') + $shipping->price;
+
+        // Coupon - Ma giam gia
+        $grandTotal = Cart::instance('cart')->subtotal(2,'.','');
+        $discount = 0;
+
+        // Apply Discount here
+        if (session()->has('code')) {
+            $code = session()->get('code');
+
+            if ($code->type == 'percent') {
+                $discount = ($code->discount_amount / 100) * $grandTotal;
+            } else {
+                $discount = $code->discout_amount;
+            }
+        }
+
+        return response()->json([
+            'status' => true,
+            'data' => number_format($shipping->price, 2),
+            'discount' => $discount,
+            'total' => number_format($grandTotal,2)
+        ]);
+    }
+
+    /*
+     * Hiển thị trang thanh toán (Checkout)
+     *
+     * */
+    public function getOrderSummery(Request $request) {
+
+        // Coupon - Ma giam gia
+        $grandTotal = Cart::instance('cart')->subtotal(2,'.','');
+        $total = Cart::instance('cart')->total(2,'.','');
+        $discount = 0;
+        $discountHtml = '';
+
+        // Apply Discount here
+        if (session()->has('code')) {
+            $code = session()->get('code');
+
+            if ($code->type == 'percent') {
+                $discount = ($code->discount_amount / 100) * $grandTotal;
+                $total = $total - $discount;
+            } else {
+                $discount = $code->discount_amount;
+                $total = $total - $discount;
+            }
+
+            $discountHtml = '<div class="input-group mt-4" id="discount-response">
+                    <strong>'.session()->get('code')->code.'</strong>
+                    <a class="btn btn-sm btn-danger">
+                        <i class="fa fa-times" id="remove-discount"></i>
+                    </a>
+                </div>';
+
+            return response()->json([
+                'status' => true,
+                'discount' => $discount,
+                'discountHtml' => $discountHtml,
+                'total' => number_format($total,2)
+            ]);
+        } else {
+            return response()->json([
+                'status' => true,
+                'discount' => number_format($discount, 2),
+                'discountHtml' => $discountHtml,
+                'total' => number_format($total,2)
+            ]);
+        }
+    }
+
+    /*
+     * Tinh tien khuyen mai
+     *
+     * */
+    public function getCoupon(Request $request) {
+
+        $code = $request->code;
+
+        $codeCoupon = Discount::where('code', $code)->first();
+
+        if ($codeCoupon == null) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Invalid discount coupon'
+            ]);
+        }
+
+        // Check if coupon start date is valid or not
+        $now = Carbon::now();
+
+        if ($codeCoupon->starts_at != "") {
+            $startDate = Carbon::createFromFormat('Y-m-d H:i:s', $codeCoupon->starts_at);
+
+            if ($now->lt($startDate)) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Invalid discount coupon start'
+                ]);
+            }
+        }
+
+        // Check if coupon end date is valid or not
+        if ($codeCoupon->expires_at != "") {
+            $endDate = Carbon::createFromFormat('Y-m-d H:i:s', $codeCoupon->expires_at);
+
+            if ($now->gt($endDate)) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Invalid discount coupon end'
+                ]);
+            }
+        }
+
+        // Max Uses Coupon Check
+        if ($codeCoupon->max_uses > 0) {
+            $couponUser = Donhang::where('giamgia', $codeCoupon->id)->count();
+
+            if ($couponUser >= $codeCoupon->max_uses) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Invalid discount coupon'
+                ]);
+            }
+        }
+
+        // Max Uses User Check
+        if ($codeCoupon->max_uses_user > 0) {
+            $couponUsedByUser = Donhang::where(['giamgia' => $codeCoupon->id,'makhachhang' => Auth::user()->id])->count();
+
+            if ($couponUsedByUser >= $codeCoupon->max_uses_user) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'You already used this coupon code'
+                ]);
+            }
+        }
+
+        $subTotal = Cart::subtotal(2, '.', '');
+        
+        // Min amount condition check
+        if ($codeCoupon->min_amount > 0) {
+            if ($subTotal < $codeCoupon->min_amount) {
+                return response()->json([
+                    'status' => false,
+                    'message' => 'Your min amount be $'.$codeCoupon->min_amount,
+                ]);
+            }
+        }
+
+        // Apply success
+        session()->put('code', $codeCoupon);
+
+        return $this->getOrderSummery($request);
+    }
+
+    /*
+     *
+     *
+     * */
+    public function removeCoupon(Request $request) {
+        session()->forget('code');
+
+        return $this->getOrderSummery($request);
+    }
+
+    /*
+     * Kiểm tra request được gửi lên từ giỏ hàng
      *
      * */
     public function prepareCheckout(Request $request) {
@@ -65,21 +262,15 @@ class CheckoutController extends Controller
 
         $data = $request->all();
 
-        // Kiểm tra giỏ hàng có rỗng không
-//        $cartDetail = DB::table('shoppingcart')
-//            ->where('identifier', $customer)
-//            ->where('instance', 'cart')
-//            ->first();
         $cartItems = Cart::instance('cart')->content();
 
         if(!$cartItems) {
             return redirect()->route('cart');
         }
-//
+
 //        $cartItems = unserialize($cartDetail->content);
 
         // Kiểm tra số lượng của từng sản phẩm
-
 
         //Set session - Thiết lập phiên lưu trữ thông tin giỏ hàng
         session(['dataCheckout' => $cartItems]);
@@ -119,7 +310,7 @@ class CheckoutController extends Controller
         //Set session address process
         session(['address_process' => request('address_process')]);
 
-        //Set session shippingAddressshippingAddress
+        //Set session shippingAddress
         session(
             [
                 'shippingAddress' => [
@@ -134,7 +325,6 @@ class CheckoutController extends Controller
             ]
         );
 
-        //
         return redirect()->route('checkout.confirm');
     }
 
@@ -368,13 +558,15 @@ class CheckoutController extends Controller
      *
      *
      * */
-    public function orderSuccessProcessFront()	     				// Bỏ
+    public function orderSuccessProcessFront()
     {
-        if (!session('orderID')) {								// b01. Nếu đơn hàng tạo thất bại
+        // b01. Nếu đơn hàng tạo thất bại
+        if (!session('orderID')) {
             return redirect()->route('home');
         }
 
-        $orderInfo = Donhang::with('chitietdonhang')->find(session('orderID'))->toArray();		// b03. Lấy đơn hàng kèm chi tiết đơn hàng
+        // b03. Lấy đơn hàng kèm chi tiết đơn hàng
+        $orderInfo = Donhang::with('chitietdonhang')->find(session('orderID'))->toArray();
 
         session()->forget('orderID');
 
@@ -390,6 +582,7 @@ class CheckoutController extends Controller
      *
      * */
     public function completeOrder() {
+
         // Clear cart store
         $this->clearCartStore();
 
@@ -415,42 +608,40 @@ class CheckoutController extends Controller
         // b1. Kiểm tra dữ liệu trong phiên dataCheckout
         $dataCheckout = session('dataCheckout') ?? '';
 
-//        dd($dataCheckout);
-
         if ($dataCheckout) {
             foreach ($dataCheckout as $key => $row) {
-//                dd($row->rowId);
-                Cart::instance('cart')->remove($row->rowId);   			// b2. Xóa sản phẩm trong giỏ hàng
+                // b2. Xóa sản phẩm trong giỏ hàng
+                Cart::instance('cart')->remove($row->rowId);
             }
         }
     }
 
-        /*
-         *
-         *
-         * */
-        private function processAfterOrderSuccess (string $orderID)
-        {
-            //Clear session
-            $this->clearSession();
-            return $orderID;
-        }
+    /*
+     *
+     *
+     * */
+    private function processAfterOrderSuccess (string $orderID)
+    {
+        //Clear session
+        $this->clearSession();
+        return $orderID;
+    }
 
-        /*
-         *
-         *
-         * */
-        private function clearSession()
-        {
-            session()->forget('paymentMethod'); //destroy paymentMethod
-            session()->forget('shippingMethod'); //destroy shippingMethod		// b02. Xoá phiên chứa dữ liệu về phương thức giao hàng
-            session()->forget('totalMethod'); //destroy totalMethod			// b03. Xoá phiên chứa dữ liệu về phương thức tổng
-            session()->forget('otherMethod'); //destroy otherMethod			// b04. Xoá phiên chứa dữ liệu về một số phương thức khác
-            session()->forget('dataTotal'); //destroy dataTotal 			// b05. Xoá phiên chứa dữ liệu về Total
-            session()->forget('dataCheckout'); //destroy dataCheckout		// b06. Xoá phiên chứa dữ liệu về Thông tin thanh toán
-            session()->forget('storeCheckout'); //destroy storeCheckout		// b07. Xoá phiên chứa dữ liệu về Cửa hàng thanh toán
-            session()->forget('dataOrder'); //destroy dataOrder			// b08. Xoá phiên chứa dữ liệu về đơn hàng
-            session()->forget('arrCartDetail'); //destroy arrCartDetail		// b09. Xoá phiên chứa dữ liệu về Danh sách sản phẩm trong giỏ hàng
-           // session()->forget('orderID'); //destroy orderID				// b10. Xoá phiên chứa dữ liệu về Đơn hàng được tạo
-        }
+    /*
+     *
+     *
+     * */
+    private function clearSession()
+    {
+        session()->forget('paymentMethod'); //destroy paymentMethod
+        session()->forget('shippingMethod'); //destroy shippingMethod		// b02. Xoá phiên chứa dữ liệu về phương thức giao hàng
+        session()->forget('totalMethod'); //destroy totalMethod			// b03. Xoá phiên chứa dữ liệu về phương thức tổng
+        session()->forget('otherMethod'); //destroy otherMethod			// b04. Xoá phiên chứa dữ liệu về một số phương thức khác
+        session()->forget('dataTotal'); //destroy dataTotal 			// b05. Xoá phiên chứa dữ liệu về Total
+        session()->forget('dataCheckout'); //destroy dataCheckout		// b06. Xoá phiên chứa dữ liệu về Thông tin thanh toán
+        session()->forget('storeCheckout'); //destroy storeCheckout		// b07. Xoá phiên chứa dữ liệu về Cửa hàng thanh toán
+        session()->forget('dataOrder'); //destroy dataOrder			// b08. Xoá phiên chứa dữ liệu về đơn hàng
+        session()->forget('arrCartDetail'); //destroy arrCartDetail		// b09. Xoá phiên chứa dữ liệu về Danh sách sản phẩm trong giỏ hàng
+       // session()->forget('orderID'); //destroy orderID				// b10. Xoá phiên chứa dữ liệu về Đơn hàng được tạo
+    }
 }

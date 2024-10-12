@@ -16,7 +16,7 @@
                        aria-label="Search..." />
             </div>
         </div>
-        <!-- /Search -->
+        <!-- / Search -->
 
         <ul class="navbar-nav flex-row align-items-center ms-auto">
             <!-- User -->

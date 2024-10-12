@@ -16,6 +16,21 @@ Route::group(['prefix' => '/checkout'],
             [CheckoutController::class,'getCheckout']
         )->name('checkout');
 
+        // Checkout shipping - Giao hang
+        Route::post('/checkout/shipping',
+            [CheckoutController::class,'getShipping']
+        )->name('checkout.shipping');
+
+        // Checkout coupon - Ma giam gia
+        Route::post('/checkout/coupon',
+            [CheckoutController::class,'getCoupon']
+        )->name('checkout.coupon');
+
+        // Checkout remove coupon - Ma giam gia
+        Route::post('/checkout/remove-discount',
+            [CheckoutController::class,'removeCoupon']
+        )->name('checkout.removeCoupon');
+
         // Checkout process, from screen checkout to check out confirm
         Route::post('/checkout-process',
             [CheckoutController::class,'processCheckout']

@@ -9,28 +9,44 @@ class Sanpham extends Model
 {
     use HasFactory;
 
+    // Khai báo các kiểu sản phẩm mặc định
+    const TYPE_SIMPLE = 'simple';     // Sản phẩm đơn giản
+    const TYPE_VARIABLE = 'variable'; // Sản phẩm biến thể
+    const TYPE_DIGITAL = 'digital';   // Sản phẩm số
+    const TYPE_SUBSCRIPTION = 'subscription'; // Sản phẩm đăng ký
+
     protected $table = 'sanpham';
 
     protected $primaryKey = 'id';
 
     protected $fillable = [
         'tensanpham',
-        'SKU',
-        'donvitinh',
+        'sku',
         'mota',
         'soluong',
-        'giagoc',
+        'gianhap',
         'giaban',
-        'giatotnhat',
         'anhbia',
-        'matacgia',
-        'manhaxuatban',
         'matheloai',
-        'mavitri',
         'trangthai',
     ];
 
-    //
+    /*
+     *
+     * */
+    public static function getProductTypes()
+    {
+        return [
+            self::TYPE_SIMPLE => 'Sản phẩm đơn giản',
+            self::TYPE_VARIABLE => 'Sản phẩm biến thể',
+            self::TYPE_DIGITAL => 'Sản phẩm số',
+            self::TYPE_SUBSCRIPTION => 'Sản phẩm đăng ký',
+        ];
+    }
+
+    /*
+     * Kiểm tra ràng buộc duy nhất của sku
+     * */
     public function checkSKU($id, $sku): bool {
         $check = self::where('SKU', $sku);
 
@@ -47,14 +63,12 @@ class Sanpham extends Model
         }
     }
 
-    public function loaisanpham() {
-        return $this->belongsTo(Loaisanpham::class, 'matheloai');
-    }
-
     /*
      *
      * */
-
+    public function loaisanpham() {
+        return $this->belongsTo(Loaisanpham::class, 'matheloai');
+    }
 
     /*
      * Upate stock, sold
@@ -69,6 +83,5 @@ class Sanpham extends Model
             $item->save();
         }
     }
-
 }
 

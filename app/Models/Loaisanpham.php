@@ -24,20 +24,6 @@ class Loaisanpham extends Model
     protected static $getListTitleAdmin = null;
     protected static $getListCategoryGroupByParentAdmin = null;
 
-    // Kiểm tra tên loại đã tồn tại chưa khi thực hiện cập nhật
-    public static function checkTenloai($id, $tenloai): bool {
-        if($id && $tenloai) {
-            return self::where('tenloai', $tenloai)->where('id', '<>', $id)->exists();
-        } else
-            return false;
-    }
-
-    //
-    public static function theloaiExists($theloai)
-    {
-        return self::where('tenloai', $theloai)->exists();
-    }
-
     /*
      *
      *

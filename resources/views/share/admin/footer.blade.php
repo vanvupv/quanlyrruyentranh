@@ -15,14 +15,8 @@
 
 <!-- -->
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/buttons/2.1.0/js/dataTables.buttons.min.js"></script>
-
-
 <!-- Lib Laravel File Manager -->
-{{--<script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>--}}
-{{--<script>--}}
-{{--    $('#lfm').filemanager('image');--}}
-{{--</script>--}}
-
+<script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
 
 <!-- Admin JS -->
 <script src="{{asset('theme/dist/js/adminlte.js')}}"></script>
@@ -36,12 +30,17 @@
 <!-- Customize -->
 <script src="{{asset('assets/js/main-customize.js')}}"></script>
 <script src="{{asset('assets/js/datatable/datatables-advanture.js')}}"></script>
-
-<!-- Add Multiple Records -->
-{{--<script src="{{asset('assets/js/change.js')}}"></script>--}}
+<script src="{{asset('assets/js/admin/product-price/product-price.js')}}"></script>
+<script src="{{asset('assets/js/admin/accounting/accounting.js')}}"></script>
 
 <!-- -->
 <script>
+    <!-- Include File Manager JS -->
+
+    // Initialize the file manager button
+    $('#lfm').filemanager('image');
+
+
     $('select[name=addProduct]').select2();
     $('select[name=addProduct]').on('change', function () {
         var valueSelect = $(this).val();

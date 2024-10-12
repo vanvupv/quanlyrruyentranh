@@ -3,11 +3,11 @@
 namespace App\Http\Controllers\Admin\khuyenmai;
 
 use App\Http\Controllers\Controller;
-use App\Models\Loaisanpham;
-use App\Models\Sanpham;
 use Illuminate\Http\Request;
 
 //
+use App\Models\Loaisanpham;
+use App\Models\Sanpham;
 use App\Models\Khuyenmai;
 use Validator;
 

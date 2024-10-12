@@ -2,8 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Models\Permission;
-use App\Models\User;
+
 use Closure;
 use Illuminate\Http\Request;
 use DB;
@@ -11,6 +10,10 @@ use DB;
 use App\Http\Controllers\Admin\Permission as Per;
 
 use Symfony\Component\HttpFoundation\Response;
+
+//
+use App\Models\Permission;
+use App\Models\User;
 
 //
 use Illuminate\Support\Facades\Auth;
@@ -104,7 +107,7 @@ class CheckPermission
 
         $routeName = $request->route()->getName();
         $user = Auth::user()->id;
-        $role = User::find(5)->roles()->pluck('role_slug', 'id');        
+        $role = User::find(5)->roles()->pluck('role_slug', 'id');
 
 
 

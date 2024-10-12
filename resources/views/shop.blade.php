@@ -1,56 +1,19 @@
 @include('share.header')
-<body class="theme-color4 light ltr">
 
 @include('share.nav')
 
-<div class="mobile-menu d-sm-none">
-    <ul>
-        <li>
-            <a href="demo3.php" class="active">
-                <i data-feather="home"></i>
-                <span>Home</span>
-            </a>
-        </li>
-        <li>
-            <a href="javascript:void(0)">
-                <i data-feather="align-justify"></i>
-                <span>Category</span>
-            </a>
-        </li>
-        <li>
-            <a href="javascript:void(0)">
-                <i data-feather="shopping-bag"></i>
-                <span>Cart</span>
-            </a>
-        </li>
-        <li>
-            <a href="javascript:void(0)">
-                <i data-feather="heart"></i>
-                <span>Wishlist</span>
-            </a>
-        </li>
-        <li>
-            <a href="user-dashboard.php">
-                <i data-feather="user"></i>
-                <span>Account</span>
-            </a>
-        </li>
-    </ul>
-</div>
-<!-- -->
 @include('share.breadcrumb')
 
-<!-- Shop Section start -->
 <section class="section-b-space">
     <div class="container">
         <div class="row">
+            <!-- Side Bar -->
             <div class="col-lg-3 category-side col-md-4">
                 <div class="category-option">
                     <div class="button-close mb-3">
                         <button class="btn p-0"><i data-feather="arrow-left"></i> Close</button>
                     </div>
                     <div class="accordion category-name" id="accordionExample">
-                        <!-- Start Danh Mục -->
                         <div class="accordion-item category-rating">
                             <h2 class="accordion-header" id="headingOne">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
@@ -78,8 +41,6 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Start Giá bán -->
                         <div class="accordion-item category-price">
                             <h2 class="accordion-header" id="headingFour">
                                 <button class="accordion-button" type="button" data-bs-toggle="collapse"
@@ -111,16 +72,9 @@
                     </div>
                 </div>
             </div>
-
+            <!-- / Side Bar -->
             <div class="category-product col-lg-9 col-12 ratio_30">
                 <div class="row g-4">
-                    <!-- label and featured section -->
-                    <div class="col-md-12">
-                        <ul class="short-name">
-
-                        </ul>
-                    </div>
-
                     <div class="col-12">
                         <div class="filter-options">
                             <div class="select-options">
@@ -173,8 +127,7 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Start Prodcut -->
+                <!-- List Product -->
                 <div class="row g-sm-4 g-3 row-cols-lg-4 row-cols-md-3 row-cols-2 mt-1 custom-gy-5 product-style-2 ratio_asos product-list-section">
                     @foreach($sanphams as $sanpham)
                     <div>
@@ -182,8 +135,8 @@
                             <div class="img-wrapper">
                                 <div class="front">
                                     <a href="{{route('home.detail', $sanpham->id)}}">
-                                        <img src="{{asset("assets/images/product/front/$sanpham->anhbia")}}"
-                                             class="bg-img blur-up lazyload" alt="">
+                                        <img src="{{asset($sanpham->anhbia)}}"
+                                             class="bg-img blur-up lazyload" alt="{{ $sanpham->tensanpham }}">
                                     </a>
                                 </div>
                                 <div class="cart-wrap">
@@ -207,26 +160,6 @@
                                 </div>
                             </div>
                             <div class="product-details">
-                                <div class="rating-details">
-                                    <span class="font-light grid-content">{{$sanpham->tensanpham}}</span>
-                                    <ul class="rating mt-0">
-                                        <li>
-                                            <i class="fas fa-star theme-color"></i>
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-star theme-color"></i>
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-star"></i>
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-star"></i>
-                                        </li>
-                                        <li>
-                                            <i class="fas fa-star"></i>
-                                        </li>
-                                    </ul>
-                                </div>
                                 <div class="main-price">
                                     <a href="{{route('home.detail', $sanpham->id)}}" class="font-default">
                                         <h5 class="ms-0">{{$sanpham->tensanpham}}</h5>
@@ -243,69 +176,29 @@
                     </div>
                     @endforeach
                 </div>
-
-                <!-- Start Panigation -->
+                <!-- / List Product -->
+                <!-- Pagination -->
                 <div class="navigation d-flex" style="justify-content: center; padding: 24px">
                     {{ $sanphams->links() }}
                 </div>
-
+                <!-- / Pagination -->
             </div>
         </div>
     </div>
 </section>
 
-<!-- Subscribe Section Start -->
-<section class="subscribe-section section-b-space">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-md-6">
-                <div class="subscribe-details">
-                    <h2 class="mb-3">Subscribe Our News</h2>
-                    <h6 class="font-light">Subscribe and receive our newsletters to follow the news about our fresh
-                        and fantastic Products.</h6>
-                </div>
-            </div>
-
-            <div class="col-lg-4 col-md-6 mt-md-0 mt-3">
-                <div class="subsribe-input">
-                    <div class="input-group">
-                        <input type="text" class="form-control subscribe-input" placeholder="Your Email Address">
-                        <button class="btn btn-solid-default" type="button">Button</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-<!-- Subscribe Section End -->
-
-<div id="qvmodal"></div>
-
-<!-- Start Form Filter -->
+<!-- Form Filter -->
 <form id="formFilter" method="GET">
-        <input type="hidden" id="pagenumber" name="pagenumber" value="{{$page}}">
+    <input type="hidden" id="pagenumber" name="pagenumber" value="{{$page}}">
     <input type="hidden" id="min_price" name="minprice" value="{{$min_price}}">
     <input type="hidden" id="max_price" name="maxprice" value="{{$max_price}}">
     <input type="hidden" id="order" name="order" value="{{$orderBy}}">
     <input type="hidden" id="brands" name="brands" value="">
     <input type="hidden" id="categories" name="categories" value="{{$q_options}}">
 </form>
-<!-- End Form Filter -->
-
-
-
-
+<!-- / Form Filter -->
 
 <script>
-    $(function () {
-        $('[data-bs-toggle="tooltip"]').tooltip()
-    });
-</script>
-
-
-
-<script>
-
     const filterByCatory = (catory) => {
         let catories = "";
         $("input[name='categories']:checked").each(function () {
@@ -340,7 +233,6 @@
         $('#formFilter').submit();
     }
 </script>
-
 
 <script>
     $('#sub-price').click(function (e) {

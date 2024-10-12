@@ -1,3 +1,4 @@
+<!-- Header -->
 <header class="header-style-2" id="home">
     <div class="main-header navbar-searchbar m-0">
         <div class="container-fluid-lg">
@@ -26,9 +27,9 @@
                                                     </span>
                                             </div>
                                         </li>
-                                        <li><a href="{{route('home')}}" class="nav-link menu-title"> Trang Chủ </a></li>
-                                        <li><a href="{{route('home.shop')}}" class="nav-link menu-title"> Cửa Hàng </a></li>
-                                        <li><a href="{{route('cart')}}" class="nav-link menu-title"> Giỏ Hàng </a></li>
+                                        <li><a href="{{route('home')}}" class="nav-link menu-title {{ Route::currentRouteName() == 'home' ? 'active' : '' }}"> Trang Chủ </a></li>
+                                        <li><a href="{{route('home.shop')}}" class="nav-link menu-title {{ Route::currentRouteName() == 'home.shop' ? 'active' : '' }}"> Cửa Hàng </a></li>
+                                        <li><a href="{{route('cart')}}" class="nav-link menu-title {{ Route::currentRouteName() == 'cart' ? 'active' : '' }}"> Giỏ Hàng </a></li>
                                         <li><a href="#" class="nav-link menu-title"> Về Chúng Tôi </a></li>
                                         <li><a href="#" class="nav-link menu-title"> Liên Hệ </a></li>
                                         <li><a href="#" class="nav-link menu-title"> Bài Viết </a></li>
@@ -44,7 +45,6 @@
                                         <i data-feather="search"></i>
                                     </div>
                                 </li>
-
                                 <li class="onhover-dropdown wislist-dropdown">
                                     <div class="cart-media">
                                         <a href="wishlist/list.html">
@@ -55,7 +55,6 @@
                                         </a>
                                     </div>
                                 </li>
-
                                 <li class="onhover-dropdown wislist-dropdown">
                                     <div class="cart-media">
                                         <a href="{{route('cart')}}">
@@ -119,7 +118,9 @@
         </div>
     </div>
 </header>
-<!-- Start Menu -->
+<!-- / Header -->
+
+<!-- Menu -->
 <div class="mobile-menu d-sm-none">
     <ul>
         <li>
@@ -154,5 +155,6 @@
         </li>
     </ul>
 </div>
-<!-- End Menu -->
+<!-- / Menu -->
+
 

@@ -21,11 +21,6 @@
                     <p class="mb-0">Orders placed across your store</p>
                 @endif
             </div>
-            <div class="d-flex align-content-center flex-wrap gap-4">
-                <button class="btn btn-outline-secondary waves-effect">Discard</button>
-                <button class="btn btn-outline-primary waves-effect">Save draft</button>
-                <button type="submit" class="btn btn-primary waves-effect waves-light">Publish product</button>
-            </div>
         </div>
 
         <div class="row">
@@ -38,8 +33,8 @@
                     </div>
                     <div class="card-body">
                         <div class="form-floating form-floating-outline mb-3">
-                            <input type="text" class="form-control" id="ecommerce-product-name" placeholder="Product title"
-                                   name="productTitle" aria-label="Product title" value="@if($action == 'edit') {{$sanpham->tensanpham}} @endif">
+                            <input type="text" class="form-control" id="ecommerce-product-name" placeholder="Product name"
+                                   name="productTitle" aria-label="Product name" value="@if($action == 'edit') {{$sanpham->tensanpham}} @endif">
                             <label for="ecommerce-product-name">Name</label>
                         </div>
 
@@ -47,15 +42,8 @@
                             <div class="col">
                                 <div class="form-floating form-floating-outline">
                                     <input type="text" class="form-control" id="ecommerce-product-sku" placeholder="00000"
-                                           name="productSku" aria-label="Product SKU" value="@if($action == 'edit') {{$sanpham->SKU}} @endif">
+                                           name="productSku" aria-label="Product SKU" value="@if($action == 'edit') {{$sanpham->sku}} @endif">
                                     <label for="ecommerce-product-sku">SKU</label>
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-floating form-floating-outline">
-                                    <input type="text" class="form-control" id="ecommerce-product-barcode"
-                                           placeholder="0123-4567" name="productBarcode" aria-label="Product barcode" value="@if($action == 'edit') {{$sanpham->masanpham}} @endif">
-                                    <label for="ecommerce-product-name">Barcode</label>
                                 </div>
                             </div>
                         </div>
@@ -91,30 +79,6 @@
                     </div>
                 </div>
                 <!-- /Product Information -->
-
-                <!-- Media -->
-                <div class="card mb-3">
-                    <div class="card-header d-flex justify-content-between align-items-center">
-                        <h5 class="mb-0 card-title">Product Image</h5>
-                        <a href="javascript:void(0);" class="fw-medium" id="lfm" data-input="thumbnail" data-type="image" data-preview="holder">Add media from URL</a>
-                    </div>
-                    <div class="card-body">
-                        <div class="d-flex justify-content-center mb-3">
-                            <div id="holder">
-                                <img src="{{'/storage/photos/1/products/image_cây-tre-trăm-đốt-080520241159.jpg'}}" alt="{{$sanpham->tensanpham}}">
-                            </div>
-                        </div>
-                        <input id="thumbnail" class="form-control" type="hidden" name="anhbia" @if($action == 'edit') value={{$sanpham->anhbia}} @endif>
-                    </div>
-                </div>
-
-                <!-- Include File Manager JS -->
-                <script src="/vendor/laravel-filemanager/js/stand-alone-button.js"></script>
-                <script>
-                    // Initialize the file manager button
-                      $('#lfm').filemanager('image');
-                </script>
-                <!-- /Media -->
             </div>
             <!-- /Second column -->
 
@@ -128,33 +92,17 @@
                     <div class="card-body">
                         <!-- Base Price -->
                         <div class="form-floating form-floating-outline mb-3">
-                            <input type="number" class="form-control" id="ecommerce-product-price" placeholder="Price"
+                            <input type="text" class="form-control wc_input_price" id="_sale_price" placeholder="Price"
                                    name="productPrice" aria-label="Product price" @if($action == 'edit') value={{trim($sanpham->giaban)}} @endif>
                             <label for="ecommerce-product-price">Best Price</label>
                         </div>
 
                         <!-- Discounted Price -->
                         <div class="form-floating form-floating-outline mb-3">
-                            <input type="number" class="form-control" id="ecommerce-product-discount-price"
+                            <input type="text" class="form-control wc_input_price" id="_regular_price"
                                    placeholder="Discounted Price" name="productDiscountedPrice"
-                                   aria-label="Product discounted price" @if($action == 'edit') value={{$sanpham->giatotnhat}} @endif>
+                                   aria-label="Product discounted price" @if($action == 'edit') value={{$sanpham->gianhap}} @endif>
                             <label for="ecommerce-product-discount-price">Discounted Price</label>
-                        </div>
-                        <!-- Charge tax check box -->
-                        <div class="form-check my-2">
-                            <input class="form-check-input" type="checkbox" value="" id="price-charge-tax" checked="">
-                            <label class="mb-2 text-heading" for="price-charge-tax">
-                                Charge tax on this product
-                            </label>
-                        </div>
-                        <!-- Instock switch -->
-                        <div class="d-flex justify-content-between align-items-center border-top pt-4 pb-2">
-                            <p class="mb-0">In stock</p>
-                            <div class="w-25 d-flex justify-content-end">
-                                <div class="form-check form-switch me-n3">
-                                    <input type="checkbox" class="form-check-input" checked="">
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -179,17 +127,7 @@
                                 </select>
                             </div>
                         </div>
-                        <!-- Location -->
-                        <div class="mb-3 col ecommerce-select2-dropdown">
-                            <select id="location" name="mavitri" class="form-select form-select-sm" data-placeholder="Location">
-                                <option value="">Chọn Vị trí</option>
-                                @if($vitris)
-                                    @foreach($vitris as $id => $item)
-                                        <option @if($action == 'edit' && $sanpham->mavitri == $id) selected @endif value="{{$id}}">{{$item}}</option>
-                                    @endforeach
-                                @endif
-                            </select>
-                        </div>
+
                         <!-- Status -->
                         <div class="mb-3 col ecommerce-select2-dropdown">
                             <select id="status-org" name="status" class="form-select form-select-sm" data-placeholder="Select Status">
@@ -202,10 +140,25 @@
                     </div>
                 </div>
                 <!-- /Organize Card -->
+                <!-- Media -->
+                <div class="card mb-3">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="mb-0 card-title">Product Image</h5>
+                        <a href="javascript:void(0);" class="fw-medium" id="lfm" data-input="thumbnail" data-type="image" data-preview="holder">Add media from URL</a>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-center mb-3">
+                            <div id="holder">
+                                <img src="{{ isset($sanpham) ? asset($sanpham->anhbia) : '' }}" alt="">
+                            </div>
+                        </div>
+                        <input id="thumbnail" class="form-control" type="hidden" name="anhbia" @if($action == 'edit') value={{$sanpham->anhbia}} @endif>
+                    </div>
+                </div>
+                <!-- /Media -->
             </div>
             <!-- /Second column -->
         </div>
-            <!-- -->
             <input type="submit" value="Create Product" class="btn btn-warning">
         </form>
     </div>

@@ -1,56 +1,17 @@
 @include('share.header')
-<body class="theme-color4 light ltr">
 
-<!-- Start Header -->
 @include('share.nav')
 
-<!--  -->
-<div class="mobile-menu d-sm-none">
-    <ul>
-        <li>
-            <a href="demo3.php" class="active">
-                <i data-feather="home"></i>
-                <span>Home</span>
-            </a>
-        </li>
-        <li>
-            <a href="javascript:void(0)">
-                <i data-feather="align-justify"></i>
-                <span>Category</span>
-            </a>
-        </li>
-        <li>
-            <a href="javascript:void(0)">
-                <i data-feather="shopping-bag"></i>
-                <span>Cart</span>
-            </a>
-        </li>
-        <li>
-            <a href="javascript:void(0)">
-                <i data-feather="heart"></i>
-                <span>Wishlist</span>
-            </a>
-        </li>
-        <li>
-            <a href="user-dashboard.php">
-                <i data-feather="user"></i>
-                <span>Account</span>
-            </a>
-        </li>
-    </ul>
-</div>
-
-<!-- Start Header -->
 @include('share.breadcrumb')
 
-<!-- Start Chi Tiet San Pham -->
+<!-- Detail Product -->
 <section>
     <div class="container">
         <div class="row gx-4 gy-5">
             <div class="col-lg-12 col-12">
                 <div class="details-items">
                     <div class="row g-4">
-                        <!-- Start Slide Ảnh -->
+                        <!-- Slide -->
                         <div class="col-md-6">
                             <div class="row">
                                 <div class="col-lg-2">
@@ -69,7 +30,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="col-lg-10">
                                     <div class="details-image-1 ratio_asos">
                                         <div>
@@ -91,32 +51,19 @@
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Start Chi Tiết Sản Phẩm -->
+                        <!-- / Silde -->
+                        <!-- Detail Product -->
                         <div class="col-md-6">
                             <div class="cloth-details-size">
-                                <div class="product-count">
-                                    <ul>
-                                        <li>
-                                            <img src="{{asset("assets/images/gif/fire.gif")}}" class="img-fluid blur-up lazyloaded" alt="image">
-                                            <span class="p-counter">37</span>
-                                            <span class="lang">orders in last 24 hours</span>
-                                        </li>
-                                    </ul>
-                                </div>
-
                                 <div class="details-image-concept">
                                     <h2>{{$sanpham->tensanpham}}</h2>
                                 </div>
-
                                 <div class="label-section">
                                     <span class="badge badge-grey-color">#1 Best seller</span>
                                 </div>
-
-                                <h3 class="price-detail">{{ number_format($sanpham->giaban) }}</h3>
-
+                                <h3 class="price-detail">{{ number_format($sanpham->giaban) }} <span> đ </span></h3>
                                 <div id="selectSize" class="addeffect-section product-description border-product">
-                                    <h6 class="product-title product-title-2 d-block">quantity</h6>
+                                    <h6 class="product-title product-title-2 d-block">Số lượng</h6>
                                     <div class="qty-box">
                                         <div class="input-group">
                                             <span class="input-group-btn">
@@ -125,7 +72,6 @@
                                               </button>
                                             </span>
                                             <input type="text" name="quant[1]" id="quantity" class="form-control input-number" value="1"  min="1" max="{{$sanpham->soluong}}">
-
                                             <span class="input-group-btn">
                                               <button type="button" class="btn btn-success btn-number" onclick="updateQuantity()" data-type="plus" data-field="quant[1]">
                                                 <span class="bi bi-plus"></span>
@@ -134,13 +80,7 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="product-buttons">
-                                    <a href="javascript:void(0)" class="btn btn-solid">
-                                        <i class="bi bi-bookmark fz-16 me-2"></i>
-                                        <span>Wishlist</span>
-                                    </a>
-
                                     <a href="javascript:void(0)" onclick="event.preventDefault(); document.getElementById('addtocart').submit();"
                                        id="cartEffect" class="btn btn-solid hover-solid btn-animation">
                                         <i class="bi bi-cart"></i>
@@ -157,14 +97,10 @@
                                         </form>
                                     </a>
                                 </div>
-
-                                <ul class="product-count shipping-order">
-                                    <li>
-                                        <img src=" {{ asset("assets/images/gif/truck.png") }}" class="img-fluid blur-up lazyload" alt="image">
-                                        <span class="lang">Free shipping for orders</span>
-                                    </li>
-                                </ul>
-
+                                <div class="product_meta">
+                                    <span class="sku_wrapper">Mã: <span class="sku">DSMH01300XNH40-1</span></span>
+                                    <span class="posted_in">Danh mục: <a href="https://giaythethao.maugiaodien.com/danh-muc/boots/" rel="tag">Boots</a>, <a href="https://giaythethao.maugiaodien.com/danh-muc/cao-got/" rel="tag">Cao gót</a>, <a href="https://giaythethao.maugiaodien.com/danh-muc/de-bet/" rel="tag">Đế bệt</a>, <a href="https://giaythethao.maugiaodien.com/danh-muc/de-go/" rel="tag">Đế gỗ</a>, <a href="https://giaythethao.maugiaodien.com/danh-muc/giay-bup-be/" rel="tag">Giày búp bê</a>, <a href="https://giaythethao.maugiaodien.com/danh-muc/sneaker/" rel="tag">Sneaker</a>, <a href="https://giaythethao.maugiaodien.com/danh-muc/the-thao/" rel="tag">Thể thao</a></span>
+                                </div>
                                 <div class="border-product">
                                     <h6 class="product-title d-block">share it</h6>
                                     <div class="product-icon">
@@ -199,13 +135,13 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- / Detail Product -->
                     </div>
                 </div>
             </div>
-
             <div class="col-12">
                 <div class="cloth-review">
-                    <!-- Start Menu -->
+                    <!-- Nav Tab -->
                     <nav>
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
                             <button class="nav-link active" id="nav-home-tab" data-bs-toggle="tab"
@@ -218,9 +154,9 @@
                                     data-bs-target="#review" type="button">Review</button>
                         </div>
                     </nav>
-
+                    <!-- / Nav Tab -->
                     <div class="tab-content" id="nav-tabContent">
-                        <!-- Start Description -->
+                        <!-- Description -->
                         <div class="tab-pane fade show active" id="desc">
                             <div class="shipping-chart">
                                 <div class="row g-3 align-items-start">
@@ -239,19 +175,15 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- End Description -->
+                        <!-- / Description -->
 
-                        <!-- Start Specification -->
+                        <!-- Specification -->
                         <div class="tab-pane fade" id="speci">
                             <div class="pro mb-4">
                                 <div class="table-responsive">
                                     <table class="table table-part">
                                         <tr>
-                                            <th>Mã Truyện</th>
-                                            <td>{{$sanpham->masanpham}}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>SKU</th>
+                                            <th>Mã</th>
                                             <td>{{$sanpham->SKU}}</td>
                                         </tr>
                                         <tr>
@@ -261,6 +193,10 @@
                                         <tr>
                                             <th>Số Lượng</th>
                                             <td>{{$sanpham->soluong}}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>Giá bán</th>
+                                            <td>{{$sanpham->giaban}}</td>
                                         </tr>
                                         <tr>
                                             <th>Thể Loại</th>
@@ -274,9 +210,9 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- End Specification -->
+                        <!-- / Specification -->
 
-                        <!-- Start Review -->
+                        <!-- Review -->
                         <div class="tab-pane fade" id="review">
                             <div class="row g-4">
                                 <div class="col-lg-4">
@@ -552,110 +488,85 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- End Review -->
+                        <!-- / Review -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
 </section>
-<!-- Shop Section end -->
+<!-- / Detail Product -->
 
-<!-- Start Sản Phẩm Liên Quan -->
+<!-- Related Product -->
 <section class="ratio_asos section-b-space overflow-hidden">
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <h2 class="mb-lg-4 mb-3">Sản Phẩm Liên Quan</h2>
-                <div class="product-wrapper product-style-2 slide-4 p-0 light-arrow bottom-space">
-                    @foreach($relatedProducts as $relatedProduct)
-                    <div>
-                        <div class="product-box">
-                            <div class="img-wrapper">
-                                <div class="front">
-                                    <a href="{{route('home.detail', $relatedProduct->id)}}">
-                                        <img src="{{asset($relatedProduct->anhbia)}}"
-                                             class="bg-img blur-up lazyload" alt="">
-                                    </a>
-                                </div>
-                                <div class="cart-wrap">
-                                    <ul>
-                                        <li>
-                                            <a href="javascript:void(0)" class="addtocart-btn"
-                                               data-bs-toggle="modal" data-bs-target="#addtocart">
-                                                <i data-feather="shopping-bag"></i>
+                <h2 class="mb-lg-4 mb-3 text-center">SẢN PHẨM LIÊN QUAN</h2>
+                @if(!$relatedProducts->isEmpty())
+                    <div class="product-wrapper product-style-2 slide-4 p-0 light-arrow bottom-space">
+                        @foreach($relatedProducts as $relatedProduct)
+                            <div>
+                                <div class="product-box">
+                                    <div class="img-wrapper">
+                                        <div class="front">
+                                            <a href="{{route('home.detail', $relatedProduct->id)}}">
+                                                <img src="{{asset($relatedProduct->anhbia)}}"
+                                                     class="bg-img blur-up lazyload" alt="{{ $relatedProduct->tensanpham }}">
                                             </a>
-                                        </li>
-                                        <li>
-                                            <a href="javascript:void(0)" data-bs-toggle="modal"
-                                               data-bs-target="#quick-view">
-                                                <i data-feather="eye"></i>
-                                            </a>
-                                        </li>
+                                        </div>
+                                        <div class="cart-wrap">
+                                            <ul>
+                                                <li>
+                                                    <a href="javascript:void(0)" class="addtocart-btn"
+                                                       data-bs-toggle="modal" data-bs-target="#addtocart">
+                                                        <i data-feather="shopping-bag"></i>
+                                                    </a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0)" data-bs-toggle="modal"
+                                                       data-bs-target="#quick-view">
+                                                        <i data-feather="eye"></i>
+                                                    </a>
+                                                </li>
 
-                                        <li>
-                                            <a href="javascript:void(0)" class="wishlist">
-                                                <i data-feather="heart"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product-details">
-                                <div class="rating-details">
-                                    <span class="font-default grid-content">{{$relatedProduct->tensanpham}}</span>
-                                </div>
-                                <div class="main-price">
-                                    <div class="listing-content">
-                                        <span class="font-light">Regular Fit</span>
-                                        <p class="font-light">Dolorem nihil quia qui laudantium expedita aut dolor.
-                                            Qui eligendi voluptatem autem ullam et. Voluptas nemo eum nihil aliquam
-                                            eos aperiam. Numquam dolorum veniam non magnam illum odit deleniti.</p>
+                                                <li>
+                                                    <a href="javascript:void(0)" class="wishlist">
+                                                        <i data-feather="heart"></i>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
                                     </div>
-                                    <h3 class="theme-color">{{ number_format($relatedProduct->giaban) }}</h3>
-                                    <button onclick="location.href = 'cart.html';" class="btn listing-content">Add To Cart</button>
+                                    <div class="product-details">
+                                        <div class="rating-details">
+                                            <span class="font-default grid-content">{{$relatedProduct->tensanpham}}</span>
+                                        </div>
+                                        <div class="main-price">
+                                            <div class="listing-content">
+                                                <span class="font-light">Regular Fit</span>
+                                                <p class="font-light">Dolorem nihil quia qui laudantium expedita aut dolor.
+                                                    Qui eligendi voluptatem autem ullam et. Voluptas nemo eum nihil aliquam
+                                                    eos aperiam. Numquam dolorum veniam non magnam illum odit deleniti.</p>
+                                            </div>
+                                            <h3 class="theme-color">{{ number_format($relatedProduct->giaban) }}</h3>
+                                            <button onclick="location.href = 'cart.html';" class="btn listing-content">Add To Cart</button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                            @endforeach
                     </div>
-                    @endforeach
-                </div>
+                @else
+                    <div class="text-center">
+                        Không tìm thấy sản phẩm liên quan
+                    </div>
+                @endif
             </div>
         </div>
     </div>
 </section>
-
-<!-- Start -->
-<div class="modal fade newletter-modal" id="newsletter">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content ">
-            <div class="modal-header">
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-
-            <div class="modal-body">
-                <img src="assets/images/newletter-icon.png" class="img-fluid blur-up lazyload" alt="">
-                <div class="modal-title">
-                    <h2 class="tt-title">Sign up for our Newsletter!</h2>
-                    <p class="font-light">Never miss any new updates or products we reveal, stay up to date.</p>
-                    <p class="font-light">Oh, and it's free!</p>
-
-                    <div class="input-group mb-3">
-                        <input placeholder="Email" class="form-control" type="text">
-                    </div>
-
-                    <div class="cancel-button text-center">
-                        <button class="btn default-theme w-100" data-bs-dismiss="modal"
-                                type="button">Submit</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- End -->
-
+<!-- / Related Product -->
 
 @include('share.footer')
 

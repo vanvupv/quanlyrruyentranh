@@ -3,18 +3,20 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Sanpham;
 use Illuminate\Http\Request;
 
 //
 use Validator;
 
 //
+use App\Models\Sanpham;
 use App\Models\Loaisanpham;
 
 class LoaisanphamController extends Controller
 {
-    //
+    /*
+     *
+     * */
     public function list() {
         $loaisanphams = Loaisanpham::with('parentCategory')->get();
 
@@ -26,25 +28,28 @@ class LoaisanphamController extends Controller
         ]);
     }
 
+    /*
+     *
+     * */
     public function store(Request $request) {
-        $parent = $request->input('parent_category');
-        $tenloai = $request->input('tentheloai');
-        $mota = $request->input('motatheloai');
-        $anhbia = $request->input('anhbia');
+        $parent     = $request->input('parent_category');
+        $tenloai    = $request->input('tentheloai');
+        $mota       = $request->input('motatheloai');
+        $anhbia     = $request->input('anhbia');
 
         $data = request()->all();
 
         $arrValidation = [
-            'parent_id' => 'required',
-            'tenloai' => 'required|unique,tenloai|regex:/(^([0-9A-Za-z\-_]+)$)/|string|max:100',
-            'mota'   => 'required|string|max:200',
+            'parent_category' => 'required',
+            'tentheloai' => 'required|unique:loaisanpham,tenloai|string|max:100',
+            'motatheloai'   => 'required|string|max:200',
             'anhbia' => 'nullable|string|max:200',
         ];
 
         $validator = Validator::make(
             $data,$arrValidation,
             [
-                'tenloai.regex' => 'Kiểu thể loại bị sai',
+                'tentheloai.regex' => 'Kiểu thể loại bị sai',
             ]
         );
 
@@ -52,10 +57,6 @@ class LoaisanphamController extends Controller
             return redirect()->back()
                 ->withErrors($validator)
                 ->withInput($data);
-        }
-
-        if (Loaisanpham::theloaiExists($tenloai)) {
-            return redirect()->back()->with('error', 'Tên Thể Loại Đã Tồn Tại');
         }
 
         Loaisanpham::create([
@@ -71,10 +72,9 @@ class LoaisanphamController extends Controller
         ]);
     }
 
-    public function view() {
-
-    }
-
+    /*
+     *
+     * */
     public function edit($id) {
         $loaisanpham = Loaisanpham::find($id);
 
@@ -91,11 +91,13 @@ class LoaisanphamController extends Controller
         ]);
     }
 
-    public function postedit($id, Request $request) {
-        $data = $request->all();
-
+    /*
+     *
+     * */
+    public function postedit($id) {
         $loaisanpham = Loaisanpham::find($id);
 
+        //
         if(!$loaisanpham) {
             return redirect()->back()->with('error', 'Không tìm thấy tên thể loại');
         }
@@ -103,19 +105,19 @@ class LoaisanphamController extends Controller
         $data = request()->all();
 
         $arrValidation = [
-            'parent_id' => 'required',
-            'tenloai' => 'required|unique,tenloai|regex:/(^([0-9A-Za-z\-_]+)$)/|string|max:100',
-            'mota'   => 'required|string|max:200',
+            'parent_category' => 'required',
+            'tentheloai' => 'required|unique:loaisanpham,tenloai,' . $loaisanpham->id . '|string|max:100',
+            'motatheloai'   => 'required|string|max:200',
             'anhbia' => 'nullable|string|max:200',
         ];
 
         $validator = Validator::make(
-            $data,$arrValidation,
+            $data, $arrValidation,
             [
-                'tenloai.regex' => 'Kiểu thể loại bị sai',
+                'tentheloai.regex'     => 'Kiểu thể loại bị sai',
+                'tentheloai.unique'    => 'Tên thể loại đã tồn tại',
             ]
         );
-
 
         if ($validator->fails()) {
             return redirect()->back()
@@ -123,16 +125,13 @@ class LoaisanphamController extends Controller
                 ->withInput($data);
         }
 
-        if(Loaisanpham::checkTenloai($id, $data['tentheloai'])) {
-            return redirect()->back()->with('error', 'Tên thể loại đã tồn tại');
-        }
-
+        //
         Loaisanpham::where('id', $id)
             ->update([
-                'parent_id'    => $data['parent_category'],
-                'tenloai' => $data['tentheloai'],
-                'mota' => $data['motatheloai'],
-                'anhbia' => $data['anhbia'],
+                'parent_id' => $data['parent_category'],
+                'tenloai'   => $data['tentheloai'],
+                'mota'      => $data['motatheloai'],
+                'anhbia'    => $data['anhbia'],
             ]);
 
         return redirect()->back()->with([
@@ -141,6 +140,9 @@ class LoaisanphamController extends Controller
         ]);
     }
 
+    /*
+     *
+     * */
     public function delete($id) {
         $checkDausach = Sanpham::where('matl', $id)->exists();
 

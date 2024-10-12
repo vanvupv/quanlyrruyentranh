@@ -1,13 +1,14 @@
 @include('share.header')
 
-<body class="theme-color4 light ltr">
-<!-- Start Navigation -->
+<!-- Navigation -->
 @include('share.nav')
+<!-- / Navigation -->
 
-<!-- Start Breadcrumb -->
+<!-- Breadcrumb -->
 @include('share.breadcrumb')
+<!-- / Breadcrumb -->
 
-<!-- Start Cart -->
+<!-- Confirm Checkout -->
 <section class="cart-section section-b-space">
     <div class="container">
             <div class="row">
@@ -123,21 +124,7 @@
             </div>
     </div>
 </section>
-
-
-<div class="tap-to-top">
-    <a href="#home">
-        <i class="fas fa-chevron-up"></i>
-    </a>
-</div>
-
-<div class="bg-overlay"></div>
-
-<script>
-    $(function () {
-        $('[data-bs-toggle="tooltip"]').tooltip()
-    });
-</script>
+<!-- / Confirm Checkout -->
 
 @include('share.footer')
 

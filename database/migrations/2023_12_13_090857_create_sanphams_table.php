@@ -15,25 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('tensanpham', 60);
             $table->string('sku', 10);
-            $table->string('mota', 255);
+            $table->text('mota');
             $table->integer('soluong');
-
-//            $table->string('donvitinh', 15)->nullable();
             $table->integer('gianhap')->default(0);
             $table->integer('giaban')->default(0);
-
             $table->integer('matheloai');
-
-//            $table->integer('matacgia');
-//            $table->integer('manhaxuatban');
-//            $table->integer('mavitri');
-
+            $table->text('anhbia');
             // Uncomment the following line if you want to add foreign key constraint
             $table->foreign('matheloai')->references('id')->on('loaisanpham');
-
-//            $table->check('GiaBan > GiaNhap');
-//            $table->check('GiaNhap >= 0');
-//            $table->check('SoLuong >= 0');
             $table->timestamps();
         });
     }

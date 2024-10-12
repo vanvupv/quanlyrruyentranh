@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Anh;
-use App\Models\Loaisanpham;
 use App\Models\Sanpham;
-use Illuminate\Http\Request;
 
 class DetailController extends Controller
 {
-    //
+    /*
+     *
+     *
+     * */
     public function viewDetail($detail) {
 
         $sanpham = Sanpham::join('loaisanpham', 'sanpham.matheloai', '=', 'loaisanpham.id')
@@ -24,7 +24,6 @@ class DetailController extends Controller
             ->where('sanpham.id', '!=', $detail)
             ->get();
 
-        //
         return view('detail', [
                 'sanpham' => $sanpham,
                 'relatedProducts' => $relatedProducts,

@@ -1,4 +1,6 @@
-<!-- Start Footer -->
+<div id="qvmodal"></div>
+
+<!-- Footer -->
 <footer class="footer-sm-space mt-5">
     <div class="main-footer m-0">
         <div class="container">
@@ -122,13 +124,13 @@
         <div class="container">
             <div class="row gy-3">
                 <div class="col-12">
-                    <p class="mb-0 font-dark text-center">© 2023</p>
+                    <p class="mb-0 font-dark text-center">Copyright © 2024</p>
                 </div>
             </div>
         </div>
     </div>
 </footer>
-<!-- End Footer -->
+<!-- / Footer -->
 
 <div class="modal fade newletter-modal" id="newsletter">
     <div class="modal-dialog modal-dialog-centered">
@@ -295,40 +297,39 @@
     </div>
 </div>
 
+<!-- Tap To Top -->
 <div class="tap-to-top">
     <a href="#home">
         <i class="fas fa-chevron-up"></i>
     </a>
 </div>
+<!-- / Tap To Top -->
 
-<div class="bg-overlay"></div>
-<!-- -->
+    <script src="{{ asset('assets/js/jquery-3.5.1.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('assets/js/feather/feather.min.js') }}"></script>
+    <script src="{{ asset('assets/js/lazysizes.min.js') }}"></script>
+    <script src="{{ asset('assets/js/slick/slick.js') }}"></script>
+    <script src="{{ asset('assets/js/slick/slick-animation.min.js') }}"></script>
+    <script src="{{ asset('assets/js/slick/custom_slick.js') }}"></script>
+    <script src="{{ asset('assets/js/price-filter.js') }}"></script>
+    <script src="{{ asset('assets/js/ion.rangeSlider.min.js') }}"></script>
+    <script src="{{ asset('assets/js/filter.js') }}"></script>
+    <script src="{{ asset('assets/js/newsletter.js') }}"></script>
+    <script src="{{ asset('assets/js/cart_modal_resize.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap/bootstrap-notify.min.js') }}"></script>
+    <script src="{{ asset('assets/js/theme-setting.js') }}"></script>
+    <script src="{{ asset('assets/js/script.js') }}"></script>
+    <!-- -->
+    <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+    <script src="{{asset('/assets/js/validate-custom/login.js')}}"></script>
+    <!--  -->
+    <script>
+        $(function () {
+            $('[data-bs-toggle="tooltip"]').tooltip()
+        });
+    </script>
 
-        <!-- -->
-        <script src="{{ asset('assets/js/jquery-3.5.1.min.js') }}"></script>
-        <script src="{{ asset('assets/js/bootstrap/bootstrap.bundle.min.js') }}"></script>
-        <script src="{{ asset('assets/js/feather/feather.min.js') }}"></script>
-        <script src="{{ asset('assets/js/lazysizes.min.js') }}"></script>
-        <script src="{{ asset('assets/js/slick/slick.js') }}"></script>
-        <script src="{{ asset('assets/js/slick/slick-animation.min.js') }}"></script>
-        <script src="{{ asset('assets/js/slick/custom_slick.js') }}"></script>
-        <script src="{{ asset('assets/js/price-filter.js') }}"></script>
-        <script src="{{ asset('assets/js/ion.rangeSlider.min.js') }}"></script>
-        <script src="{{ asset('assets/js/filter.js') }}"></script>
-        <script src="{{ asset('assets/js/newsletter.js') }}"></script>
-        <script src="{{ asset('assets/js/cart_modal_resize.js') }}"></script>
-        <script src="{{ asset('assets/js/bootstrap/bootstrap-notify.min.js') }}"></script>
-        <script src="{{ asset('assets/js/theme-setting.js') }}"></script>
-        <script src="{{ asset('assets/js/script.js') }}"></script>
-        <!-- -->
-        <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
-        <script src="{{asset('/assets/js/validate-custom/login.js')}}"></script>
-        <!--  -->
-        <script>
-            $(function () {
-                $('[data-bs-toggle="tooltip"]').tooltip()
-            });
-        </script>
     </body>
 </html>
 

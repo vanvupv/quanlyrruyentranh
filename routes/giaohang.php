@@ -1,21 +1,23 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Admin\khuyenmai\KhuyenmaiController;
+use App\Http\Controllers\Admin\giaohang\ShippingController;
 
-Route::group(['prefix' => 'admin/khuyenmai'],
+Route::group(['prefix' => 'admin/giaohang'],
 
     function () {
-        // Coupon
-        Route::get('/', [KhuyenmaiController::class,'index'])->name('khuyenmai');
+        // Shipping
+        Route::get('/', [ShippingController::class,'index'])->name('giaohang');
 
-        // Coupon Add
-        Route::get('/create', [KhuyenmaiController::class,'create'])->name('khuyenmai.add');
-        Route::post('/create/store', [KhuyenmaiController::class,'store'])->name('khuyenmai.store');
+        // Shipping Add
+        Route::get('/create', [ShippingController::class,'create'])->name('giaohang.add');
+        Route::post('/create/store', [ShippingController::class,'store'])->name('giaohang.store');
 
-        // Coupon Edit
-        Route::get('/edit/{id}', [KhuyenmaiController::class,'edit'])->name('khuyenmai.edit');
-        Route::post('/edit/{id}', [KhuyenmaiController::class,'postedit'])->name('khuyenmai.postedit');
+        // Shipping Edit
+        Route::get('/edit/{id}', [ShippingController::class,'edit'])->name('giaohang.edit');
+        Route::post('/edit/{id}', [ShippingController::class,'update'])->name('giaohang.postedit');
 
+        // Shipping Delete
+        Route::delete('/delete/{id}', [ShippingController::class,'delete'])->name('giaohang.delete');
     }
 );

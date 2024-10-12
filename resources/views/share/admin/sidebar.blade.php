@@ -17,8 +17,6 @@
         </a>
     </div>
 
-    <div class="menu-inner-shadow"></div>
-
     <ul class="menu-inner py-1">
         <!-- Đầu Sách -->
         <li class="menu-item active">
@@ -29,7 +27,7 @@
             <ul class="menu-sub">
                 <li class="menu-item active">
                     <a href="{{route('sanpham')}}"
-                      class="menu-link">
+                       class="menu-link">
                         <div data-i18n="CRM">Danh sách Đầu Sách</div>
                         <div class="badge bg-label-primary fs-tiny rounded-pill ms-auto"></div>
                     </a>
@@ -60,59 +58,6 @@
         </li>
         <!-- / Thể Loại -->
 
-        <!-- Tác Giả -->
-{{--        <li class="menu-item">--}}
-{{--            <a href="javascript:void(0);" class="menu-link menu-toggle">--}}
-{{--                <i class="menu-icon tf-icons mdi mdi-flip-to-front"></i>--}}
-{{--                <div data-i18n="Front Pages">Tác Giả</div>--}}
-{{--                <div class="badge bg-label-primary fs-tiny rounded-pill ms-auto"></div>--}}
-{{--            </a>--}}
-{{--            <ul class="menu-sub">--}}
-{{--                <li class="menu-item">--}}
-{{--                    <a href="{{route('tacgia')}}"--}}
-{{--                       class="menu-link">--}}
-{{--                        <div data-i18n="Landing">Tác Giả</div>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
-{{--            </ul>--}}
-{{--        </li>--}}
-        <!-- / Tác Giả -->
-
-        <!-- Nhà Xuất Bản -->
-{{--        <li class="menu-item">--}}
-{{--            <a href="javascript:void(0);" class="menu-link menu-toggle">--}}
-{{--                <i class="menu-icon tf-icons mdi mdi-file-document-multiple-outline"></i>--}}
-{{--                <div data-i18n="Front Pages">Nhà Xuất Bản</div>--}}
-{{--                <div class="badge bg-label-primary fs-tiny rounded-pill ms-auto"></div>--}}
-{{--            </a>--}}
-{{--            <ul class="menu-sub">--}}
-{{--                <li class="menu-item">--}}
-{{--                    <a href="{{route('nhaxuatban')}}"--}}
-{{--                       class="menu-link">--}}
-{{--                        <div data-i18n="Landing">Nhà Xuất Bản</div>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
-{{--            </ul>--}}
-{{--        </li>--}}
-        <!-- / Nhà Xuất Bản -->
-        <!-- Nhà Xuất Bản -->
-{{--        <li class="menu-item">--}}
-{{--            <a href="javascript:void(0);" class="menu-link menu-toggle">--}}
-{{--                <i class="menu-icon tf-icons bi bi-geo-alt"></i>--}}
-{{--                <div data-i18n="Front Pages">Vị trí</div>--}}
-{{--                <div class="badge bg-label-primary fs-tiny rounded-pill ms-auto"></div>--}}
-{{--            </a>--}}
-{{--            <ul class="menu-sub">--}}
-{{--                <li class="menu-item">--}}
-{{--                    <a href="{{route('vitri')}}"--}}
-{{--                       class="menu-link" >--}}
-{{--                        <div data-i18n="Landing">Vị trí</div>--}}
-{{--                    </a>--}}
-{{--                </li>--}}
-{{--            </ul>--}}
-{{--        </li>--}}
-        <!-- / Vị trí -->
-
         <!-- Quản Lý Order -->
         <li class="menu-header fw-medium mt-4">
             <span class="menu-header-text"> Quản Lý Đơn Hàng </span>
@@ -120,7 +65,7 @@
         <!-- Order -->
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons mdi mdi-account-outline"></i>
+                <i class="menu-icon tf-icons bi bi-cart-plus"></i>
                 <div data-i18n="Account Settings"> Quản Lý Đơn Hàng </div>
             </a>
             <ul class="menu-sub">
@@ -137,7 +82,6 @@
         <li class="menu-header fw-medium mt-4">
             <span class="menu-header-text"> Quản Lý Độc Giả </span>
         </li>
-        <!-- Độc Giả -->
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons mdi mdi-account-outline"></i>
@@ -151,17 +95,34 @@
                 </li>
             </ul>
         </li>
-        <!-- / Độc Giả -->
         <!-- / Quản Lý Độc Giả -->
+
+        <!-- Quản Lý Giao Hàng -->
+        <li class="menu-header fw-medium mt-4">
+            <span class="menu-header-text"> Quản Lý Giao hàng </span>
+        </li>
+        <li class="menu-item">
+            <a href="javascript:void(0);" class="menu-link menu-toggle">
+                <i class="menu-icon tf-icons bi bi-truck"></i>
+                <div data-i18n="Account Settings">Quản Lý Giao hàng </div>
+            </a>
+            <ul class="menu-sub">
+                <li class="menu-item">
+                    <a href="{{route('giaohang')}}" class="menu-link">
+                        <div data-i18n="Account"> Giao hàng </div>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!-- / Quản Lý Giao Hàng -->
 
         <!-- Quản Lý Khuyến Mại -->
         <li class="menu-header fw-medium mt-4">
             <span class="menu-header-text"> Quản Lý Khuyến Mại </span>
         </li>
-        <!-- Khuyến Mại -->
         <li class="menu-item">
             <a href="javascript:void(0);" class="menu-link menu-toggle">
-                <i class="menu-icon tf-icons mdi mdi-account-outline"></i>
+                <i class="menu-icon tf-icons bi bi-tags"></i>
                 <div data-i18n="Account Settings">Quản Lý Khuyến Mại </div>
             </a>
             <ul class="menu-sub">
@@ -172,12 +133,12 @@
                 </li>
             </ul>
         </li>
-        <!-- / Khuyến Mại -->
         <!-- / Quản Lý Khuyến Mại -->
 
         <!-- Hóa Đơn -->
-        <li class="menu-header fw-medium mt-4"><span class="menu-header-text">Quản Lý Hóa Đơn</span></li>
-        <!-- Hóa Đơn -->
+        <li class="menu-header fw-medium mt-4">
+            <span class="menu-header-text">Quản Lý Hóa Đơn</span>
+        </li>
         <li class="menu-item">
             <a href="javascript:void(0)" class="menu-link menu-toggle">
                 <i class="menu-icon tf-icons bi bi-receipt"></i>
@@ -242,6 +203,8 @@
             </a>
         </li>
     </ul>
+
+    <div class="menu-inner-shadow"></div>
 </aside>
 
 
